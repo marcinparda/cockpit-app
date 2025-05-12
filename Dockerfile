@@ -11,6 +11,11 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
+# Handle environment files
+RUN if [ ! -f src/environments/environment.production.ts ]; then \
+      cp src/environments/environment.production.template.ts src/environments/environment.production.ts; \
+    fi
+
 # Build the application
 RUN npm run build
 
