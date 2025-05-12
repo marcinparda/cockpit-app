@@ -1,16 +1,11 @@
 services:
-  # Development service defined in docker-compose.dev.yml
-  frontend-dev:
-    extends:
-      file: docker-compose.dev.yml
-      service: frontend-dev
-    profiles:
-      - development
-
-  # Production service defined in docker-compose.prod.yml
-  frontend-prod:
-    extends:
-      file: docker-compose.prod.yml
-      service: frontend-prod
-    profiles:
-      - production
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cockpit-app
+    ports:
+      - "4200:80"
+    environment:
+      - NODE_ENV=production
+      - API_URL=http://api.production.com
