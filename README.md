@@ -36,6 +36,34 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+## Environment Configuration
+
+The application uses environment files for configuration. These files are located in the `src/environments/` directory:
+
+```
+src/environments/
+├── environment.ts         # Development environment settings
+└── environment.prod.ts    # Production environment settings
+```
+
+To configure environment-specific variables:
+
+1. Open the relevant environment file
+2. Modify the environment object with your settings:
+
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: "http://localhost:3000/api", // Add your environment variables here
+};
+```
+
+When building for production, the CLI will automatically use the production environment file:
+
+```bash
+ng build --configuration production
+```
+
 ## Running unit tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
