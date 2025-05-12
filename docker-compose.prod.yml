@@ -1,7 +1,4 @@
-version: "3"
-
 services:
-  # Production build service
   frontend-prod:
     build:
       context: .
