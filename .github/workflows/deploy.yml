@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [master]
   pull_request:
-    branches: [ main ]
+    branches: [master]
 
 jobs:
   build-and-test:
@@ -12,27 +12,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
-          cache: 'npm'
-          
+          node-version: "20"
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Build
         run: npm run build
-        
+
       - name: Test
         run: npm test -- --watch=false --browsers=ChromeHeadless
 
   deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    
+    if: github.ref == 'refs/heads/master'
+
     steps:
       - name: Deploy to Raspberry Pi
         uses: appleboy/ssh-action@master
@@ -43,8 +43,8 @@ jobs:
           passphrase: ${{ secrets.RASPBERRY_PI_SSH_PASSPHRASE || '' }}
           script: |
             cd ~/cockpit-app
-            git pull origin main
-            
+            git pull origin master
+
             # Create Angular environment.production.ts file
             mkdir -p src/environments
             cat > src/environments/environment.production.ts << EOL
@@ -53,6 +53,6 @@ jobs:
               apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
             };
             EOL
-            
+
             docker compose down
             docker compose up -d --build
