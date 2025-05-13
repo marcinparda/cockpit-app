@@ -44,13 +44,14 @@ jobs:
     if: github.ref == 'refs/heads/master'
 
     steps:
-      - name: Deploy to Raspberry Pi
+      - name: Deploy to Raspberry Pi through Cloudflare Tunnel
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.RASPBERRY_PI_HOST }}
+          host: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
           username: ${{ secrets.RASPBERRY_PI_USERNAME }}
           key: ${{ secrets.RASPBERRY_PI_SSH_KEY }}
           passphrase: ${{ secrets.RASPBERRY_PI_SSH_PASSPHRASE || '' }}
+          port: ${{ secrets.SSH_PORT || '22' }}
           script: |
             cd ~/cockpit-app
             git pull origin master
