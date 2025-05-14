@@ -30,11 +30,25 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'categories/create',
+    loadComponent: () =>
+      import(
+        './components/categories/category-create/category-create.component'
+      ).then((m) => m.CategoryCreateComponent),
+  },
+  {
     path: 'payment-methods',
     loadComponent: () =>
       import('./components/payment-methods/payment-methods.component').then(
         (m) => m.PaymentMethodsComponent
       ),
+  },
+  {
+    path: 'payment-methods/create',
+    loadComponent: () =>
+      import(
+        './components/payment-methods/payment-method-create/payment-method-create.component'
+      ).then((c) => c.PaymentMethodCreateComponent),
   },
   {
     path: '**',

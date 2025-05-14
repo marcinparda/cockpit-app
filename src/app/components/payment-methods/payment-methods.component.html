@@ -9,6 +9,12 @@
     </ul>
   </nav>
 
+  <div>
+    <a routerLink="/payment-methods/create" class="create-button"
+      >Create New Payment Method</a
+    >
+  </div>
+
   <div *ngIf="isLoading">Loading payment methods...</div>
 
   <div *ngIf="error" class="error-message">{{ error }}</div>

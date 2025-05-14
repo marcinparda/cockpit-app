@@ -1,0 +1,33 @@
+<div>
+  <h1>Create Payment Method</h1>
+
+  <nav>
+    <ul>
+      <li><a routerLink="/expenses">Expenses</a></li>
+      <li><a routerLink="/categories">Categories</a></li>
+      <li><a routerLink="/payment-methods">Payment Methods</a></li>
+    </ul>
+  </nav>
+
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="newPaymentMethod.name"
+        required
+      />
+    </div>
+
+    <button type="submit" [disabled]="isSaving">
+      {{ isSaving ? "Saving..." : "Create Payment Method" }}
+    </button>
+    <button type="button" routerLink="/payment-methods" [disabled]="isSaving">
+      Cancel
+    </button>
+  </form>
+</div>

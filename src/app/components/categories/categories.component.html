@@ -9,6 +9,10 @@
     </ul>
   </nav>
 
+  <div class="actions">
+    <a routerLink="/categories/create" class="button">Create New Category</a>
+  </div>
+
   <div *ngIf="isLoading">Loading categories...</div>
 
   <div *ngIf="error" class="error-message">{{ error }}</div>
