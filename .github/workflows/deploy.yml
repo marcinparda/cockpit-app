@@ -71,11 +71,11 @@ jobs:
           " > ~/.ssh/config
           chmod 600 ~/.ssh/config
 
-      - name: Add known_hosts
-        env:
-          TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
-        run: |
-          ssh-keyscan ${TUNNEL_DOMAIN} >> ~/.ssh/known_hosts
+      # - name: Add known_hosts
+      #   env:
+      #     TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+      #   run: |
+      #     ssh-keyscan ${TUNNEL_DOMAIN} >> ~/.ssh/known_hosts
 
       - name: Deploy via SSH
         env:
