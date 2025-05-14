@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -11,20 +12,30 @@ export class AuthService {
     this.getStoredApiKey()
   );
   public apiKey$ = this.apiKeySubject.asObservable();
+  private isBrowser: boolean;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, @Inject(PLATFORM_ID) platformId: Object) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   public getStoredApiKey(): string | null {
-    return localStorage.getItem(this.API_KEY_STORAGE_KEY);
+    if (this.isBrowser) {
+      return localStorage.getItem(this.API_KEY_STORAGE_KEY);
+    }
+    return null;
   }
 
   public saveApiKey(key: string): void {
-    localStorage.setItem(this.API_KEY_STORAGE_KEY, key);
+    if (this.isBrowser) {
+      localStorage.setItem(this.API_KEY_STORAGE_KEY, key);
+    }
     this.apiKeySubject.next(key);
   }
 
   public clearApiKey(): void {
-    localStorage.removeItem(this.API_KEY_STORAGE_KEY);
+    if (this.isBrowser) {
+      localStorage.removeItem(this.API_KEY_STORAGE_KEY);
+    }
     this.apiKeySubject.next(null);
   }
 
