@@ -23,6 +23,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'expenses/create',
+    loadComponent: () =>
+      import(
+        './components/expenses/expense-create/expense-create.component'
+      ).then((m) => m.ExpenseCreateComponent),
+  },
+  {
     path: 'categories',
     loadComponent: () =>
       import('./components/categories/categories.component').then(

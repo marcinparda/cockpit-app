@@ -1,0 +1,148 @@
+<div class="container">
+  <h1>Create New Expense</h1>
+
+  <nav>
+    <ul>
+      <li><a routerLink="/expenses">Expenses</a></li>
+      <li><a routerLink="/categories">Categories</a></li>
+      <li><a routerLink="/payment-methods">Payment Methods</a></li>
+    </ul>
+  </nav>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="expense-form">
+    <div class="form-group">
+      <label for="amount">Amount*</label>
+      <input
+        type="number"
+        id="amount"
+        formControlName="amount"
+        class="form-control"
+        [class.is-invalid]="
+          expenseForm.get('amount')?.invalid &&
+          expenseForm.get('amount')?.touched
+        "
+        step="0.01"
+        min="0.01"
+      />
+      <div
+        *ngIf="
+          expenseForm.get('amount')?.invalid &&
+          expenseForm.get('amount')?.touched
+        "
+        class="invalid-feedback"
+      >
+        Amount is required and must be greater than 0
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category*</label>
+      <select
+        id="category"
+        formControlName="category_id"
+        class="form-control"
+        [class.is-invalid]="
+          expenseForm.get('category_id')?.invalid &&
+          expenseForm.get('category_id')?.touched
+        "
+      >
+        <option value="">Select Category</option>
+        @for (category of categories; track category.id) {
+        <option [value]="category.id">{{ category.name }}</option>
+        }
+      </select>
+      <div *ngIf="isLoadingCategories">Loading categories...</div>
+      <div
+        *ngIf="
+          expenseForm.get('category_id')?.invalid &&
+          expenseForm.get('category_id')?.touched
+        "
+        class="invalid-feedback"
+      >
+        Category is required
+      </div>
+      <div class="form-text">
+        <a [routerLink]="['/categories/create']">Create new category</a>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="payment_method">Payment Method*</label>
+      <select
+        id="payment_method"
+        formControlName="payment_method_id"
+        class="form-control"
+        [class.is-invalid]="
+          expenseForm.get('payment_method_id')?.invalid &&
+          expenseForm.get('payment_method_id')?.touched
+        "
+      >
+        <option value="">Select Payment Method</option>
+        @for (method of paymentMethods; track method.id) {
+        <option [value]="method.id">{{ method.name }}</option>
+        }
+      </select>
+      <div *ngIf="isLoadingPaymentMethods">Loading payment methods...</div>
+      <div
+        *ngIf="
+          expenseForm.get('payment_method_id')?.invalid &&
+          expenseForm.get('payment_method_id')?.touched
+        "
+        class="invalid-feedback"
+      >
+        Payment Method is required
+      </div>
+      <div class="form-text">
+        <a [routerLink]="['/payment-methods/create']"
+          >Create new payment method</a
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="date">Date*</label>
+      <input
+        type="date"
+        id="date"
+        formControlName="date"
+        class="form-control"
+        [class.is-invalid]="
+          expenseForm.get('date')?.invalid && expenseForm.get('date')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          expenseForm.get('date')?.invalid && expenseForm.get('date')?.touched
+        "
+        class="invalid-feedback"
+      >
+        Date is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        class="form-control"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="expenseForm.invalid || isSubmitting"
+      >
+        {{ isSubmitting ? "Saving..." : "Save Expense" }}
+      </button>
+      <button type="button" routerLink="/expanses">Cancel</button>
+    </div>
+  </form>
+</div>
