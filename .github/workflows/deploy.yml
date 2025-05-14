@@ -61,27 +61,27 @@ jobs:
           chmod 644 ~/.ssh/known_hosts
           cat <<EOF > ~/.ssh/config
           Host ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
-            User ${{ secrets.RASPBERRY_PI_USERNAME }}
-            IdentityFile ~/.ssh/id_ed25519
-            ProxyCommand cloudflared access ssh --hostname %h
+          User ${{ secrets.RASPBERRY_PI_USERNAME }}
+          IdentityFile ~/.ssh/id_ed25519
+          ProxyCommand cloudflared access ssh --hostname %h
           EOF
           chmod 600 ~/.ssh/config
         shell: bash
 
       - name: Deploy via SSH
         run: |
-            ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "\
-            eval \"\$(ssh-agent -s)\" && \
-            ssh-add ~/.ssh/github && \
-            cd ~/cockpit-app && \
-            git pull && \
-            mkdir -p src/environments && \
-            cat > src/environments/environment.production.ts << 'EOL'
-            export const environment = {
-              production: true,
-              apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
-            };
-            EOL
-            && docker compose down && docker compose up -d --build"
+          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "\
+          eval \"\$(ssh-agent -s)\" && \
+          ssh-add ~/.ssh/github && \
+          cd ~/cockpit-app && \
+          git pull && \
+          mkdir -p src/environments && \
+          cat > src/environments/environment.production.ts << 'EOL'
+          export const environment = {
+            production: true,
+            apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
+          };
+          EOL
+          && docker compose down && docker compose up -d --build"
 
         shell: bash
