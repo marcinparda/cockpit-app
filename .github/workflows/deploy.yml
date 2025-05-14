@@ -69,5 +69,5 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          ssh -vvv -o StrictHostKeyChecking=yes ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "echo 'HelloWorld!' && ./deploy-script.sh"
+          ssh -vvv -o ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "echo 'HelloWorld!' && ./deploy-script.sh"
         shell: bash
