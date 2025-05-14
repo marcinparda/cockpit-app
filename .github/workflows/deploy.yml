@@ -68,7 +68,7 @@ jobs:
         run: |
           echo "Host ${TUNNEL_DOMAIN}
           User ${PI_USERNAME}
-          ProxyCommand cloudflared access ssh --hostname %h
+          ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
           " > ~/.ssh/config
           chmod 600 ~/.ssh/config
 
