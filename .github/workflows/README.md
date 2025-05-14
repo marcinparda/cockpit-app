@@ -1,35 +1,58 @@
-# GitHub Actions Deployment Workflow
+# CI/CD Pipeline Documentation
 
-This directory contains GitHub Actions workflow configurations for continuous integration and deployment.
+This document provides details about the CI/CD pipeline defined in `deploy.yml`.
 
-## deploy.yml
+## Overview
 
-The `deploy.yml` workflow runs on every push to the main branch and handles:
+The workflow automates building, testing, and deploying the Cockpit application to a Raspberry Pi server using Cloudflare tunneling for secure SSH access.
 
-1. Building and testing the Angular application on GitHub runners
-2. SSH into the Raspberry Pi to pull the latest code and rebuild the containers
+## Workflow Triggers
+
+This workflow runs on:
+
+- Push events to the `master` branch
+- Pull requests targeting the `master` branch
+
+## Jobs
+
+### 1. Build and Test
+
+This job runs on Ubuntu and performs the following steps:
+
+- Checks out the repository code
+- Sets up Node.js v20 with npm caching
+- Installs dependencies using `npm ci`
+- Creates environment configuration files
+- Builds the Angular application
+- Runs tests in CI mode
+
+### 2. Deploy
+
+This job runs after successful build and test and handles deployment:
+
+- Sets up Cloudflared for secure tunnel access
+- Configures SSH with the following components:
+  - Private SSH key for Raspberry Pi access
+  - Known hosts configuration
+  - SSH config for Cloudflare tunnel connection
+- Deploys to the Raspberry Pi server by:
+  - Pulling the latest code
+  - Rebuilding and restarting Docker containers
 
 ## Required Secrets
 
-For the workflow to function correctly, the following secrets need to be configured in your GitHub repository:
+The following secrets must be configured in your GitHub repository:
 
-### Raspberry Pi Secrets
-- `RASPBERRY_PI_HOST`: The hostname or IP address of your Raspberry Pi
-- `RASPBERRY_PI_USERNAME`: SSH username for Raspberry Pi access
-- `RASPBERRY_PI_SSH_KEY`: SSH private key for authentication
-- `RASPBERRY_PI_SSH_PASSPHRASE`: Passphrase for the SSH key (if applicable)
+| Secret Name                | Description                                                      |
+| -------------------------- | ---------------------------------------------------------------- |
+| `API_URL`                  | Backend API URL (optional, defaults to http://localhost:8000)    |
+| `RASPBERRY_PI_SSH_KEY`     | Private SSH key for accessing the Raspberry Pi                   |
+| `RASPBERRY_PI_USERNAME`    | Username for the Raspberry Pi                                    |
+| `SSH_KNOWN_HOSTS`          | Known hosts configuration for SSH, needed for secure connections |
+| `CLOUDFLARE_TUNNEL_DOMAIN` | Cloudflare tunnel hostname                                       |
 
-## Setup Instructions for Raspberry Pi
+## Troubleshooting
 
-1. Set up Docker and Docker Compose on your Raspberry Pi
-2. Clone this repository on your Pi: `git clone https://github.com/your-username/cockpit-app.git ~/cockpit-app`
-3. Make sure the repository can be updated with `git pull` (configure Git credentials if needed)
-4. Ensure your `docker-compose.yml` is properly configured to build the application
-
-## Modifying the Workflow
-
-If you need to customize the deployment process:
-
-- Adjust the build parameters in the workflow as needed
-- Modify the deployment scripts that run on the Raspberry Pi
-- Add additional services or dependencies to the workflow
+- The SSH connection uses verbose logging (`-vvv`) to help with debugging connection issues
+- Check the GitHub Actions logs for detailed deployment information
+- Ensure all secrets are properly configured before running the workflow
