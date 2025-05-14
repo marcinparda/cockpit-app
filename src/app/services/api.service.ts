@@ -12,6 +12,6 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   getCockpitData(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any>(`${this.apiUrl}/api/v1/payment_methods`);
   }
 }
