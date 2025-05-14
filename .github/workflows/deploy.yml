@@ -72,6 +72,11 @@ jobs:
           " > ~/.ssh/config
           chmod 600 ~/.ssh/config
 
+      - name: Update known_hosts
+        run: |
+          ssh-keyscan -t ed25519 ssh.parda.me >> ~/.ssh/known_hosts
+          cat ~/.ssh/known_hosts
+
       - name: Deploy via SSH
         env:
           TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
