@@ -58,7 +58,6 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.RASPBERRY_PI_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          cat ~/.ssh/id_ed25519
 
       - name: Add SSH config for Cloudflare Tunnel
         env:
@@ -71,7 +70,6 @@ jobs:
           ProxyCommand cloudflared access ssh --hostname %h
           " > ~/.ssh/config
           chmod 600 ~/.ssh/config
-          cat ~/.ssh/config
 
       # - name: Add known_hosts
       #   env:
@@ -83,9 +81,6 @@ jobs:
         env:
           TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
         run: |
-          echo {{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
-          cat ~/.ssh/id_ed25519
-          cat ~/.ssh/config
           ssh -o StrictHostKeyChecking=yes ${TUNNEL_DOMAIN} "cd ~/cockpit-app && \
             git pull origin master && \
             docker compose down && \
