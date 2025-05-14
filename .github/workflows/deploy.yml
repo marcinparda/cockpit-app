@@ -81,7 +81,9 @@ jobs:
         env:
           TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
         run: |
-          ssh -o StrictHostKeyChecking=yes ${TUNNEL_DOMAIN} "cd ~/cockpit-app && \
+          for i in {1..5}; do
+            ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=yes ${TUNNEL_DOMAIN} "cd ~/cockpit-app && \
             git pull origin master && \
             docker compose down && \
-            docker compose up -d --build"
+            docker compose up -d --build" && break || sleep 5
+          done
