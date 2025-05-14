@@ -41,7 +41,6 @@ jobs:
   deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
 
     steps:
       - name: Deploy to Raspberry Pi through Cloudflare Tunnel
