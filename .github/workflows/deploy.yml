@@ -7,36 +7,36 @@ on:
     branches: [master]
 
 jobs:
-  # build-and-test:
-  #   runs-on: ubuntu-latest
+  build-and-test:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: "20"
-  #         cache: "npm"
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "npm"
 
-  #     - name: Install dependencies
-  #       run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-  #     - name: Create Angular environment files
-  #       run: |
-  #         mkdir -p src/environments
-  #         cat > src/environments/environment.production.ts << EOL
-  #         export const environment = {
-  #           production: true,
-  #           apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
-  #         };
-  #         EOL
+      - name: Create Angular environment files
+        run: |
+          mkdir -p src/environments
+          cat > src/environments/environment.production.ts << EOL
+          export const environment = {
+            production: true,
+            apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
+          };
+          EOL
 
-  #     - name: Build
-  #       run: npm run build
+      - name: Build
+        run: npm run build
 
-  #     - name: Test
-  #       run: npm run test:ci
+      - name: Test
+        run: npm run test:ci
 
   deploy:
     runs-on: ubuntu-latest
@@ -69,5 +69,5 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "mkdir -p ~/app"
+          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "cd ~/cockpit-app && git pull && docker compose down && docker compose up -d --build"
         shell: bash
