@@ -43,16 +43,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to Raspberry Pi through Cloudflare Tunnel
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
-          username: ${{ secrets.RASPBERRY_PI_USERNAME }}
-          key: ${{ secrets.RASPBERRY_PI_SSH_KEY }}
-          passphrase: ${{ secrets.RASPBERRY_PI_SSH_PASSPHRASE || '' }}
-          port: ${{ secrets.SSH_PORT || '22' }}
-          script: |
-            cd ~/cockpit-app
-            git pull origin master
-            docker compose down
-            docker compose up -d --build
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install cloudflared
+        run: |
+          curl -L https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-archive-keyring.gpg >/dev/null
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-archive-keyring.gpg] https://pkg.cloudflare.com/cloudflared $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflared.list
+          sudo apt-get update
+          sudo apt-get install cloudflared
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.RASPBERRY_PI_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Add SSH config for Cloudflare Tunnel
+        env:
+          TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+          PI_USERNAME: ${{ secrets.RASPBERRY_PI_USERNAME }}
+        run: |
+          echo "Host ${TUNNEL_DOMAIN}
+          User ${PI_USERNAME}
+          IdentityFile ~/.ssh/id_ed25519
+          ProxyCommand cloudflared access ssh --hostname %h
+          " > ~/.ssh/config
+          chmod 600 ~/.ssh/config
+
+      - name: Add known_hosts
+        env:
+          TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+        run: |
+          ssh-keyscan ${TUNNEL_DOMAIN} >> ~/.ssh/known_hosts
+
+      - name: Deploy via SSH
+        env:
+          TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+        run: |
+          ssh -o StrictHostKeyChecking=yes ${TUNNEL_DOMAIN} "cd ~/cockpit-app && \
+            git pull origin master && \
+            docker compose down && \
+            docker compose up -d --build"
