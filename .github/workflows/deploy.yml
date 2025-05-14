@@ -74,8 +74,9 @@ jobs:
 
       - name: Update known_hosts
         run: |
-          ssh-keyscan -t ed25519 ssh.parda.me > ~/.ssh/known_hosts
-          cat ~/.ssh/known_hosts
+          ssh-keyscan -t ed25519 ssh.parda.me
+          # ssh-keyscan -t ed25519 ssh.parda.me > ~/.ssh/known_hosts
+          # cat ~/.ssh/known_hosts
 
       - name: Deploy via SSH
         env:
