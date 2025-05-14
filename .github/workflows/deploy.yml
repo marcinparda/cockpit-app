@@ -77,7 +77,7 @@ jobs:
           TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
         run: |
           for i in {1..5}; do
-            ssh ${TUNNEL_DOMAIN} "cd ~/cockpit-app && \
+            ssh -o ProxyCommand="cloudflared access ssh --hostname %h" ${TUNNEL_DOMAIN} "cd ~/cockpit-app && \
             git pull origin master && \
             docker compose down && \
             docker compose up -d --build" && break || sleep 5
