@@ -16,9 +16,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'cockpit-app' title`, () => {
+  it(`should have the 'Cockpit App' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('cockpit-app');
+    expect(app.title).toEqual('Cockpit App');
   });
 });
