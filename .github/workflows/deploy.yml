@@ -7,20 +7,6 @@ on:
     branches: [master]
 
 jobs:
-  ssh_command:
-    if: github.event.pull_request.merged == true
-    name: Run SSH command
-    runs-on: ubuntu-latest
-    steps:
-      - name: Connect and run command on remote server
-        uses: and-fm/cloudflared-ssh-action@v3
-        with:
-          host: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
-          username: ${{ secrets.RASPBERRY_PI_USERNAME }}
-          private_key_filename: github-actions-raspberry
-          private_key_value: ${{ secrets.RASPBERRY_PI_SSH_KEY }}
-          port: 22
-          commands: mkdir hello-world -v && echo "Hello, World!" > hello-world/hello.txt
   # build-and-test:
   #   runs-on: ubuntu-latest
 
@@ -52,45 +38,45 @@ jobs:
   #     - name: Test
   #       run: npm run test:ci
 
-  # deploy:
-  #   # needs: build-and-test
-  #   runs-on: ubuntu-latest
+  deploy:
+    # needs: build-and-test
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  #     - name: Install cloudflared
-  #       run: |
-  #         curl -L https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-archive-keyring.gpg >/dev/null
-  #         echo "deb [signed-by=/usr/share/keyrings/cloudflare-archive-keyring.gpg] https://pkg.cloudflare.com/cloudflared $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflared.list
-  #         sudo apt-get update
-  #         sudo apt-get install cloudflared
+      - name: Install cloudflared
+        run: |
+          curl -L https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-archive-keyring.gpg >/dev/null
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-archive-keyring.gpg] https://pkg.cloudflare.com/cloudflared $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflared.list
+          sudo apt-get update
+          sudo apt-get install cloudflared
 
-  #     - name: Set up SSH key
-  #       run: |
-  #         mkdir -p ~/.ssh
-  #         echo "${{ secrets.RASPBERRY_PI_SSH_KEY }}" > ~/.ssh/id_ed25519
-  #         chmod 600 ~/.ssh/id_ed25519
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.RASPBERRY_PI_SSH_KEY }}" > ~/.ssh/github-actions-raspberry
+          chmod 600 ~/.ssh/github-actions-raspberry
 
-  #     - name: Add SSH config for Cloudflare Tunnel
-  #       env:
-  #         TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
-  #         PI_USERNAME: ${{ secrets.RASPBERRY_PI_USERNAME }}
-  #       run: |
-  #         echo "Host ${TUNNEL_DOMAIN}
-  #         User ${PI_USERNAME}
-  #         ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
-  #         " > ~/.ssh/config
-  #         chmod 600 ~/.ssh/config
+      - name: Add SSH config for Cloudflare Tunnel
+        env:
+          TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+          PI_USERNAME: ${{ secrets.RASPBERRY_PI_USERNAME }}
+        run: |
+          echo "Host ${TUNNEL_DOMAIN}
+          User ${PI_USERNAME}
+          ProxyCommand cloudflared access ssh --hostname %h
+          " > ~/.ssh/config
+          chmod 600 ~/.ssh/config
 
-  #     - name: Deploy via SSH
-  #       env:
-  #         TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
-  #       run: |
-  #         for i in {1..5}; do
-  #           ssh ${TUNNEL_DOMAIN} "cd ~/cockpit-app && \
-  #           git pull origin master && \
-  #           docker compose down && \
-  #           docker compose up -d --build" && break || sleep 5
-  #         done
+      - name: Deploy via SSH
+        env:
+          TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+        run: |
+          for i in {1..5}; do
+            ssh ${TUNNEL_DOMAIN} "cd ~/cockpit-app && \
+            git pull origin master && \
+            docker compose down && \
+            docker compose up -d --build" && break || sleep 5
+          done
