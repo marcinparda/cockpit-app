@@ -69,5 +69,5 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          ssh -vvv -o ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "mkdir -p ~/app"
+          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "mkdir -p ~/app"
         shell: bash
