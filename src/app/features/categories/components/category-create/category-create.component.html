@@ -1,13 +1,7 @@
 <div>
   <h1>Create New Category</h1>
 
-  <nav>
-    <ul>
-      <li><a routerLink="/expenses">Expenses</a></li>
-      <li><a routerLink="/categories">Categories</a></li>
-      <li><a routerLink="/payment-methods">Payment Methods</a></li>
-    </ul>
-  </nav>
+  <app-category-navigation></app-category-navigation>
 
   <div *ngIf="error" class="error-message">{{ error }}</div>
 

@@ -31,17 +31,10 @@ export const routes: Routes = [
   },
   {
     path: 'categories',
-    loadComponent: () =>
-      import('./components/categories/categories.component').then(
-        (m) => m.CategoriesComponent
+    loadChildren: () =>
+      import('./features/categories/categories.routes').then(
+        (m) => m.CATEGORIES_ROUTES
       ),
-  },
-  {
-    path: 'categories/create',
-    loadComponent: () =>
-      import(
-        './components/categories/category-create/category-create.component'
-      ).then((m) => m.CategoryCreateComponent),
   },
   {
     path: 'payment-methods',

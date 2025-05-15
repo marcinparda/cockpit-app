@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../services/api.service';
+import { ApiService } from '../../../../services/api.service';
+import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 
 @Component({
   selector: 'app-category-create',
   templateUrl: './category-create.component.html',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, NavigationHeaderComponent],
 })
 export class CategoryCreateComponent implements OnInit {
   newCategory: any = {

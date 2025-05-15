@@ -1,0 +1,36 @@
+<div class="categories-container">
+  <app-navigation-header title="Categories"></app-navigation-header>
+
+  <div class="actions">
+    <a routerLink="/categories/create" class="button">Create New Category</a>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">Loading categories...</div>
+
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <table *ngIf="categories.length && !isLoading" class="categories-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Parent ID</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories">
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+        <td>{{ category.parent_id }}</td>
+        <td>{{ category.created_at | date }}</td>
+        <td>{{ category.updated_at | date }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!categories.length && !isLoading" class="empty-state">
+    No categories found.
+  </div>
+</div>

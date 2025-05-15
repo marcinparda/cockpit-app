@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../../../services/api.service';
+import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 
 @Component({
-  selector: 'app-categories',
-  templateUrl: './categories.component.html',
+  selector: 'app-categories-list-page',
+  templateUrl: './categories-list-page.component.html',
+  styleUrls: ['./categories-list-page.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NavigationHeaderComponent],
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesListPageComponent implements OnInit {
   categories: any[] = [];
   isLoading: boolean = false;
   error: string | null = null;
