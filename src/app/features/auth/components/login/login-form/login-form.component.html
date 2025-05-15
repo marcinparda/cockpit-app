@@ -1,0 +1,27 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="apiKey">API Key</label>
+    <input
+      type="text"
+      id="apiKey"
+      formControlName="apiKey"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': submitted && loginForm.controls['apiKey'].errors
+      }"
+      placeholder="Enter your X-API-KEY"
+    />
+    <div
+      *ngIf="submitted && loginForm.controls['apiKey'].errors"
+      class="invalid-feedback"
+    >
+      <div *ngIf="loginForm.controls['apiKey'].errors['required']">
+        API Key is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="login-button">Save API Key</button>
+  </div>
+</form>

@@ -1,36 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { LoginCardComponent } from '../components/login/login-card/login-card.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, LoginCardComponent],
 })
-export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+export class LoginPageComponent implements OnInit {
   returnUrl: string = '/';
   submitted = false;
 
   constructor(
-    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService
-  ) {
-    this.loginForm = this.formBuilder.group({
-      apiKey: ['', Validators.required],
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     // Get return URL from route parameters or default to '/'
@@ -42,16 +30,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  onSubmitApiKey(apiKey: string): void {
     this.submitted = true;
-
-    if (this.loginForm.invalid) {
-      return;
-    }
-
-    const apiKey = this.loginForm.controls['apiKey'].value;
     this.authService.saveApiKey(apiKey);
-
     this.router.navigateByUrl(this.returnUrl);
   }
 }
