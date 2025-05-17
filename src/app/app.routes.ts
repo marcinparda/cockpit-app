@@ -10,9 +10,9 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./components/main-layout/main-layout.component').then(
-        (m) => m.MainLayoutComponent
-      ),
+      import(
+        './shared/components/navigation-header/navigation-header.component'
+      ).then((m) => m.NavigationHeaderComponent),
     canActivate: [AuthGuard],
   },
   {
@@ -21,6 +21,7 @@ export const routes: Routes = [
       import('./features/expenses/expenses.routes').then(
         (m) => m.EXPENSES_ROUTES
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'categories',
@@ -28,6 +29,7 @@ export const routes: Routes = [
       import('./features/categories/categories.routes').then(
         (m) => m.CATEGORIES_ROUTES
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'payment-methods',
@@ -35,6 +37,7 @@ export const routes: Routes = [
       import('./features/payment-methods/payment-methods.routes').then(
         (m) => m.PAYMENT_METHODS_ROUTES
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: '**',
