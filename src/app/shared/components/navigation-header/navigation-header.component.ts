@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-category-navigation',
+  selector: 'app-navigation-header',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './navigation-header.component.html',
