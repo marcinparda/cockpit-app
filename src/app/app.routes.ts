@@ -31,17 +31,10 @@ export const routes: Routes = [
   },
   {
     path: 'payment-methods',
-    loadComponent: () =>
-      import('./components/payment-methods/payment-methods.component').then(
-        (m) => m.PaymentMethodsComponent
+    loadChildren: () =>
+      import('./features/payment-methods/payment-methods.routes').then(
+        (m) => m.PAYMENT_METHODS_ROUTES
       ),
-  },
-  {
-    path: 'payment-methods/create',
-    loadComponent: () =>
-      import(
-        './components/payment-methods/payment-method-create/payment-method-create.component'
-      ).then((c) => c.PaymentMethodCreateComponent),
   },
   {
     path: '**',

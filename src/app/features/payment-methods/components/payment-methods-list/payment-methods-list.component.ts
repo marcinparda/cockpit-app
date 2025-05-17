@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
-  selector: 'app-payment-methods',
-  templateUrl: './payment-methods.component.html',
+  selector: 'app-payment-methods-list',
+  templateUrl: './payment-methods-list.component.html',
+  styleUrls: ['./payment-methods-list.component.css'],
   standalone: true,
   imports: [CommonModule, RouterModule],
 })
-export class PaymentMethodsComponent implements OnInit {
+export class PaymentMethodsListComponent implements OnInit {
   paymentMethods: any[] = [];
   isLoading: boolean = false;
   error: string | null = null;

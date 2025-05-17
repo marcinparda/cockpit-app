@@ -1,0 +1,37 @@
+.payment-methods-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.payment-methods-table th,
+.payment-methods-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.payment-methods-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.error-message {
+  padding: 15px;
+  margin-bottom: 15px;
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+}
+
+.loading {
+  color: #565656;
+  margin: 20px 0;
+}
+
+.empty-state {
+  margin: 20px 0;
+  color: #666;
+  font-style: italic;
+}

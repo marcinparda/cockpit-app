@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../services/api.service';
+import { ApiService } from '../../../../services/api.service';
+import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 
 @Component({
   selector: 'app-payment-method-create',
   templateUrl: './payment-method-create.component.html',
+  styleUrls: ['./payment-method-create.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, NavigationHeaderComponent],
 })
 export class PaymentMethodCreateComponent {
   newPaymentMethod: any = {
