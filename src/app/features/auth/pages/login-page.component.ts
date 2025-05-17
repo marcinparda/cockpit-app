@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LoginCardComponent } from '../components/login/login-card/login-card.component';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login-page',

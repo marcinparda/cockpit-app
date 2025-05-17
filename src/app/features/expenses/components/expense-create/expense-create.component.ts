@@ -8,8 +8,8 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { ApiService } from '../../../../services/api.service';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
+import { ApiService } from '../../../api/api.service';
 
 interface Category {
   id: number;

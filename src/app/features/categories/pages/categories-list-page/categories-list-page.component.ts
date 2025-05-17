@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ApiService } from '../../../../services/api.service';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
+import { ApiService } from '../../../api/api.service';
 
 @Component({
   selector: 'app-categories-list-page',
