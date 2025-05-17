@@ -23,9 +23,9 @@
         <td>{{ expense.date }}</td>
         <td>{{ expense.category_id }}</td>
         <td>{{ expense.payment_method_id }}</td>
-        <td>{{ expense.description || "N/A" }}</td>
-        <td>{{ expense.created_at | date : "medium" }}</td>
-        <td>{{ expense.updated_at | date : "medium" }}</td>
+        <td>{{ expense.description || 'N/A' }}</td>
+        <td>{{ expense.created_at | date : 'medium' }}</td>
+        <td>{{ expense.updated_at | date : 'medium' }}</td>
       </tr>
     </tbody>
   </table>

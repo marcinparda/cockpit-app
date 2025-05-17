@@ -54,7 +54,7 @@ To configure environment-specific variables:
 ```typescript
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:3000/api", // Add your environment variables here
+  apiUrl: 'http://localhost:3000/api', // Add your environment variables here
 };
 ```
 

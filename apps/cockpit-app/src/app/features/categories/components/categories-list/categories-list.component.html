@@ -25,9 +25,9 @@
       <tr *ngFor="let category of categories">
         <td>{{ category.id }}</td>
         <td>{{ category.name }}</td>
-        <td>{{ category.parent_id || "N/A" }}</td>
-        <td>{{ category.created_at | date : "medium" }}</td>
-        <td>{{ category.updated_at | date : "medium" }}</td>
+        <td>{{ category.parent_id || 'N/A' }}</td>
+        <td>{{ category.created_at | date : 'medium' }}</td>
+        <td>{{ category.updated_at | date : 'medium' }}</td>
       </tr>
     </tbody>
   </table>
