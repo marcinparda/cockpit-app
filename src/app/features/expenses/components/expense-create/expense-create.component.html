@@ -1,13 +1,7 @@
 <div class="container">
   <h1>Create New Expense</h1>
 
-  <nav>
-    <ul>
-      <li><a routerLink="/expenses">Expenses</a></li>
-      <li><a routerLink="/categories">Categories</a></li>
-      <li><a routerLink="/payment-methods">Payment Methods</a></li>
-    </ul>
-  </nav>
+  <app-navigation-header></app-navigation-header>
 
   <div *ngIf="errorMessage" class="alert alert-danger">
     {{ errorMessage }}
@@ -142,7 +136,7 @@
       >
         {{ isSubmitting ? "Saving..." : "Save Expense" }}
       </button>
-      <button type="button" routerLink="/expanses">Cancel</button>
+      <button type="button" routerLink="/expenses">Cancel</button>
     </div>
   </form>
 </div>

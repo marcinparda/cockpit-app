@@ -8,7 +8,8 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { ApiService } from '../../../services/api.service';
+import { ApiService } from '../../../../services/api.service';
+import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 
 interface Category {
   id: number;
@@ -24,7 +25,13 @@ interface PaymentMethod {
 @Component({
   selector: 'app-expense-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, HttpClientModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    HttpClientModule,
+    NavigationHeaderComponent,
+  ],
   templateUrl: './expense-create.component.html',
   styleUrls: ['./expense-create.component.scss'],
 })

@@ -17,17 +17,10 @@ export const routes: Routes = [
   },
   {
     path: 'expenses',
-    loadComponent: () =>
-      import('./components/expenses/expenses.component').then(
-        (m) => m.ExpensesComponent
+    loadChildren: () =>
+      import('./features/expenses/expenses.routes').then(
+        (m) => m.EXPENSES_ROUTES
       ),
-  },
-  {
-    path: 'expenses/create',
-    loadComponent: () =>
-      import(
-        './components/expenses/expense-create/expense-create.component'
-      ).then((m) => m.ExpenseCreateComponent),
   },
   {
     path: 'categories',

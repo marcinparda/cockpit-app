@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
-  selector: 'app-expenses',
-  templateUrl: './expenses.component.html',
+  selector: 'app-expenses-list',
+  templateUrl: './expenses-list.component.html',
+  styleUrls: ['./expenses-list.component.css'],
   standalone: true,
   imports: [CommonModule, RouterModule],
 })
-export class ExpensesComponent implements OnInit {
+export class ExpensesListComponent implements OnInit {
   expenses: any[] = [];
   isLoading: boolean = false;
   error: string | null = null;
