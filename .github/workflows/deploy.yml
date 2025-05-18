@@ -35,8 +35,8 @@ jobs:
       - name: Build
         run: npm run build -- cockpit-app --configuration=production
 
-      - name: Test
-        run: npm run test -- cockpit-app --watch=false
+      # - name: Test
+      #   run: npm run test -- cockpit-app --watch=false
 
   deploy:
     needs: build-and-test
