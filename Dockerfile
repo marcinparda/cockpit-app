@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Handle angular environment files
-RUN cp src/environments/environment.production.ts src/environments/environment.ts
+RUN cp apps/cockpit-app/src/environments/environment.production.ts apps/cockpit-app/src/environments/environment.ts
 
 # Build the application
 RUN npm run build --configuration=production
