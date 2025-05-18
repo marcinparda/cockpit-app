@@ -24,8 +24,8 @@ jobs:
 
       - name: Create Angular environment files
         run: |
-          mkdir -p src/environments
-          cat > src/environments/environment.production.ts << EOL
+          mkdir -p apps/cockpit-app/src/environments
+          cat > apps/cockpit-app/src/environments/environment.production.ts << EOL
           export const environment = {
             production: true,
             apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
@@ -33,10 +33,10 @@ jobs:
           EOL
 
       - name: Build
-        run: npm run build
+        run: npm run build -- cockpit-app --configuration=production
 
       - name: Test
-        run: npm run test:ci
+        run: npm run test -- cockpit-app --watch=false --bail
 
   deploy:
     needs: build-and-test
