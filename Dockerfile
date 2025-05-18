@@ -1,6 +1,42 @@
 # Build stage
 FROM node:20-alpine AS build
 
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    gnupg2 \
+    fonts-liberation \
+    libappindicator3-1 \
+    libasound2 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libcups2 \
+    libx11-xcb1 \
+    libxcomposite1 \
+    libxrandr2 \
+    libxss1 \
+    libxcursor1 \
+    libxi6 \
+    libxtst6 \
+    libnss3 \
+    libxshmfence1 \
+    --no-install-recommends
+
+# Add Google Chrome’s official GPG key and repository
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+
+# Install Google Chrome
+RUN apt-get update && apt-get install -y google-chrome-stable --no-install-recommends
+
+# (Optional) Add a non-root user for running Chrome
+RUN useradd -m chromeuser
+USER chromeuser
+
+# Set environment variable for Chrome binary
+ENV CHROME_BIN=/usr/bin/google-chrome
+
 WORKDIR /app
 
 # Copy package.json and package-lock.json
