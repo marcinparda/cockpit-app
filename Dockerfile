@@ -14,8 +14,6 @@ COPY . .
 
 # Build the application - specify the project name
 RUN npm run build -- cockpit-app --configuration=production
-# Debug - list the output directory structure
-RUN ls -la dist/
 
 # Serve stage
 FROM nginx:alpine
