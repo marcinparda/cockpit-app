@@ -75,13 +75,15 @@ jobs:
             ssh-add ~/.ssh/github && \
             cd ~/cockpit-app && \
             git pull && \
-            mkdir -p src/environments && \
-            cat > src/environments/environment.production.ts << 'EOL'
-          export const environment = {
-            production: true,
-            apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
-          };
-          EOL
+            mkdir -p apps/cockpit-app/src/environments && \
+
+            # Create the environment file for cockpit-app production
+            cat > apps/cockpit-app/src/environments/environment.production.ts << 'EOL'
+            export const environment = {
+              production: true,
+              apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
+            };
+            EOL
             docker compose down && docker compose up -d --build"
 
         shell: bash
