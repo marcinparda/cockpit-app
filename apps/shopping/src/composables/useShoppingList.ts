@@ -28,11 +28,13 @@ export function useShoppingList() {
   const addShoppingItem = async () => {
     if (!newItemTitle.value.trim()) return;
 
+    const newItem = {
+      name: newItemTitle.value,
+    };
+
     try {
-      const newItem = await shoppingListService.addShoppingItem(
-        newItemTitle.value
-      );
-      shoppingItems.value.push(newItem);
+      const createdItem = await shoppingListService.addShoppingItem(newItem);
+      shoppingItems.value.push(createdItem);
       newItemTitle.value = '';
     } catch (error) {
       console.error('Failed to add shopping item:', error);
@@ -45,9 +47,13 @@ export function useShoppingList() {
     const item = shoppingItems.value.find((item) => item.id === id);
     if (item) {
       try {
-        const updatedItem = { ...item, completed: !item.completed };
-        await shoppingListService.updateShoppingItem(updatedItem);
-        item.completed = !item.completed;
+        const completed_at = item.is_closed ? null : new Date().toISOString();
+        await shoppingListService.updateShoppingItem(id, {
+          is_closed: !item.is_closed,
+          completed_at,
+        });
+        item.is_closed = !item.is_closed;
+        item.completed_at = completed_at;
       } catch (error) {
         console.error('Failed to update shopping item:', error);
         alert('Failed to update shopping item');
@@ -71,7 +77,7 @@ export function useShoppingList() {
   // Start editing a shopping item
   const startEditing = (item: ShoppingItem) => {
     editingItemId.value = item.id;
-    updateItemTitle.value = item.title;
+    updateItemTitle.value = item.name;
   };
 
   // Save edited shopping item
@@ -82,9 +88,10 @@ export function useShoppingList() {
       );
       if (item && updateItemTitle.value.trim()) {
         try {
-          const updatedItem = { ...item, title: updateItemTitle.value };
-          await shoppingListService.updateShoppingItem(updatedItem);
-          item.title = updateItemTitle.value;
+          await shoppingListService.updateShoppingItem(item.id, {
+            name: updateItemTitle.value,
+          });
+          item.name = updateItemTitle.value;
         } catch (error) {
           console.error('Failed to update shopping item:', error);
           alert('Failed to update shopping item');

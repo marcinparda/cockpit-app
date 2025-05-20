@@ -1,58 +1,106 @@
 import type { ShoppingItem } from '../types/ShoppingItem';
+import { environment } from '../environments/environment';
 
-// This is a mock service that simulates API calls
-// In a real application, you would replace these with actual API calls
-
-// Initial mock data
-const mockShoppingItems: ShoppingItem[] = [
-  { id: 1, title: 'Buy groceries', completed: false },
-  { id: 2, title: 'Clean the house', completed: true },
-];
+const API_URL = `${environment.apiUrl}/api/v1/shopping/items`;
 
 export const shoppingListService = {
-  // Get all shopping items
-  async getShoppingItems(): Promise<ShoppingItem[]> {
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    return [...mockShoppingItems];
-  },
-
-  // Add a new shopping item
-  async addShoppingItem(title: string): Promise<ShoppingItem> {
-    const newId =
-      mockShoppingItems.length > 0
-        ? Math.max(...mockShoppingItems.map((item) => item.id)) + 1
-        : 1;
-
-    const newItem: ShoppingItem = {
-      id: newId,
-      title,
-      completed: false,
-    };
-
-    mockShoppingItems.push(newItem);
-    return newItem;
-  },
-
-  // Update a shopping item
-  async updateShoppingItem(updatedItem: ShoppingItem): Promise<ShoppingItem> {
-    const index = mockShoppingItems.findIndex(
-      (item) => item.id === updatedItem.id
-    );
-    if (index !== -1) {
-      mockShoppingItems[index] = { ...updatedItem };
-      return mockShoppingItems[index];
+  async getShoppingItems(skip = 0, limit = 100): Promise<ShoppingItem[]> {
+    try {
+      const response = await fetch(`${API_URL}/?skip=${skip}&limit=${limit}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching shopping items:', error);
+      throw error;
     }
-    throw new Error('Shopping item not found');
   },
 
-  // Delete a shopping item
-  async deleteShoppingItem(id: number): Promise<void> {
-    const index = mockShoppingItems.findIndex((item) => item.id === id);
-    if (index !== -1) {
-      mockShoppingItems.splice(index, 1);
-      return;
+  async getShoppingItem(id: number): Promise<ShoppingItem> {
+    try {
+      const response = await fetch(`${API_URL}/${id}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error(`Error fetching shopping item with id ${id}:`, error);
+      throw error;
     }
-    throw new Error('Shopping item not found');
+  },
+
+  async addShoppingItem(item: {
+    name: string;
+    description?: string | null;
+    categories?: string | null;
+    shops?: string | null;
+  }): Promise<ShoppingItem> {
+    try {
+      const response = await fetch(`${API_URL}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(item),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error adding shopping item:', error);
+      throw error;
+    }
+  },
+
+  async updateShoppingItem(
+    id: number,
+    updates: {
+      name?: string | null;
+      description?: string | null;
+      is_closed?: boolean | null;
+      categories?: string | null;
+      shops?: string | null;
+      completed_at?: string | null;
+    }
+  ): Promise<ShoppingItem> {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updates),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error updating shopping item:', error);
+      throw error;
+    }
+  },
+
+  async deleteShoppingItem(id: number): Promise<ShoppingItem> {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error deleting shopping item:', error);
+      throw error;
+    }
   },
 };
