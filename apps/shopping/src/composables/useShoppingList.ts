@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import type { ShoppingItem } from '../types/ShoppingItem';
 import { shoppingListService } from '../services/shoppingListService';
 
@@ -11,6 +11,9 @@ export function useShoppingList() {
   const updateItemTitle = ref('');
   const editingItemId = ref<number | null>(null);
 
+  // Reference for the refresh interval
+  let refreshInterval: number | null = null;
+
   // Load shopping items
   const loadShoppingItems = async () => {
     try {
@@ -20,8 +23,23 @@ export function useShoppingList() {
     }
   };
 
-  // Call once on initialization
-  loadShoppingItems();
+  // Setup automatic refresh
+  onMounted(() => {
+    // Initial load
+    loadShoppingItems();
+
+    // Set up interval to refresh data every 5 seconds
+    refreshInterval = window.setInterval(() => {
+      loadShoppingItems();
+    }, 5000);
+  });
+
+  // Clean up interval when component unmounts
+  onUnmounted(() => {
+    if (refreshInterval !== null) {
+      clearInterval(refreshInterval);
+    }
+  });
 
   // Add a new shopping item
   const addShoppingItem = async () => {
