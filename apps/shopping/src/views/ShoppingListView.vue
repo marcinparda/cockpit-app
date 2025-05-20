@@ -46,10 +46,10 @@ const {
           />
           <span
             :style="{
-              textDecoration: item.completed ? 'line-through' : 'none',
+              textDecoration: item.is_closed ? 'line-through' : 'none',
             }"
           >
-            {{ item.title }}
+            {{ item.name }}
           </span>
           <button @click="startEditing(item)">Edit</button>
           <button @click="deleteShoppingItem(item.id)">Delete</button>

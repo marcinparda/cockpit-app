@@ -1,16 +1,16 @@
 import type { ShoppingItem } from '../types/ShoppingItem';
 import { environment } from '../environments/environment';
+import httpClient from './http.service'; // Import the HTTP client
 
 const API_URL = `${environment.apiUrl}/api/v1/shopping/items`;
 
 export const shoppingListService = {
   async getShoppingItems(skip = 0, limit = 100): Promise<ShoppingItem[]> {
     try {
-      const response = await fetch(`${API_URL}/?skip=${skip}&limit=${limit}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
+      const response = await httpClient.get(
+        `${API_URL}/?skip=${skip}&limit=${limit}`
+      );
+      return response.data;
     } catch (error) {
       console.error('Error fetching shopping items:', error);
       throw error;
@@ -19,11 +19,8 @@ export const shoppingListService = {
 
   async getShoppingItem(id: number): Promise<ShoppingItem> {
     try {
-      const response = await fetch(`${API_URL}/${id}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
+      const response = await httpClient.get(`${API_URL}/${id}`);
+      return response.data;
     } catch (error) {
       console.error(`Error fetching shopping item with id ${id}:`, error);
       throw error;
@@ -37,19 +34,8 @@ export const shoppingListService = {
     shops?: string | null;
   }): Promise<ShoppingItem> {
     try {
-      const response = await fetch(`${API_URL}/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(item),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
+      const response = await httpClient.post(`${API_URL}/`, item);
+      return response.data;
     } catch (error) {
       console.error('Error adding shopping item:', error);
       throw error;
@@ -68,19 +54,8 @@ export const shoppingListService = {
     }
   ): Promise<ShoppingItem> {
     try {
-      const response = await fetch(`${API_URL}/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updates),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
+      const response = await httpClient.put(`${API_URL}/${id}`, updates);
+      return response.data;
     } catch (error) {
       console.error('Error updating shopping item:', error);
       throw error;
@@ -89,15 +64,8 @@ export const shoppingListService = {
 
   async deleteShoppingItem(id: number): Promise<ShoppingItem> {
     try {
-      const response = await fetch(`${API_URL}/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
+      const response = await httpClient.delete(`${API_URL}/${id}`);
+      return response.data;
     } catch (error) {
       console.error('Error deleting shopping item:', error);
       throw error;

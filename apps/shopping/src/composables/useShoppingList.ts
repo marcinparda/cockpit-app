@@ -17,7 +17,6 @@ export function useShoppingList() {
       shoppingItems.value = await shoppingListService.getShoppingItems();
     } catch (error) {
       console.error('Failed to load shopping items:', error);
-      alert('Failed to load shopping items');
     }
   };
 
@@ -38,7 +37,6 @@ export function useShoppingList() {
       newItemTitle.value = '';
     } catch (error) {
       console.error('Failed to add shopping item:', error);
-      alert('Failed to add shopping item');
     }
   };
 
@@ -56,7 +54,6 @@ export function useShoppingList() {
         item.completed_at = completed_at;
       } catch (error) {
         console.error('Failed to update shopping item:', error);
-        alert('Failed to update shopping item');
       }
     }
   };
@@ -70,7 +67,6 @@ export function useShoppingList() {
       );
     } catch (error) {
       console.error('Failed to delete shopping item:', error);
-      alert('Failed to delete shopping item');
     }
   };
 
@@ -94,7 +90,6 @@ export function useShoppingList() {
           item.name = updateItemTitle.value;
         } catch (error) {
           console.error('Failed to update shopping item:', error);
-          alert('Failed to update shopping item');
         }
       }
       editingItemId.value = null;
