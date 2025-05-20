@@ -19,24 +19,29 @@ This workflow runs on:
 
 This job runs on Ubuntu and performs the following steps:
 
-- Checks out the repository code
+- Checks out the repository code using actions/checkout@v3
 - Sets up Node.js v20 with npm caching
 - Installs dependencies using `npm ci`
-- Creates environment configuration files
-- Builds the Angular application
-- Runs tests in CI mode
+- Creates Angular environment files with API URL configuration
+- Builds the Angular application with production configuration
+- Note: Testing is currently disabled in the workflow
 
 ### 2. Deploy
 
 This job runs after successful build and test and handles deployment:
 
-- Sets up Cloudflared for secure tunnel access
+- Checks out the repository code using actions/checkout@v2
+- Sets up Cloudflared for secure tunnel access by:
+  - Adding Cloudflare package repository
+  - Installing cloudflared package
 - Configures SSH with the following components:
   - Private SSH key for Raspberry Pi access
   - Known hosts configuration
   - SSH config for Cloudflare tunnel connection
 - Deploys to the Raspberry Pi server by:
-  - Pulling the latest code
+  - Connecting through Cloudflare tunnel
+  - Pulling the latest code on the server
+  - Creating environment configuration files
   - Rebuilding and restarting Docker containers
 
 ## Required Secrets
@@ -56,3 +61,4 @@ The following secrets must be configured in your GitHub repository:
 - The SSH connection uses verbose logging (`-vvv`) to help with debugging connection issues
 - Check the GitHub Actions logs for detailed deployment information
 - Ensure all secrets are properly configured before running the workflow
+- The StrictHostKeyChecking option is set to "no" for the deployment SSH connection
