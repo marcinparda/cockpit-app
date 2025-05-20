@@ -76,10 +76,10 @@ jobs:
             cd ~/cockpit-app && \
             git pull && \
             mkdir -p apps/cockpit-app/src/environments && \
-            cat > apps/cockpit-app/src/environments/environment.production.ts << 'EOL'
+            cat > apps/cockpit-app/src/environments/environment.ts << 'EOL'
           export const environment = {
             production: true,
-            apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
+            apiUrl: '${{ secrets.API_URL || 'http://localhost:8003' }}',
           };
           EOL
             docker compose down && docker compose up -d --build"
