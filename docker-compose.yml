@@ -9,3 +9,14 @@ services:
     environment:
       - NODE_ENV=production
     restart: unless-stopped
+
+  shopping:
+    build:
+      context: .
+      dockerfile: apps/shopping/Dockerfile
+    container_name: shopping
+    ports:
+      - '4201:80'
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
