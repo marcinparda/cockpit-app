@@ -75,13 +75,6 @@ jobs:
             ssh-add ~/.ssh/github && \
             cd ~/ai-budget && \
             git pull && \
-            mkdir -p apps/ai-budget/src/environments && \
-            cat > apps/ai-budget/src/environments/environment.ts << 'EOL'
-          export const environment = {
-            production: true,
-            apiUrl: '${{ secrets.API_URL || 'http://localhost:8003' }}',
-          };
-          EOL
             docker compose down && docker compose up -d --build"
 
         shell: bash
