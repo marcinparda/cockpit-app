@@ -2,8 +2,8 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: apps/cockpit-app/Dockerfile
-    container_name: cockpit-app
+      dockerfile: apps/ai-budget/Dockerfile
+    container_name: ai-budget
     ports:
       - '4200:80'
     environment:

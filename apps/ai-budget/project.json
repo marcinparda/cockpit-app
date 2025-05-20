@@ -1,24 +1,24 @@
 {
-  "name": "cockpit-app",
+  "name": "ai-budget",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "generators": {},
-  "sourceRoot": "apps/cockpit-app/src",
+  "sourceRoot": "apps/ai-budget/src",
   "prefix": "app",
+  "generators": {},
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "options": {
-        "outputPath": "dist/apps/cockpit-app",
-        "index": "apps/cockpit-app/src/index.html",
-        "main": "apps/cockpit-app/src/main.ts",
+        "outputPath": "dist/apps/ai-budget",
+        "index": "apps/ai-budget/src/index.html",
+        "main": "apps/ai-budget/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/cockpit-app/tsconfig.app.json",
+        "tsConfig": "apps/ai-budget/tsconfig.app.json",
         "assets": [
-          "apps/cockpit-app/src/favicon.ico",
-          "apps/cockpit-app/src/assets"
+          "apps/ai-budget/src/favicon.ico",
+          "apps/ai-budget/src/assets"
         ],
-        "styles": ["apps/cockpit-app/src/styles.css"],
+        "styles": ["apps/ai-budget/src/styles.css"],
         "scripts": []
       },
       "configurations": {
@@ -52,10 +52,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "cockpit-app:build:production"
+          "buildTarget": "ai-budget:build:production"
         },
         "development": {
-          "buildTarget": "cockpit-app:build:development"
+          "buildTarget": "ai-budget:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -63,19 +63,19 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "cockpit-app:build"
+        "buildTarget": "ai-budget:build"
       }
     },
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
         "polyfills": ["zone.js", "zone.js/testing"],
-        "tsConfig": "apps/cockpit-app/tsconfig.spec.json",
+        "tsConfig": "apps/ai-budget/tsconfig.spec.json",
         "assets": [
-          "apps/cockpit-app/src/favicon.ico",
-          "apps/cockpit-app/src/assets"
+          "apps/ai-budget/src/favicon.ico",
+          "apps/ai-budget/src/assets"
         ],
-        "styles": ["apps/cockpit-app/src/styles.css"],
+        "styles": ["apps/ai-budget/src/styles.css"],
         "scripts": []
       }
     }

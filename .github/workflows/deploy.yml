@@ -24,8 +24,8 @@ jobs:
 
       - name: Create Angular environment files
         run: |
-          mkdir -p apps/cockpit-app/src/environments
-          cat > apps/cockpit-app/src/environments/environment.production.ts << EOL
+          mkdir -p apps/ai-budget/src/environments
+          cat > apps/ai-budget/src/environments/environment.production.ts << EOL
           export const environment = {
             production: true,
             apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
@@ -33,10 +33,10 @@ jobs:
           EOL
 
       - name: Build
-        run: npm run build -- cockpit-app --configuration=production
+        run: npm run build -- ai-budget --configuration=production
 
       # - name: Test
-      #   run: npm run test -- cockpit-app --watch=false
+      #   run: npm run test -- ai-budget --watch=false
 
   deploy:
     needs: build-and-test
@@ -73,10 +73,10 @@ jobs:
           ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "\
             eval \"\$(ssh-agent -s)\" && \
             ssh-add ~/.ssh/github && \
-            cd ~/cockpit-app && \
+            cd ~/ai-budget && \
             git pull && \
-            mkdir -p apps/cockpit-app/src/environments && \
-            cat > apps/cockpit-app/src/environments/environment.ts << 'EOL'
+            mkdir -p apps/ai-budget/src/environments && \
+            cat > apps/ai-budget/src/environments/environment.ts << 'EOL'
           export const environment = {
             production: true,
             apiUrl: '${{ secrets.API_URL || 'http://localhost:8003' }}',

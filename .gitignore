@@ -44,8 +44,7 @@ testem.log
 Thumbs.db
 
 # Environment files
-/apps/cockpit-app/src/environments/environment.development.ts
-/apps/cockpit-app/src/environments/environment.production.ts
+/apps/ai-budget/src/environments/environment.*.ts
 
 
 .nx/cache
