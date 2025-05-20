@@ -14,6 +14,7 @@ RUN npx nx build cockpit-app --configuration=production
 FROM nginx:alpine
 
 COPY --from=build /app/dist/apps/cockpit-app /usr/share/nginx/html
+COPY apps/cockpit-app/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
