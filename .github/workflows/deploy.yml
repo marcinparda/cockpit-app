@@ -84,6 +84,8 @@ jobs:
               apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
             };
             EOL
+
+            # Build all apps
             docker compose down && docker compose up -d --build"
 
         shell: bash
