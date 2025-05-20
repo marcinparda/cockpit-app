@@ -76,8 +76,6 @@ jobs:
             cd ~/cockpit-app && \
             git pull && \
             mkdir -p apps/cockpit-app/src/environments && \
-
-            # Create the environment file for cockpit-app production
             cat > apps/cockpit-app/src/environments/environment.production.ts << 'EOL'
             export const environment = {
               production: true,
