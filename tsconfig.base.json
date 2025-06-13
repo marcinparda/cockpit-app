@@ -19,7 +19,9 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
-    "paths": {},
+    "paths": {
+      "@cockpit-app/shared/vue-ui": ["libs/shared/vue-ui/src/index.ts"]
+    },
     "rootDir": "."
   },
   "angularCompilerOptions": {

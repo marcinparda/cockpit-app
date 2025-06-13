@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Button, InputText, Checkbox } from '@cockpit-app/shared/vue-ui';
 import { useShoppingList } from '../composables/useShoppingList';
 
 const {
@@ -18,31 +19,26 @@ const {
   <div>
     <h1>Shopping List</h1>
 
-    <!-- Create new shopping item -->
     <div>
-      <input
+      <InputText
         v-model="newItemTitle"
         placeholder="Add a new item"
         @keyup.enter="addShoppingItem"
       />
-      <button @click="addShoppingItem">Add to list</button>
+      <Button @click="addShoppingItem"> Add to list </Button>
     </div>
 
-    <!-- List shopping items -->
     <ul>
       <li v-for="item in shoppingItems" :key="item.id">
-        <!-- Edit mode -->
         <div v-if="editingItemId === item.id">
-          <input v-model="updateItemTitle" @keyup.enter="saveItemUpdate" />
-          <button @click="saveItemUpdate">Save</button>
+          <InputText v-model="updateItemTitle" @keyup.enter="saveItemUpdate" />
+          <Button @click="saveItemUpdate"> Save </Button>
         </div>
 
-        <!-- Display mode -->
         <div v-else>
-          <input
-            type="checkbox"
-            :checked="item.completed"
-            @change="toggleShoppingItem(item.id)"
+          <Checkbox
+            :model-value="item.is_closed"
+            @update:model-value="() => toggleShoppingItem(item.id)"
           />
           <span
             :style="{
@@ -51,8 +47,8 @@ const {
           >
             {{ item.name }}
           </span>
-          <button @click="startEditing(item)">Edit</button>
-          <button @click="deleteShoppingItem(item.id)">Delete</button>
+          <Button @click="startEditing(item)"> Edit </Button>
+          <Button @click="deleteShoppingItem(item.id)"> Delete </Button>
         </div>
       </li>
     </ul>

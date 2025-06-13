@@ -1,25 +1,16 @@
-<template>
-  <button @click="logout">Logout</button>
-</template>
-
-<script>
-import { defineComponent } from 'vue';
+<script setup>
 import { useRouter } from 'vue-router';
 import { authService } from '../services/auth.service';
+import { Button } from '@cockpit-app/shared/vue-ui';
 
-export default defineComponent({
-  name: 'LogoutButton',
-  setup() {
-    const router = useRouter();
+const router = useRouter();
 
-    const logout = () => {
-      authService.logout();
-      router.push('/login');
-    };
-
-    return {
-      logout,
-    };
-  },
-});
+const logout = () => {
+  authService.logout();
+  router.push('/login');
+};
 </script>
+
+<template>
+  <Button @click="logout"> Logout </Button>
+</template>
