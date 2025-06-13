@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import { authService } from '../services/auth.service';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import Card from 'primevue/card';
 
 const apiKey = ref('');
 const errorMessage = ref('');
@@ -20,24 +21,26 @@ const handleLogin = () => {
 </script>
 
 <template>
-  <div>
-    <div>
-      <form @submit.prevent="handleLogin">
-        <div>
-          <label for="apiKey">API Key</label>
-          <InputText
-            id="apiKey"
-            v-model="apiKey"
-            type="text"
-            placeholder="Enter your API Key"
-            required
-          />
-        </div>
-        <Button type="submit" label="Login" style="width: 100%" />
-        <p v-if="errorMessage" style="text-align: center">
-          {{ errorMessage }}
-        </p>
-      </form>
-    </div>
+  <div class="pt-12 max-w-xl mx-auto">
+    <Card>
+      <template #title>
+        <div class="pb-6">Login Form</div>
+      </template>
+      <template #content>
+        <form @submit.prevent="handleLogin">
+          <div class="flex flex-col pb-8">
+            <label for="apiKey" class="pb-1"
+              >Enter your API Key to log in</label
+            >
+            <InputText
+              id="apiKey"
+              v-model="apiKey"
+              aria-describedby="apiKey-help"
+            />
+          </div>
+          <Button type="submit" label="Login" class="w-full" />
+        </form>
+      </template>
+    </Card>
   </div>
 </template>

@@ -12,5 +12,5 @@ const logout = () => {
 </script>
 
 <template>
-  <Button @click="logout"> Logout </Button>
+  <Button label="Logout" class="p-button-text" @click="logout" />
 </template>

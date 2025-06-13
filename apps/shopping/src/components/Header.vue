@@ -6,7 +6,7 @@
       </RouterLink>
     </template>
     <template #end>
-      <span class="p-menubar-title">Shopping App</span>
+      <LogoutButton />
     </template>
   </Menubar>
 </template>
@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import Menubar from 'primevue/menubar';
+import LogoutButton from './LogoutButton.vue';
 
 type MenuItem = {
   label: string;
