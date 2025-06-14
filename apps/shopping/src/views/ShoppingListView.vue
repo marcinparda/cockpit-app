@@ -17,8 +17,6 @@ const {
 
 <template>
   <div>
-    <h1>Shopping List</h1>
-
     <div>
       <InputText
         v-model="newItemTitle"
@@ -36,17 +34,22 @@ const {
         </div>
 
         <div v-else>
-          <Checkbox
-            :model-value="item.is_closed"
-            @update:model-value="() => toggleShoppingItem(item.id)"
-          />
-          <span
-            :style="{
-              textDecoration: item.is_closed ? 'line-through' : 'none',
-            }"
-          >
-            {{ item.name }}
-          </span>
+          <div class="flex items-center gap-2">
+            <Checkbox
+              v-model="item.is_closed"
+              binary
+              size="large"
+              @change="toggleShoppingItem(item)"
+            />
+            <label>
+              <span
+                :style="{
+                  textDecoration: item.is_closed ? 'line-through' : 'none',
+                }"
+                >{{ item.name }}
+              </span>
+            </label>
+          </div>
           <Button @click="startEditing(item)"> Edit </Button>
           <Button @click="deleteShoppingItem(item.id)"> Delete </Button>
         </div>

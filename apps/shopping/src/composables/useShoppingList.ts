@@ -59,16 +59,14 @@ export function useShoppingList() {
   };
 
   // Toggle a shopping item's completion status
-  const toggleShoppingItem = async (id: number) => {
-    const item = shoppingItems.value.find((item) => item.id === id);
+  const toggleShoppingItem = async (item: ShoppingItem) => {
     if (item) {
       try {
-        const completed_at = item.is_closed ? null : new Date().toISOString();
-        await shoppingListService.updateShoppingItem(id, {
-          is_closed: !item.is_closed,
+        const completed_at = !item.is_closed ? null : new Date().toISOString();
+        await shoppingListService.updateShoppingItem(item.id, {
+          is_closed: item.is_closed,
           completed_at,
         });
-        item.is_closed = !item.is_closed;
         item.completed_at = completed_at;
       } catch (error) {
         console.error('Failed to update shopping item:', error);
