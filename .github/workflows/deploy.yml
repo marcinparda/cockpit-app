@@ -73,7 +73,7 @@ jobs:
           ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "\
             eval \"\$(ssh-agent -s)\" && \
             ssh-add ~/.ssh/github && \
-            cd ~/ai-budget && \
+            cd ~/cockpit-app && \
             git pull && \
             docker compose down && docker compose up -d --build"
 
