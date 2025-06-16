@@ -23,7 +23,7 @@ FROM nginx:alpine
 COPY --from=build /app/dist/apps/shopping /usr/share/nginx/html
 
 # Copy nginx configuration
-# COPY apps/shopping/nginx.conf /etc/nginx/conf.d/default.conf
+COPY apps/shopping/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Expose port
 EXPOSE 80
