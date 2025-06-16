@@ -5,10 +5,7 @@ import { shoppingListService } from '../services/shoppingListService';
 export function useShoppingList() {
   // State for shopping items
   const shoppingItems = ref<ShoppingItem[]>([]);
-
-  // State for new shopping item input and editing
-  const newItemTitle = ref('');
-  const editingItemNewTitle = ref('');
+  // State for currently edited item id
   const editingItemId = ref<number | null>(null);
 
   // Reference for the refresh interval
@@ -42,17 +39,16 @@ export function useShoppingList() {
   });
 
   // Add a new shopping item
-  const addShoppingItem = async () => {
-    if (!newItemTitle.value.trim()) return;
+  const addShoppingItem = async (title: string) => {
+    if (!title.trim()) return;
 
     const newItem = {
-      name: newItemTitle.value,
+      name: title,
     };
 
     try {
       const createdItem = await shoppingListService.addShoppingItem(newItem);
       shoppingItems.value = [...shoppingItems.value, createdItem];
-      newItemTitle.value = '';
     } catch (error) {
       console.error('Failed to add shopping item:', error);
     }
@@ -99,20 +95,22 @@ export function useShoppingList() {
   // Start editing a shopping item
   const startEditing = (item: ShoppingItem) => {
     editingItemId.value = item.id;
-    editingItemNewTitle.value = item.name;
+  };
+
+  const cancelEditedItem = () => {
+    editingItemId.value = null;
   };
 
   // Save edited shopping item
-  const saveEditedItem = async () => {
-    if (editingItemId.value !== null) {
+  const saveEditedItem = async (newTitle: string) => {
+    if (editingItemId.value !== null && newTitle.trim()) {
       const item = shoppingItems.value.find(
         (item) => item.id === editingItemId.value
       );
-
-      if (item && editingItemNewTitle.value.trim()) {
+      if (item) {
         try {
           await shoppingListService.updateShoppingItem(item.id, {
-            name: editingItemNewTitle.value,
+            name: newTitle,
           });
 
           // Create a new array with the updated item
@@ -120,7 +118,7 @@ export function useShoppingList() {
             shoppingItem.id === item.id
               ? {
                   ...shoppingItem,
-                  name: editingItemNewTitle.value,
+                  name: newTitle,
                 }
               : shoppingItem
           );
@@ -130,19 +128,17 @@ export function useShoppingList() {
         }
       }
       editingItemId.value = null;
-      editingItemNewTitle.value = '';
     }
   };
 
   return {
     shoppingItems,
-    newItemTitle,
-    editingItemNewTitle,
     editingItemId,
     addShoppingItem,
     toggleShoppingItem,
     deleteShoppingItem,
     startEditing,
-    saveItemUpdate: saveEditedItem,
+    cancelEditedItem,
+    saveEditedItem,
   };
 }
