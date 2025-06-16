@@ -6,16 +6,16 @@ import { computed } from 'vue';
 const props = defineProps<{
   item: ShoppingItemType;
   editingItemId: number | null;
-  updateItemTitle: string;
 }>();
 
 const emit = defineEmits<{
   (e: 'start-editing', item: ShoppingItemType): void;
   (e: 'save-item-update'): void;
-  (e: 'toggle-shopping-item', item: ShoppingItemType): void;
+  (e: 'toggle-shopping-item', item: ShoppingItemType, value: boolean): void;
   (e: 'delete-shopping-item', id: number): void;
-  (e: 'update:updateItemTitle', value: string): void; // added for v-model workaround
 }>();
+
+const editingItemNewTitle = defineModel<string>('editingItemNewTitle');
 
 const isEditing = computed(() => props.editingItemId === props.item.id);
 </script>
@@ -24,19 +24,18 @@ const isEditing = computed(() => props.editingItemId === props.item.id);
   <li>
     <div v-if="isEditing">
       <InputText
-        :model-value="updateItemTitle"
-        @update:model-value="$emit('update:updateItemTitle', $event)"
-        @keyup.enter="$emit('save-item-update')"
+        v-model="editingItemNewTitle"
+        @keyup.enter="emit('save-item-update')"
       />
-      <Button @click="$emit('save-item-update')"> Save </Button>
+      <Button @click="emit('save-item-update')"> Save </Button>
     </div>
     <div v-else>
       <div class="flex items-center gap-2">
         <Checkbox
-          v-model="item.is_closed"
+          :model-value="item.is_closed"
           binary
           size="large"
-          @change="$emit('toggle-shopping-item', item)"
+          @update:model-value="(val) => emit('toggle-shopping-item', item, val)"
         />
         <label>
           <span
@@ -47,8 +46,8 @@ const isEditing = computed(() => props.editingItemId === props.item.id);
           >
         </label>
       </div>
-      <Button @click="$emit('start-editing', item)"> Edit </Button>
-      <Button @click="$emit('delete-shopping-item', item.id)"> Delete </Button>
+      <Button @click="emit('start-editing', item)"> Edit </Button>
+      <Button @click="emit('delete-shopping-item', item.id)"> Delete </Button>
     </div>
   </li>
 </template>

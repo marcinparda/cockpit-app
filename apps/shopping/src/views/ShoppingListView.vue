@@ -3,8 +3,17 @@ import { InputText, Button } from '@cockpit-app/shared/vue-ui';
 import { useShoppingList } from '../composables/useShoppingList';
 import ShoppingList from '../components/ShoppingList.vue';
 
-const { shoppingItems, newItemTitle, addShoppingItem, ...shoppingListMethods } =
-  useShoppingList();
+const {
+  shoppingItems,
+  newItemTitle,
+  addShoppingItem,
+  editingItemId,
+  editingItemNewTitle,
+  startEditing,
+  saveItemUpdate,
+  toggleShoppingItem,
+  deleteShoppingItem,
+} = useShoppingList();
 </script>
 
 <template>
@@ -17,6 +26,14 @@ const { shoppingItems, newItemTitle, addShoppingItem, ...shoppingListMethods } =
       />
       <Button @click="addShoppingItem"> Add to list </Button>
     </div>
-    <ShoppingList :items="shoppingItems" v-bind="shoppingListMethods" />
+    <ShoppingList
+      v-model="editingItemNewTitle"
+      :items="shoppingItems"
+      :editing-item-id="editingItemId"
+      :start-editing="startEditing"
+      :save-item-update="saveItemUpdate"
+      :toggle-shopping-item="toggleShoppingItem"
+      :delete-shopping-item="deleteShoppingItem"
+    />
   </div>
 </template>

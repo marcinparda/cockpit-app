@@ -8,7 +8,7 @@ export function useShoppingList() {
 
   // State for new shopping item input and editing
   const newItemTitle = ref('');
-  const updateItemTitle = ref('');
+  const editingItemNewTitle = ref('');
   const editingItemId = ref<number | null>(null);
 
   // Reference for the refresh interval
@@ -51,23 +51,33 @@ export function useShoppingList() {
 
     try {
       const createdItem = await shoppingListService.addShoppingItem(newItem);
-      shoppingItems.value.push(createdItem);
+      shoppingItems.value = [...shoppingItems.value, createdItem];
       newItemTitle.value = '';
     } catch (error) {
       console.error('Failed to add shopping item:', error);
     }
   };
 
-  // Toggle a shopping item's completion status
-  const toggleShoppingItem = async (item: ShoppingItem) => {
+  const toggleShoppingItem = async (id: number, value: boolean) => {
+    const item = shoppingItems.value.find((item) => item.id === id);
     if (item) {
       try {
-        const completed_at = !item.is_closed ? null : new Date().toISOString();
-        await shoppingListService.updateShoppingItem(item.id, {
-          is_closed: item.is_closed,
-          completed_at,
+        await shoppingListService.updateShoppingItem(id, {
+          is_closed: value,
+          completed_at: value ? new Date().toISOString() : null,
         });
-        item.completed_at = completed_at;
+
+        // Create a new array with the updated item
+        const updatedItems = shoppingItems.value.map((i) =>
+          i.id === id
+            ? {
+                ...i,
+                is_closed: value,
+                completed_at: value ? new Date().toISOString() : null,
+              }
+            : i
+        );
+        shoppingItems.value = updatedItems;
       } catch (error) {
         console.error('Failed to update shopping item:', error);
       }
@@ -89,39 +99,50 @@ export function useShoppingList() {
   // Start editing a shopping item
   const startEditing = (item: ShoppingItem) => {
     editingItemId.value = item.id;
-    updateItemTitle.value = item.name;
+    editingItemNewTitle.value = item.name;
   };
 
   // Save edited shopping item
-  const saveItemUpdate = async () => {
+  const saveEditedItem = async () => {
     if (editingItemId.value !== null) {
       const item = shoppingItems.value.find(
         (item) => item.id === editingItemId.value
       );
-      if (item && updateItemTitle.value.trim()) {
+
+      if (item && editingItemNewTitle.value.trim()) {
         try {
           await shoppingListService.updateShoppingItem(item.id, {
-            name: updateItemTitle.value,
+            name: editingItemNewTitle.value,
           });
-          item.name = updateItemTitle.value;
+
+          // Create a new array with the updated item
+          const updatedItems = shoppingItems.value.map((shoppingItem) =>
+            shoppingItem.id === item.id
+              ? {
+                  ...shoppingItem,
+                  name: editingItemNewTitle.value,
+                }
+              : shoppingItem
+          );
+          shoppingItems.value = updatedItems;
         } catch (error) {
           console.error('Failed to update shopping item:', error);
         }
       }
       editingItemId.value = null;
-      updateItemTitle.value = '';
+      editingItemNewTitle.value = '';
     }
   };
 
   return {
     shoppingItems,
     newItemTitle,
-    updateItemTitle,
+    editingItemNewTitle,
     editingItemId,
     addShoppingItem,
     toggleShoppingItem,
     deleteShoppingItem,
     startEditing,
-    saveItemUpdate,
+    saveItemUpdate: saveEditedItem,
   };
 }
