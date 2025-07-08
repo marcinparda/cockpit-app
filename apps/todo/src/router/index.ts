@@ -13,6 +13,15 @@ const router = createRouter({
       name: 'todoList',
       component: () => import('../views/TodoListView.vue'),
     },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: () => import('../views/ProjectsView.vue'),
+    },
+    {
+      path: '/:catchAll(.*)',
+      redirect: '/list',
+    },
   ],
 });
 
