@@ -39,11 +39,12 @@ export function useTodoList() {
   });
 
   // Add a new todo item
-  const addTodoItem = async (title: string) => {
+  const addTodoItem = async (title: string, projectId: number | null) => {
     if (!title.trim()) return;
 
-    const newItem = {
+    const newItem: Partial<TodoItem> = {
       name: title,
+      project_id: projectId,
     };
 
     try {

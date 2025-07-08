@@ -30,11 +30,6 @@ const fetchProjects = async () => {
             command: () =>
               router.push({ path: '/list', query: { project: p.name } }),
           })),
-          {
-            label: '+ New project',
-            command: () =>
-              router.push({ path: '/list', query: { project: 'new' } }),
-          },
         ],
       },
     ];
@@ -47,11 +42,6 @@ const fetchProjects = async () => {
             label: 'All',
             command: () =>
               router.push({ path: '/list', query: { project: 'All' } }),
-          },
-          {
-            label: '+ New project',
-            command: () =>
-              router.push({ path: '/list', query: { project: 'new' } }),
           },
         ],
       },
