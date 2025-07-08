@@ -14,16 +14,16 @@ RUN npm ci
 COPY . .
 
 # Build the application
-RUN npm run build -- --project=shopping --configuration=production
+RUN npm run build -- --project=todo --configuration=production
 
 # Production image
 FROM nginx:alpine
 
 # Copy built assets from the build stage
-COPY --from=build /app/dist/apps/shopping /usr/share/nginx/html
+COPY --from=build /app/dist/apps/todo /usr/share/nginx/html
 
 # Copy nginx configuration
-COPY apps/shopping/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY apps/todo/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Expose port
 EXPOSE 80

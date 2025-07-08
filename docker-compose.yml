@@ -10,11 +10,11 @@ services:
       - NODE_ENV=production
     restart: unless-stopped
 
-  shopping:
+  todo:
     build:
       context: .
-      dockerfile: apps/shopping/Dockerfile
-    container_name: shopping
+      dockerfile: apps/todo/Dockerfile
+    container_name: todo
     ports:
       - '4201:80'
     environment:
