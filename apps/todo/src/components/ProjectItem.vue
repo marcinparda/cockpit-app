@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { Button, InputText } from '@cockpit-app/shared/vue-ui';
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 import { todoProjectsService } from '../services/todoProjectsService';
 
 const props = defineProps<{
   id: number;
   name: string;
 }>();
+
+const emit = defineEmits(['update', 'delete', 'refresh']);
 
 const isEditing = ref(false);
 const newProjectName = ref('');
@@ -23,16 +25,20 @@ function handleCancelEdit() {
 
 async function handleSaveNewProjectName() {
   if (newProjectName.value.trim()) {
+    emit('update', { id: props.id, name: newProjectName.value });
     await todoProjectsService.updateTodoProject(props.id, {
       name: newProjectName.value,
     });
     newProjectName.value = '';
     isEditing.value = false;
+    emit('refresh');
   }
 }
 
 async function handleDeleteProject() {
+  emit('delete', props.id);
   await todoProjectsService.deleteTodoProject(props.id);
+  emit('refresh');
 }
 </script>
 

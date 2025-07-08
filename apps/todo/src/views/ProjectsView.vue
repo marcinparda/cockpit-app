@@ -19,6 +19,19 @@ const handleAddProject = async () => {
   fetchProjects();
 };
 
+const handleProjectUpdate = (updated: { id: number; name: string }) => {
+  // Optimistic update
+  const idx = projects.value.findIndex((p) => p.id === updated.id);
+  if (idx !== -1) {
+    projects.value[idx] = { ...projects.value[idx], name: updated.name };
+  }
+};
+
+const handleProjectDelete = (id: number) => {
+  // Optimistic removal
+  projects.value = projects.value.filter((p) => p.id !== id);
+};
+
 onMounted(fetchProjects);
 </script>
 
@@ -36,7 +49,13 @@ onMounted(fetchProjects);
       </div>
 
       <template v-for="(project, idx) in projects" :key="project.id">
-        <ProjectItem :id="project.id" :name="project.name" />
+        <ProjectItem
+          :id="project.id"
+          :name="project.name"
+          @update="handleProjectUpdate"
+          @delete="handleProjectDelete"
+          @refresh="fetchProjects"
+        />
         <Divider v-if="idx < projects.length - 1" class="my-2" />
       </template>
     </div>
