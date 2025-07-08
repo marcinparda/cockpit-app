@@ -9,7 +9,7 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue'),
     },
     {
-      path: '/',
+      path: '/list',
       name: 'todoList',
       component: () => import('../views/TodoListView.vue'),
     },
