@@ -36,7 +36,7 @@ onMounted(fetchProjects);
 </script>
 
 <template>
-  <div class="flex flex-col md:flex-row h-screen">
+  <div class="flex flex-col md:flex-row h-screen justify-center">
     <div class="max-w-2xl flex-1 py-6 px-4">
       <div class="flex items-center gap-2 mb-4">
         <InputText
