@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     root: __dirname,
-    cacheDir: '../../node_modules/.vite/apps/shopping',
+    cacheDir: '../../node_modules/.vite/apps/todo',
     server: {
       port: 4201,
       host: 'localhost',
@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [vue(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
     build: {
-      outDir: '../../dist/apps/shopping',
+      outDir: '../../dist/apps/todo',
       emptyOutDir: true,
       reportCompressedSize: true,
       commonjsOptions: {
@@ -35,7 +35,7 @@ export default defineConfig(({ mode }) => {
       include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
       reporters: ['default'],
       coverage: {
-        reportsDirectory: '../../coverage/apps/shopping',
+        reportsDirectory: '../../coverage/apps/todo',
         provider: 'v8' as const,
       },
     },
