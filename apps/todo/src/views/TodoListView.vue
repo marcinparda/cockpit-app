@@ -46,8 +46,14 @@ const fetchProjects = async () => {
 
 const openAddDialog = async () => {
   await fetchProjects();
+  // Preselect project if query param is set and not 'All'
+  const projectName = projectParam.value;
+  let preselected = null;
+  if (projectName && projectName !== 'All') {
+    preselected = allProjects.value.find((p) => p.name === projectName) || null;
+  }
+  addForm.value = { name: '', project: preselected };
   showAddDialog.value = true;
-  resetAddForm();
 };
 
 const resetAddForm = () => {
@@ -81,16 +87,6 @@ const filteredItems = computed(() => {
 const handleAddItem = async () => {
   if (!addForm.value.name.trim()) return;
   addDialogLoading.value = true;
-  // Optimistic update
-  const optimisticItem = {
-    id: Date.now(),
-    name: addForm.value.name,
-    project: addForm.value.project,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    is_closed: false,
-  };
-  todoItems.value.unshift(optimisticItem as any);
   showAddDialog.value = false;
   const projectId = addForm.value.project?.id || null;
   try {
@@ -153,12 +149,7 @@ const handleAddItem = async () => {
                 @click="handleAddDialogHide"
                 >Cancel</Button
               >
-              <Button
-                type="submit"
-                :loading="addDialogLoading"
-                @click="handleAddItem"
-                >Create</Button
-              >
+              <Button type="submit" :loading="addDialogLoading">Create</Button>
             </div>
           </div>
         </form>

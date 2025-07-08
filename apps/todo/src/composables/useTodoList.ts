@@ -49,7 +49,9 @@ export function useTodoList() {
 
     try {
       const createdItem = await todoItemsService.addTodoItem(newItem);
-      todoItems.value = [...todoItems.value, createdItem];
+      todoItems.value = [...todoItems.value, createdItem].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
     } catch (error) {
       console.error('Failed to add todo item:', error);
     }
