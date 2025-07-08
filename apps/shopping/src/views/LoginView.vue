@@ -13,7 +13,7 @@ const router = useRouter();
 const handleLogin = () => {
   if (apiKey.value.trim()) {
     authService.setApiKey(apiKey.value.trim());
-    router.push('/shopping-list');
+    router.push('/todo-list');
   } else {
     errorMessage.value = 'API Key is required';
   }

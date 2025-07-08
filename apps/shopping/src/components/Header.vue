@@ -23,8 +23,8 @@ type MenuItem = {
 
 const items: MenuItem[] = [
   {
-    label: 'Shopping List',
-    to: '/shopping-list',
+    label: 'Todo List',
+    to: '/todo-list',
   },
 ];
 </script>

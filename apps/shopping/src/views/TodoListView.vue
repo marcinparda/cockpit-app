@@ -1,30 +1,30 @@
 <script setup lang="ts">
 import { InputText, Button } from '@cockpit-app/shared/vue-ui';
 import { ref } from 'vue';
-import { useShoppingList } from '../composables/useShoppingList';
-import ShoppingList from '../components/ShoppingList.vue';
-import type { ShoppingItem } from '../types/ShoppingItem';
+import { useTodoList } from '../composables/useTodoList';
+import TodoList from '../components/TodoList.vue';
+import type { TodoItem } from '../types/TodoItem';
 
 const newItemTitle = ref('');
 const editingItemNewTitle = ref('');
 
 const {
-  shoppingItems,
+  todoItems,
   editingItemId,
-  addShoppingItem,
+  addTodoItem,
   startEditing,
   saveEditedItem,
   cancelEditedItem,
-  toggleShoppingItem,
-  deleteShoppingItem,
-} = useShoppingList();
+  toggleTodoItem,
+  deleteTodoItem,
+} = useTodoList();
 
-const handleAddShoppingItem = async () => {
-  await addShoppingItem(newItemTitle.value);
+const handleAddTodoItem = async () => {
+  await addTodoItem(newItemTitle.value);
   newItemTitle.value = '';
 };
 
-const handleStartEditing = (item: ShoppingItem) => {
+const handleStartEditing = (item: TodoItem) => {
   startEditing(item);
   editingItemNewTitle.value = item.name;
 };
@@ -42,19 +42,19 @@ const handleSaveEditedItem = async () => {
         v-model="newItemTitle"
         class="flex-1"
         placeholder="Add a new item"
-        @keyup.enter="handleAddShoppingItem"
+        @keyup.enter="handleAddTodoItem"
       />
-      <Button @click="handleAddShoppingItem"> Add to list </Button>
+      <Button @click="handleAddTodoItem"> Add to list </Button>
     </div>
-    <ShoppingList
+    <TodoList
       v-model:editing-item-new-title="editingItemNewTitle"
-      :items="shoppingItems"
+      :items="todoItems"
       :editing-item-id="editingItemId"
       :start-editing="handleStartEditing"
       :cancel-edited-item="cancelEditedItem"
       :save-edited-item="handleSaveEditedItem"
-      :toggle-shopping-item="toggleShoppingItem"
-      :delete-shopping-item="deleteShoppingItem"
+      :toggle-todo-item="toggleTodoItem"
+      :delete-todo-item="deleteTodoItem"
     />
   </div>
 </template>

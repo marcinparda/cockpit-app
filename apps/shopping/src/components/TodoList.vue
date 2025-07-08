@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import type { ShoppingItem as ShoppingItemType } from '../types/ShoppingItem';
-import ShoppingItem from './ShoppingItem.vue';
+import type { TodoItem as TodoItemType } from '../types/TodoItem';
+import TodoItem from './TodoItem.vue';
 import { Divider } from '@cockpit-app/shared/vue-ui';
 
 const props = defineProps<{
-  items: ShoppingItemType[];
+  items: TodoItemType[];
   editingItemId: number | null;
   editingItemNewTitle: string;
-  startEditing: (item: ShoppingItemType) => void;
+  startEditing: (item: TodoItemType) => void;
   cancelEditedItem: () => void;
   saveEditedItem: () => void;
-  toggleShoppingItem: (id: number, value: boolean) => void;
-  deleteShoppingItem: (id: number) => void;
+  toggleTodoItem: (id: number, value: boolean) => void;
+  deleteTodoItem: (id: number) => void;
 }>();
 
 const emit = defineEmits(['update:editingItemNewTitle']);
@@ -24,7 +24,7 @@ const handleInput = (val: string) => {
 <template>
   <ul class="py-8">
     <template v-for="(item, idx) in items" :key="item.id">
-      <ShoppingItem
+      <TodoItem
         :item="item"
         :editing-item-id="editingItemId"
         :editing-item-new-title="editingItemNewTitle"
@@ -32,10 +32,8 @@ const handleInput = (val: string) => {
         @start-editing="startEditing"
         @cancel-edited-item="cancelEditedItem"
         @save-edited-item="saveEditedItem"
-        @toggle-shopping-item="
-          (item, value) => toggleShoppingItem(item.id, value)
-        "
-        @delete-shopping-item="deleteShoppingItem"
+        @toggle-todo-item="(item, value) => toggleTodoItem(item.id, value)"
+        @delete-todo-item="deleteTodoItem"
       />
       <Divider v-if="idx < items.length - 1" class="my-2" />
     </template>

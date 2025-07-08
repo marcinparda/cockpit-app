@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { Button, InputText, Checkbox } from '@cockpit-app/shared/vue-ui';
-import type { ShoppingItem as ShoppingItemType } from '../types/ShoppingItem';
+import type { TodoItem as TodoItemType } from '../types/TodoItem';
 import { computed } from 'vue';
 
 const props = defineProps<{
-  item: ShoppingItemType;
+  item: TodoItemType;
   editingItemId: number | null;
   editingItemNewTitle: string;
 }>();
 
 const emit = defineEmits<{
-  (e: 'start-editing', item: ShoppingItemType): void;
+  (e: 'start-editing', item: TodoItemType): void;
   (e: 'save-edited-item'): void;
-  (e: 'toggle-shopping-item', item: ShoppingItemType, value: boolean): void;
-  (e: 'delete-shopping-item', id: number): void;
+  (e: 'toggle-todo-item', item: TodoItemType, value: boolean): void;
+  (e: 'delete-todo-item', id: number): void;
   (e: 'update:editingItemNewTitle', value: string): void;
   (e: 'cancel-edited-item'): void;
 }>();
@@ -54,7 +54,7 @@ function handleEditNameInput(val: string | undefined) {
         :model-value="item.is_closed"
         binary
         size="large"
-        @update:model-value="(val) => emit('toggle-shopping-item', item, val)"
+        @update:model-value="(val) => emit('toggle-todo-item', item, val)"
         @click.stop
       />
       <label>
@@ -69,7 +69,7 @@ function handleEditNameInput(val: string | undefined) {
       <Button
         class="ml-auto"
         severity="danger"
-        @click="emit('delete-shopping-item', item.id)"
+        @click="emit('delete-todo-item', item.id)"
         @click.stop
       >
         Delete
