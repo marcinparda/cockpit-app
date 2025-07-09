@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { InputText, Button, Dialog, Select } from '@cockpit-app/shared/vue-ui';
+import { Button, Dialog, Select } from '@cockpit-app/shared/vue-ui';
 import { ref, computed } from 'vue';
 import { useTodoList } from '../composables/useTodoList';
 import TodoList from '../components/TodoList.vue';
@@ -9,6 +9,7 @@ import Sidebar from '../components/Sidebar.vue';
 import ProjectSelect from '../components/ProjectSelect.vue';
 import { todoProjectsService } from '../services/todoProjectsService';
 import type { TodoProject } from '../types/TodoProject';
+import TodoItemCreateDialog from '../components/TodoItemCreateDialog.vue';
 
 const editingItemNewTitle = ref('');
 const route = useRoute();
@@ -26,41 +27,42 @@ const {
 } = useTodoList();
 
 const showAddDialog = ref(false);
-const addForm = ref<{
-  name: string;
-  project: TodoProject | null;
-}>({
-  name: '',
-  project: null,
-});
-const allProjects = ref<TodoProject[]>([]);
 const addDialogLoading = ref(false);
+const allProjects = ref<TodoProject[]>([]);
+const projectParam = computed(() => route.query['project'] || 'All');
 
 const fetchProjects = async () => {
   const projects = await todoProjectsService.getTodoProjects();
   allProjects.value = projects.filter((p) => p.name !== 'All');
 };
 
-const openAddDialog = async () => {
-  await fetchProjects();
-  // Preselect project if query param is set and not 'All'
-  const projectName = projectParam.value;
-  let preselected = null;
-  if (projectName && projectName !== 'All') {
-    preselected = allProjects.value.find((p) => p.name === projectName) || null;
-  }
-  addForm.value = { name: '', project: preselected };
+function openAddDialog() {
+  fetchProjects();
   showAddDialog.value = true;
-};
+}
 
-const resetAddForm = () => {
-  addForm.value = { name: '', project: null };
-};
-
-const handleAddDialogHide = () => {
+function handleDialogCancel() {
   showAddDialog.value = false;
-  resetAddForm();
-};
+}
+
+async function handleDialogSubmit({
+  name,
+  project,
+}: {
+  name: string;
+  project: TodoProject | null;
+}) {
+  if (!name.trim()) return;
+  addDialogLoading.value = true;
+  showAddDialog.value = false;
+  const projectId = project?.id || null;
+  try {
+    await addTodoItem(name, projectId);
+    await loadTodoItems();
+  } finally {
+    addDialogLoading.value = false;
+  }
+}
 
 const handleStartEditing = (item: TodoItem) => {
   startEditing(item);
@@ -72,7 +74,6 @@ const handleSaveEditedItem = async () => {
   editingItemNewTitle.value = '';
 };
 
-const projectParam = computed(() => route.query['project'] || 'All');
 const filteredItems = computed(() => {
   if (projectParam.value === 'All' || !projectParam.value)
     return todoItems.value;
@@ -80,20 +81,6 @@ const filteredItems = computed(() => {
     (item) => item.project && item.project.name === projectParam.value
   );
 });
-
-const handleAddItem = async () => {
-  if (!addForm.value.name.trim()) return;
-  addDialogLoading.value = true;
-  showAddDialog.value = false;
-  const projectId = addForm.value.project?.id || null;
-  try {
-    await addTodoItem(addForm.value.name, projectId);
-    await loadTodoItems();
-  } finally {
-    addDialogLoading.value = false;
-    resetAddForm();
-  }
-};
 </script>
 
 <template>
@@ -110,47 +97,14 @@ const handleAddItem = async () => {
           Add new item to list
         </Button>
       </div>
-      <Dialog
-        v-model:visible="showAddDialog"
-        header="Add New Todo Item"
-        :modal="true"
-        :closable="false"
-        @hide="handleAddDialogHide"
-      >
-        <form @submit.prevent="handleAddItem">
-          <div class="flex flex-col gap-4">
-            <div>
-              <label for="item-name" class="block mb-1">Item Name</label>
-              <InputText
-                id="item-name"
-                v-model="addForm.name"
-                class="w-full"
-                required
-              />
-            </div>
-            <div>
-              <label for="project-select" class="block mb-1">Project</label>
-              <Select
-                id="project-select"
-                v-model="addForm.project"
-                :options="allProjects"
-                option-label="name"
-                placeholder="Select a project"
-                class="w-full"
-              />
-            </div>
-            <div class="flex gap-2 justify-end">
-              <Button
-                type="button"
-                severity="secondary"
-                @click="handleAddDialogHide"
-                >Cancel</Button
-              >
-              <Button type="submit" :loading="addDialogLoading">Create</Button>
-            </div>
-          </div>
-        </form>
-      </Dialog>
+      <TodoItemCreateDialog
+        v-model="showAddDialog"
+        :loading="addDialogLoading"
+        :all-projects="allProjects"
+        :project-param="projectParam"
+        @submit="handleDialogSubmit"
+        @cancel="handleDialogCancel"
+      />
       <TodoList
         v-model:editing-item-new-title="editingItemNewTitle"
         :items="filteredItems"
