@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { InputText, Button, Dialog, Dropdown } from '@cockpit-app/shared/vue-ui';
+import {
+  InputText,
+  Button,
+  Dialog,
+  Select,
+} from '@cockpit-app/shared/vue-ui';
 import { ref, computed } from 'vue';
 import { useTodoList } from '../composables/useTodoList';
 import TodoList from '../components/TodoList.vue';
@@ -130,7 +135,7 @@ const handleAddItem = async () => {
             </div>
             <div>
               <label for="project-select" class="block mb-1">Project</label>
-              <Dropdown
+              <Select
                 id="project-select"
                 v-model="addForm.project"
                 :options="allProjects"
