@@ -4,7 +4,6 @@ export { default as Checkbox } from 'primevue/checkbox';
 export { default as Divider } from 'primevue/divider';
 export { default as primeVuePlugin } from './plugin';
 export { default as Dialog } from 'primevue/dialog';
-export { default as Dropdown } from 'primevue/dropdown';
 export { default as Menu } from 'primevue/menu';
 export { default as Card } from 'primevue/card';
 export { default as Menubar } from 'primevue/menubar';
