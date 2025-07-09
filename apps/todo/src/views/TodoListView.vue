@@ -12,7 +12,6 @@ import Dropdown from 'primevue/dropdown';
 import { todoProjectsService } from '../services/todoProjectsService';
 import type { TodoProject } from '../types/TodoProject';
 
-const newItemTitle = ref('');
 const editingItemNewTitle = ref('');
 const route = useRoute();
 

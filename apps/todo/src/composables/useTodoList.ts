@@ -42,7 +42,7 @@ export function useTodoList() {
   const addTodoItem = async (title: string, projectId: number | null) => {
     if (!title.trim()) return;
 
-    const newItem: Partial<TodoItem> = {
+    const newItem = {
       name: title,
       project_id: projectId,
     };
@@ -145,5 +145,6 @@ export function useTodoList() {
     startEditing,
     cancelEditedItem,
     saveEditedItem,
+    loadTodoItems,
   };
 }
