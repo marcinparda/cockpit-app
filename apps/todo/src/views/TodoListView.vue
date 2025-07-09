@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { InputText, Button } from '@cockpit-app/shared/vue-ui';
+import { InputText, Button, Dialog, Dropdown } from '@cockpit-app/shared/vue-ui';
 import { ref, computed } from 'vue';
 import { useTodoList } from '../composables/useTodoList';
 import TodoList from '../components/TodoList.vue';
@@ -7,8 +7,6 @@ import type { TodoItem } from '../types/TodoItem';
 import { useRoute } from 'vue-router';
 import Sidebar from '../components/Sidebar.vue';
 import ProjectSelect from '../components/ProjectSelect.vue';
-import Dialog from 'primevue/dialog';
-import Dropdown from 'primevue/dropdown';
 import { todoProjectsService } from '../services/todoProjectsService';
 import type { TodoProject } from '../types/TodoProject';
 

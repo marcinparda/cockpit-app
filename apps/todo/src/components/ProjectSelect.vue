@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue';
-import Select from 'primevue/select';
+import { Select } from '@cockpit-app/shared/vue-ui';
 import { useRoute, useRouter } from 'vue-router';
 import { todoProjectsService } from '../services/todoProjectsService';
 import type { TodoProject } from '../types/TodoProject';

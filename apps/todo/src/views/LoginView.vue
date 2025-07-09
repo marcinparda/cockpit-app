@@ -2,9 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { authService } from '../services/auth.service';
-import InputText from 'primevue/inputtext';
-import Button from 'primevue/button';
-import Card from 'primevue/card';
+import { InputText, Button, Card } from '@cockpit-app/shared/vue-ui';
 
 const apiKey = ref('');
 const errorMessage = ref('');
