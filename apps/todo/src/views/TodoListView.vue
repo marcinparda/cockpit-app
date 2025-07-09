@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import {
-  InputText,
-  Button,
-  Dialog,
-  Select,
-} from '@cockpit-app/shared/vue-ui';
+import { InputText, Button, Dialog, Select } from '@cockpit-app/shared/vue-ui';
 import { ref, computed } from 'vue';
 import { useTodoList } from '../composables/useTodoList';
 import TodoList from '../components/TodoList.vue';
@@ -102,14 +97,14 @@ const handleAddItem = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col md:flex-row h-screen">
+  <div class="flex flex-col md:flex-row h-screen px-4 py-6">
     <div class="hidden md:flex">
       <Sidebar />
     </div>
     <div class="md:hidden">
       <ProjectSelect />
     </div>
-    <div class="max-w-2xl flex-1 mx-auto py-6">
+    <div class="max-w-2xl flex-1 py-6">
       <div class="flex items-center gap-2">
         <Button class="w-full" @click="openAddDialog">
           Add new item to list
