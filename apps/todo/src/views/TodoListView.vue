@@ -84,37 +84,39 @@ const filteredItems = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col md:flex-row h-screen px-4 py-6">
+  <div class="flex flex-col md:flex-row h-screen px-4 py-6 md:px-0 md:py-0">
     <div class="hidden md:flex">
       <Sidebar />
     </div>
     <div class="md:hidden">
       <ProjectSelect />
     </div>
-    <div class="max-w-2xl flex-1 py-6">
-      <div class="flex items-center gap-2">
-        <Button class="w-full" @click="openAddDialog">
-          Add new item to list
-        </Button>
+    <div class="flex flex-col flex-1 py-6 items-center">
+      <div class="w-full max-w-2xl">
+        <div class="gap-2">
+          <Button class="w-full" @click="openAddDialog">
+            Add new item to list
+          </Button>
+        </div>
+        <TodoList
+          v-model:editing-item-new-title="editingItemNewTitle"
+          :items="filteredItems"
+          :editing-item-id="editingItemId"
+          :start-editing="handleStartEditing"
+          :cancel-edited-item="cancelEditedItem"
+          :save-edited-item="handleSaveEditedItem"
+          :toggle-todo-item="toggleTodoItem"
+          :delete-todo-item="deleteTodoItem"
+        />
       </div>
-      <TodoItemCreateDialog
-        v-model="showAddDialog"
-        :loading="addDialogLoading"
-        :all-projects="allProjects"
-        :project-param="projectParam"
-        @submit="handleDialogSubmit"
-        @cancel="handleDialogCancel"
-      />
-      <TodoList
-        v-model:editing-item-new-title="editingItemNewTitle"
-        :items="filteredItems"
-        :editing-item-id="editingItemId"
-        :start-editing="handleStartEditing"
-        :cancel-edited-item="cancelEditedItem"
-        :save-edited-item="handleSaveEditedItem"
-        :toggle-todo-item="toggleTodoItem"
-        :delete-todo-item="deleteTodoItem"
-      />
     </div>
   </div>
+  <TodoItemCreateDialog
+    v-model="showAddDialog"
+    :loading="addDialogLoading"
+    :all-projects="allProjects"
+    :project-param="projectParam"
+    @submit="handleDialogSubmit"
+    @cancel="handleDialogCancel"
+  />
 </template>
