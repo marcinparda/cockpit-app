@@ -45,12 +45,17 @@ const projectOptions = computed(() => [
 </script>
 
 <template>
+  <label class="block mb-2 text-sm" html-for="project-select"
+    >Selected project</label
+  >
   <Select
+    id="project-select"
     v-model="selectedProject"
     :options="projectOptions"
     option-label="name"
     option-value="code"
     placeholder="Select a project"
     class="w-full md:w-56"
+    label="Project"
   />
 </template>
