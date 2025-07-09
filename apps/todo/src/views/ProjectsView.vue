@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { todoProjectsService } from '../services/todoProjectsService';
 import type { TodoProject } from '../types/TodoProject';
-import { InputText, Button } from '@cockpit-app/shared/vue-ui';
+import { InputText, Button, Divider } from '@cockpit-app/shared/vue-ui';
 import ProjectItem from '../components/ProjectItem.vue';
 
 const projects = ref<TodoProject[]>([]);
