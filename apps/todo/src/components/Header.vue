@@ -1,7 +1,7 @@
 <template>
   <Menubar :model="items">
     <template #item="{ item }">
-      <RouterLink :to="item['to']">
+      <RouterLink class="block p-2" :to="item['to']">
         {{ item.label }}
       </RouterLink>
     </template>
