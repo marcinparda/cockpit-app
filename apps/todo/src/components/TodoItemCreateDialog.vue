@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue';
+import { ref, watch } from 'vue';
 import { InputText, Button, Dialog, Select } from '@cockpit-app/shared/vue-ui';
 import type { TodoProject } from '../types/TodoProject';
 
@@ -10,7 +10,7 @@ interface TodoItemCreateDialogProps {
   modelValue: boolean;
   loading: boolean;
   allProjects: TodoProject[];
-  projectParam: string;
+  projectParam: string | null;
 }
 
 const props = defineProps<TodoItemCreateDialogProps>();
@@ -42,16 +42,23 @@ function handleSubmit() {
   emit('submit', { ...addForm.value });
 }
 
-function preselectProject(projects: TodoProject[], projectParam: string) {
-  if (projectParam && projectParam !== 'All') {
+function preselectProject(
+  projects: TodoProject[],
+  projectParam: string | null
+) {
+  if (projectParam !== null) {
     return projects.find((p) => p.name === projectParam) || null;
   }
   return null;
 }
 
 watch(
-  () => [props.modelValue, props.allProjects, props.projectParam],
-  ([visible, projects, projectParam]) => {
+  [() => props.modelValue, () => props.allProjects, () => props.projectParam],
+  ([visible, projects, projectParam]: [
+    boolean,
+    TodoProject[],
+    string | null
+  ]) => {
     if (visible) {
       addForm.value = {
         name: '',

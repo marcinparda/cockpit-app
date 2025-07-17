@@ -22,8 +22,7 @@ const fetchProjects = async () => {
         items: [
           {
             label: 'All',
-            command: () =>
-              router.push({ path: '/list', query: { project: 'All' } }),
+            command: () => router.push({ path: '/list' }),
           },
           ...projects.map((p: any) => ({
             label: p.name,
@@ -40,8 +39,7 @@ const fetchProjects = async () => {
         items: [
           {
             label: 'All',
-            command: () =>
-              router.push({ path: '/list', query: { project: 'All' } }),
+            command: () => router.push({ path: '/list' }),
           },
         ],
       },

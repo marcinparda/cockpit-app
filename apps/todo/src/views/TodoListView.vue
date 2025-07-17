@@ -32,7 +32,7 @@ const addDialogLoading = ref(false);
 const allProjects = ref<TodoProject[]>([]);
 const projectParam = computed(() => {
   const projectParam = route.query['project'];
-  return isMeaningfulString(projectParam) ? projectParam : 'All';
+  return isMeaningfulString(projectParam) ? projectParam : null;
 });
 
 const fetchProjects = async () => {
@@ -79,7 +79,7 @@ const handleSaveEditedItem = async () => {
 };
 
 const filteredItems = computed(() => {
-  if (projectParam.value === 'All') return todoItems.value;
+  if (!projectParam.value) return todoItems.value;
   return todoItems.value.filter(
     (item) => item.project && item.project.name === projectParam.value
   );
