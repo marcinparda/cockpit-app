@@ -66,6 +66,7 @@
     "jasmine-core": "~5.1.0",
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
+    "jsonc-eslint-parser": "^2.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
