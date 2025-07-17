@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Button, Dialog, Select } from '@cockpit-app/shared/vue-ui';
+import { Button } from '@cockpit-app/shared/vue-ui';
+import { isMeaningfulString } from '@cockpit-app/shared/utils';
 import { ref, computed } from 'vue';
 import { useTodoList } from '../composables/useTodoList';
 import TodoList from '../components/TodoList.vue';
@@ -29,7 +30,10 @@ const {
 const showAddDialog = ref(false);
 const addDialogLoading = ref(false);
 const allProjects = ref<TodoProject[]>([]);
-const projectParam = computed(() => route.query['project'] || 'All');
+const projectParam = computed(() => {
+  const projectParam = route.query['project'];
+  return isMeaningfulString(projectParam) ? projectParam : 'All';
+});
 
 const fetchProjects = async () => {
   const projects = await todoProjectsService.getTodoProjects();
@@ -52,7 +56,7 @@ async function handleDialogSubmit({
   name: string;
   project: TodoProject | null;
 }) {
-  if (!name.trim()) return;
+  if (!isMeaningfulString(name)) return;
   addDialogLoading.value = true;
   showAddDialog.value = false;
   const projectId = project?.id || null;
@@ -75,8 +79,7 @@ const handleSaveEditedItem = async () => {
 };
 
 const filteredItems = computed(() => {
-  if (projectParam.value === 'All' || !projectParam.value)
-    return todoItems.value;
+  if (projectParam.value === 'All') return todoItems.value;
   return todoItems.value.filter(
     (item) => item.project && item.project.name === projectParam.value
   );
