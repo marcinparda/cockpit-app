@@ -6,6 +6,13 @@
 - Prefer modern ES6+ syntax for JavaScript/TypeScript.
 - Use clear, descriptive variable and function names.
 - Always write JSDocs, or Python docstrings for all exported functions, classes and components.
+- For saving you thoughts or summaries use .md extension files, save them in .ai folder in appropriate folder. If folder does not exist, create it.
+- Appropriate folder for .md thoughts/summaries should be the name of the feature/fix/improvement you are working on right now. .md files names convention:
+  - requirements.md - for requirements of the feature
+  - initial-notes.md - my for initial notes about the feature
+  - development-plan.md - for development plan of the feature
+  - step-x.md - for each step of the feature development, where x is the number of the step
+- You can find openapi API documentation on page https://api.parda.me/openapi.json.
 
 ## React
 
@@ -36,15 +43,6 @@
 - Use Vue Router for navigation.
 - Write tests with Vue Test Utils and Vitest.
 
-## FastAPI
-
-- Use Python type hints for all function signatures.
-- Organize endpoints using APIRouter.
-- Validate request/response models with Pydantic.
-- Add OpenAPI documentation via FastAPI's built-in features.
-- Write async endpoints where appropriate.
-- Use pytest for testing API endpoints.
-
 ## Documentation
 
 - Add JSDoc comments to exported functions and components in JS/TS.
@@ -55,3 +53,11 @@
 - Use NX workspace conventions for organizing apps and libraries.
 - Use proper imports from `@cockpit-app` libraries.
 - Do not use relative imports in apps and libs.
+
+## Deployment
+- Use Docker for containerization.
+- Use GitHub Actions for CI/CD pipelines.
+- Deploys apps on personal Raspberry Pi machine.
+- Each app should have its own Dockerfile.
+- Use `docker compose` for multi-container setups.
+- Docker setup is only for production, development uses `nx serve` commands.
