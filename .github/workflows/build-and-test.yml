@@ -126,7 +126,7 @@ jobs:
 
       - name: Upload Build Artifacts
         if: steps.build.outputs.build-completed == 'true'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-${{ inputs.app-name }}-${{ inputs.configuration }}
           path: |
