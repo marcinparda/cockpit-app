@@ -2,15 +2,12 @@ import axios from 'axios';
 import { authService } from './auth.service';
 import router from '../router';
 
-const httpClient = axios.create();
+const httpClient = axios.create({
+  withCredentials: true,
+});
 
-// Request interceptor to add API key to all requests
 httpClient.interceptors.request.use(
   (config) => {
-    const apiKey = authService.getApiKey();
-    if (apiKey) {
-      config.headers['X-API-KEY'] = apiKey;
-    }
     return config;
   },
   (error) => {
