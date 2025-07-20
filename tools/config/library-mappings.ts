@@ -102,8 +102,10 @@ export const LIBRARY_MAPPINGS: Record<string, LibraryMapping> = {
     includedSchemas: [
       'OCRResponse',
       'Body_extract_text_from_image_api_v1_shared_ocr_post',
+      'HTTPValidationError',
+      'ValidationError',
     ],
-    description: 'TypeScript types for shared utilities (OCR, etc.)',
+    description: 'TypeScript types for shared utilities (OCR, validation errors, etc.)',
   },
 
   'system-health': {
