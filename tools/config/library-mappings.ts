@@ -105,7 +105,8 @@ export const LIBRARY_MAPPINGS: Record<string, LibraryMapping> = {
       'HTTPValidationError',
       'ValidationError',
     ],
-    description: 'TypeScript types for shared utilities (OCR, validation errors, etc.)',
+    description:
+      'TypeScript types for shared utilities (OCR, validation errors, etc.)',
   },
 
   'system-health': {
