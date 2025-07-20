@@ -22,6 +22,9 @@ on:
         required: true
       RASPBERRY_PI_USERNAME:
         required: true
+      API_URL:
+        description: 'Production API URL for environment configuration'
+        required: true
 
 jobs:
   deploy:
@@ -90,6 +93,28 @@ jobs:
             echo '📥 Pulling latest changes...'
             git fetch origin
             git reset --hard origin/master
+            
+            echo '🔧 Creating production environment files...'
+            mkdir -p apps/ai-budget/src/environments
+            mkdir -p apps/todo/src/environments
+            
+            # AI Budget environment
+            cat > apps/ai-budget/src/environments/environment.production.ts << 'EOF'
+          export const environment = {
+            production: true,
+            apiUrl: '${{ secrets.API_URL }}',
+          };
+          EOF
+            
+            # Todo environment  
+            cat > apps/todo/src/environments/environment.production.ts << 'EOF'
+          export const environment = {
+            production: true,
+            apiUrl: '${{ secrets.API_URL }}',
+          };
+          EOF
+            
+            echo '✅ Environment files created successfully'
             
             echo '🔄 Stopping existing services...'
             docker compose down --remove-orphans
