@@ -16,7 +16,7 @@ export class PaymentMethodCreateComponent {
   newPaymentMethod: any = {
     name: '',
   };
-  isSaving: boolean = false;
+  isSaving = false;
   error: string | null = null;
 
   constructor(private apiService: ApiService, private router: Router) {}

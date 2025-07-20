@@ -44,7 +44,9 @@
 - Write tests with Vue Test Utils and Vitest.
 
 ## TypeScript
-- For types for requests and responses use types libs like `@cockpit-app/types-ai-budget-expenses`, `@cockpit-app/types-todo-items`, etc. 
+
+- For types for requests and responses use types libs like `@cockpit-app/types-ai-budget-expenses`, `@cockpit-app/types-todo-items`, etc.
+- Don't use `any` type, prefer `unknown` or specific types.
 
 ## Documentation
 

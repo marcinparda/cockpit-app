@@ -14,7 +14,7 @@ export class AuthService {
   public apiKey$ = this.apiKeySubject.asObservable();
   private isBrowser: boolean;
 
-  constructor(private router: Router, @Inject(PLATFORM_ID) platformId: Object) {
+  constructor(private router: Router, @Inject(PLATFORM_ID) platformId: object) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 

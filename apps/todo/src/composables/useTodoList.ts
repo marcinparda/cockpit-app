@@ -1,5 +1,9 @@
 import { ref, onMounted, onUnmounted } from 'vue';
-import type { TodoItem } from '../types/TodoItem';
+import type {
+  TodoItem,
+  TodoItemCreate,
+  TodoItemUpdate,
+} from '@cockpit-app/types-todo-items';
 import { todoItemsService } from '../services/todoItemsService';
 
 export function useTodoList() {
@@ -42,7 +46,7 @@ export function useTodoList() {
   const addTodoItem = async (title: string, projectId: number | null) => {
     if (!title.trim()) return;
 
-    const newItem = {
+    const newItem: TodoItemCreate = {
       name: title,
       project_id: projectId,
     };
@@ -61,10 +65,12 @@ export function useTodoList() {
     const item = todoItems.value.find((item) => item.id === id);
     if (item) {
       try {
-        await todoItemsService.updateTodoItem(id, {
+        const updateData: TodoItemUpdate = {
           is_closed: value,
           completed_at: value ? new Date().toISOString() : null,
-        });
+        };
+
+        await todoItemsService.updateTodoItem(id, updateData);
 
         // Create a new array with the updated item
         const updatedItems = todoItems.value
@@ -112,9 +118,11 @@ export function useTodoList() {
       );
       if (item) {
         try {
-          await todoItemsService.updateTodoItem(item.id, {
+          const updateData: TodoItemUpdate = {
             name: newTitle,
-          });
+          };
+
+          await todoItemsService.updateTodoItem(item.id, updateData);
 
           // Create a new array with the updated item and sort them by name
           const updatedItems = todoItems.value

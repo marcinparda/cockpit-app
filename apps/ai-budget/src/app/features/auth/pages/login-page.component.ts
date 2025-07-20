@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
   imports: [CommonModule, LoginCardComponent],
 })
 export class LoginPageComponent implements OnInit {
-  returnUrl: string = '/';
+  returnUrl = '/';
   submitted = false;
 
   constructor(

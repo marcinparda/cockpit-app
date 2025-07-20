@@ -17,8 +17,8 @@ export class CategoryCreateComponent implements OnInit {
     parent_id: null,
   };
   categories: any[] = [];
-  isLoading: boolean = false;
-  isSaving: boolean = false;
+  isLoading = false;
+  isSaving = false;
   error: string | null = null;
 
   constructor(private apiService: ApiService, private router: Router) {}

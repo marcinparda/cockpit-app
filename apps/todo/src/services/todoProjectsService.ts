@@ -1,4 +1,8 @@
-import type { TodoProject } from '../types/TodoProject';
+import type {
+  TodoProject,
+  TodoProjectCreate,
+  TodoProjectUpdate,
+} from '@cockpit-app/types-todo-projects';
 import { environment } from '../environments/environment';
 import httpClient from './http.service';
 
@@ -25,7 +29,7 @@ export const todoProjectsService = {
     }
   },
 
-  async addTodoProject(item: { name: string }): Promise<TodoProject> {
+  async addTodoProject(item: TodoProjectCreate): Promise<TodoProject> {
     try {
       const response = await httpClient.post(`${API_URL}/`, item);
       return response.data;
@@ -37,7 +41,7 @@ export const todoProjectsService = {
 
   async updateTodoProject(
     id: number,
-    updates: { name: string }
+    updates: TodoProjectUpdate
   ): Promise<TodoProject> {
     try {
       const response = await httpClient.put(`${API_URL}/${id}`, updates);

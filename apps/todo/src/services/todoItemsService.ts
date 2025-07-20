@@ -1,4 +1,8 @@
-import type { TodoItem } from '../types/TodoItem';
+import type {
+  TodoItem,
+  TodoItemCreate,
+  TodoItemUpdate,
+} from '@cockpit-app/types-todo-items';
 import { environment } from '../environments/environment';
 import httpClient from './http.service'; // Import the HTTP client
 
@@ -27,12 +31,7 @@ export const todoItemsService = {
     }
   },
 
-  async addTodoItem(item: {
-    name: string;
-    description?: string | null;
-    project_id?: number | null;
-    shops?: string | null;
-  }): Promise<TodoItem> {
+  async addTodoItem(item: TodoItemCreate): Promise<TodoItem> {
     try {
       const response = await httpClient.post(`${API_URL}/`, item);
       return response.data;
@@ -42,17 +41,7 @@ export const todoItemsService = {
     }
   },
 
-  async updateTodoItem(
-    id: number,
-    updates: {
-      name?: string | null;
-      description?: string | null;
-      is_closed?: boolean | null;
-      project_id?: number | null;
-      shops?: string | null;
-      completed_at?: string | null;
-    }
-  ): Promise<TodoItem> {
+  async updateTodoItem(id: number, updates: TodoItemUpdate): Promise<TodoItem> {
     try {
       const response = await httpClient.put(`${API_URL}/${id}`, updates);
       return response.data;

@@ -12,7 +12,7 @@ import { NavigationHeaderComponent } from '../../../../shared/components/navigat
 })
 export class CategoriesListComponent implements OnInit {
   categories: any[] = [];
-  isLoading: boolean = false;
+  isLoading = false;
   error: string | null = null;
 
   constructor(private apiService: ApiService) {}
