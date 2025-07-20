@@ -82,7 +82,7 @@ jobs:
       - name: Deploy Application
         run: |
           echo "🚀 Deploying to ${{ inputs.environment }}..."
-          ssh ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "
+          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "
             echo '🔑 Starting SSH agent...'
             eval \"\$(ssh-agent -s)\" && \
             ssh-add ~/.ssh/github && \
