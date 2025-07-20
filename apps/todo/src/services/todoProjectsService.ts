@@ -11,7 +11,7 @@ const API_URL = `${environment.apiUrl}/api/v1/todo/projects`;
 export const todoProjectsService = {
   async getTodoProjects(): Promise<TodoProject[]> {
     try {
-      const response = await httpClient.get(`${API_URL}/`);
+      const response = await httpClient.get(`${API_URL}`);
       return response.data;
     } catch (error) {
       console.error('Error fetching todo projects:', error);
@@ -31,7 +31,7 @@ export const todoProjectsService = {
 
   async addTodoProject(item: TodoProjectCreate): Promise<TodoProject> {
     try {
-      const response = await httpClient.post(`${API_URL}/`, item);
+      const response = await httpClient.post(`${API_URL}`, item);
       return response.data;
     } catch (error) {
       console.error('Error adding todo project:', error);

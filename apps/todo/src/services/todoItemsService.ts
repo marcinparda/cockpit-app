@@ -12,7 +12,7 @@ export const todoItemsService = {
   async getTodoItems(skip = 0, limit = 100): Promise<TodoItem[]> {
     try {
       const response = await httpClient.get(
-        `${API_URL}/?skip=${skip}&limit=${limit}`
+        `${API_URL}?skip=${skip}&limit=${limit}`
       );
       return response.data;
     } catch (error) {
@@ -33,7 +33,7 @@ export const todoItemsService = {
 
   async addTodoItem(item: TodoItemCreate): Promise<TodoItem> {
     try {
-      const response = await httpClient.post(`${API_URL}/`, item);
+      const response = await httpClient.post(`${API_URL}`, item);
       return response.data;
     } catch (error) {
       console.error('Error adding todo item:', error);
