@@ -53,9 +53,15 @@ export class CategoryCreateComponent implements OnInit {
     this.error = null;
 
     // Convert parent_id from string to number or null
-    if (this.newCategory.parent_id === '') {
+    if (
+      this.newCategory.parent_id === '' ||
+      this.newCategory.parent_id === undefined
+    ) {
       this.newCategory.parent_id = null;
-    } else if (this.newCategory.parent_id !== null) {
+    } else if (
+      this.newCategory.parent_id !== null &&
+      typeof this.newCategory.parent_id === 'string'
+    ) {
       this.newCategory.parent_id = parseInt(this.newCategory.parent_id);
     }
 
