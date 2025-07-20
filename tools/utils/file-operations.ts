@@ -16,18 +16,21 @@ export async function ensureDirectoryExists(path: string): Promise<void> {
 /**
  * Writes content to a TypeScript file with proper formatting
  */
-export async function writeTypeFile(filePath: string, content: string): Promise<void> {
+export async function writeTypeFile(
+  filePath: string,
+  content: string
+): Promise<void> {
   // Ensure directory exists
   await ensureDirectoryExists(dirname(filePath));
-  
+
   // Write the file
   await fs.writeFile(filePath, content, 'utf-8');
-  
+
   // Try to format with prettier if available
   try {
-    execSync(`npx prettier --write "${filePath}"`, { 
+    execSync(`npx prettier --write "${filePath}"`, {
       stdio: 'ignore',
-      cwd: dirname(filePath)
+      cwd: dirname(filePath),
     });
   } catch {
     // Prettier formatting failed, file is still written
@@ -39,18 +42,20 @@ export async function writeTypeFile(filePath: string, content: string): Promise<
  * Creates an index.ts file with barrel exports
  */
 export async function createIndexFile(
-  libraryPath: string, 
+  libraryPath: string,
   exports: string[]
 ): Promise<void> {
   const indexPath = join(libraryPath, 'index.ts');
-  
+
   const content = `// Auto-generated barrel export file
 // This file exports all types from this library
 
-${exports.map(exportName => `export * from './${exportName}';`).join('\n')}
+${exports.map((exportName) => `export * from './${exportName}';`).join('\n')}
 
 // Re-export commonly used types for convenience
-${exports.map(exportName => `export type * from './${exportName}';`).join('\n')}
+${exports
+  .map((exportName) => `export type * from './${exportName}';`)
+  .join('\n')}
 `;
 
   await writeTypeFile(indexPath, content);
@@ -84,12 +89,12 @@ export async function fileExists(filePath: string): Promise<boolean> {
  */
 export async function backupFile(filePath: string): Promise<string> {
   const backupPath = `${filePath}.backup.${Date.now()}`;
-  
+
   if (await fileExists(filePath)) {
     await fs.copyFile(filePath, backupPath);
     return backupPath;
   }
-  
+
   return '';
 }
 
@@ -97,18 +102,18 @@ export async function backupFile(filePath: string): Promise<string> {
  * Removes backup files older than specified time
  */
 export async function cleanupBackups(
-  directory: string, 
+  directory: string,
   olderThanMs: number = 7 * 24 * 60 * 60 * 1000 // 7 days
 ): Promise<void> {
   try {
     const files = await fs.readdir(directory);
-    const backupFiles = files.filter(file => file.includes('.backup.'));
+    const backupFiles = files.filter((file) => file.includes('.backup.'));
     const now = Date.now();
-    
+
     for (const file of backupFiles) {
       const filePath = join(directory, file);
       const stats = await fs.stat(filePath);
-      
+
       if (now - stats.mtime.getTime() > olderThanMs) {
         await fs.unlink(filePath);
       }

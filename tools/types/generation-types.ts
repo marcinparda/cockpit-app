@@ -138,10 +138,13 @@ export interface TypeCoverageReport {
   /** Unused schemas (defined but not generated) */
   unusedSchemas: string[];
   /** Libraries and their coverage */
-  libraryBreakdown: Record<string, {
-    totalSchemas: number;
-    coveredSchemas: number;
-    coveragePercentage: number;
-    missingSchemas: string[];
-  }>;
+  libraryBreakdown: Record<
+    string,
+    {
+      totalSchemas: number;
+      coveredSchemas: number;
+      coveragePercentage: number;
+      missingSchemas: string[];
+    }
+  >;
 }

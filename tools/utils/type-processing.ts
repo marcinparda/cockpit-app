@@ -5,11 +5,14 @@
 /**
  * Adds JSDoc comments to TypeScript types
  */
-export function addJSDocComments(typeContent: string, libraryInfo: {
-  library: string;
-  tags: string[];
-  description?: string;
-}): string {
+export function addJSDocComments(
+  typeContent: string,
+  libraryInfo: {
+    library: string;
+    tags: string[];
+    description?: string;
+  }
+): string {
   const header = `/**
  * Generated TypeScript types for ${libraryInfo.library}
  * 
@@ -90,7 +93,10 @@ export interface RequestContext {
 export function enhanceEnumTypes(content: string): string {
   // Ensure content is a string
   if (typeof content !== 'string') {
-    console.warn('⚠️ enhanceEnumTypes received non-string content:', typeof content);
+    console.warn(
+      '⚠️ enhanceEnumTypes received non-string content:',
+      typeof content
+    );
     return String(content);
   }
 
@@ -102,13 +108,18 @@ export function enhanceEnumTypes(content: string): string {
       if (otherValues) {
         const additionalValues = otherValues.match(/"([^"]+)"/g);
         if (additionalValues) {
-          values.push(...additionalValues.map(v => v.slice(1, -1)));
+          values.push(...additionalValues.map((v) => v.slice(1, -1)));
         }
       }
-      
+
       const enumName = `${typeName}Enum`;
       const enumDef = `export enum ${enumName} {
-${values.map(value => `  ${value.toUpperCase().replace(/[^A-Z0-9]/g, '_')} = "${value}"`).join(',\n')}
+${values
+  .map(
+    (value) =>
+      `  ${value.toUpperCase().replace(/[^A-Z0-9]/g, '_')} = "${value}"`
+  )
+  .join(',\n')}
 }
 
 export type ${typeName} = \`\${${enumName}}\`;`;
@@ -146,17 +157,19 @@ export type TodoProjectId = Branded<number, 'TodoProjectId'>;
  * Cleans up and formats TypeScript content
  */
 export function cleanupTypeScript(content: string): string {
-  return content
-    // Remove empty lines at the beginning
-    .replace(/^\s*\n+/, '')
-    // Remove excessive empty lines (more than 2)
-    .replace(/\n\s*\n\s*\n+/g, '\n\n')
-    // Ensure proper spacing around export statements
-    .replace(/\nexport\s/g, '\n\nexport ')
-    // Remove trailing whitespace
-    .replace(/[ \t]+$/gm, '')
-    // Ensure file ends with newline
-    .replace(/\n*$/, '\n');
+  return (
+    content
+      // Remove empty lines at the beginning
+      .replace(/^\s*\n+/, '')
+      // Remove excessive empty lines (more than 2)
+      .replace(/\n\s*\n\s*\n+/g, '\n\n')
+      // Ensure proper spacing around export statements
+      .replace(/\nexport\s/g, '\n\nexport ')
+      // Remove trailing whitespace
+      .replace(/[ \t]+$/gm, '')
+      // Ensure file ends with newline
+      .replace(/\n*$/, '\n')
+  );
 }
 
 /**

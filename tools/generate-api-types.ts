@@ -5,7 +5,7 @@
  *
  * This script fetches the OpenAPI specification from the Cockpit API
  * and generates TypeScript types for all libraries based on the configured mappings.
- * 
+ *
  * Features:
  * - Fetches OpenAPI spec from live API
  * - Generates TypeScript types using openapi-typescript
@@ -24,14 +24,18 @@ import { fileURLToPath } from 'url';
 
 // Import utilities
 import { validateOpenAPISpec } from './utils/openapi-parser.js';
-import { writeTypeFile, createIndexFile, backupFile } from './utils/file-operations.js';
+import {
+  writeTypeFile,
+  createIndexFile,
+  backupFile,
+} from './utils/file-operations.js';
 import { addJSDocComments } from './utils/type-processing.js';
 import { LIBRARY_MAPPINGS } from './config/library-mappings.js';
-import type { 
-  GenerationResult, 
-  GenerationSummary, 
+import type {
+  GenerationResult,
+  GenerationSummary,
   GenerationOptions,
-  LibraryMapping 
+  LibraryMapping,
 } from './types/generation-types.js';
 
 // Get current directory (ES modules)
@@ -55,7 +59,7 @@ async function fetchOpenAPISpec(url: string): Promise<Record<string, unknown>> {
     }
 
     const spec = (await response.json()) as Record<string, unknown>;
-    
+
     // Validate the spec
     if (!validateOpenAPISpec(spec)) {
       throw new Error('Invalid OpenAPI specification structure');
@@ -103,17 +107,20 @@ async function generateTypesForLibrary(
     // For now, let's create working TypeScript types based on the schema mappings
     // This is a simplified implementation while we work out the openapi-typescript v7 API
     const specData = fullSpec as Record<string, unknown>;
-    const components = specData?.components as Record<string, unknown> || {};
-    const schemas = components?.schemas as Record<string, unknown> || {};
+    const components = (specData?.components as Record<string, unknown>) || {};
+    const schemas = (components?.schemas as Record<string, unknown>) || {};
     const includedSchemas = mapping.includedSchemas || [];
-    
+
     const typeDefinitions: string[] = [];
     let typeCount = 0;
 
     // Generate types for each included schema
     for (const schemaName of includedSchemas) {
       if (schemas[schemaName]) {
-        const schemaType = generateTypeFromSchema(schemaName, schemas[schemaName]);
+        const schemaType = generateTypeFromSchema(
+          schemaName,
+          schemas[schemaName]
+        );
         if (schemaType) {
           typeDefinitions.push(schemaType);
           typeCount++;
@@ -128,9 +135,10 @@ async function generateTypesForLibrary(
  * Placeholder type for ${mapping.library}
  * This will be replaced with actual types from OpenAPI spec
  */
-export interface ${libraryName.split('-').map(word => 
-  word.charAt(0).toUpperCase() + word.slice(1)
-).join('')}Placeholder {
+export interface ${libraryName
+        .split('-')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join('')}Placeholder {
   message: string;
   timestamp?: string;
 }
@@ -149,7 +157,7 @@ export interface ${libraryName.split('-').map(word =>
     const outputPath = join(WORKSPACE_ROOT, mapping.outputPath);
     const typesFileName = `${libraryName}.types.ts`;
     const typesFile = join(outputPath, typesFileName);
-    
+
     // Create backup if file exists
     const backupPath = await backupFile(typesFile);
     if (backupPath) {
@@ -170,11 +178,10 @@ export interface ${libraryName.split('-').map(word =>
     result.metadata.processingTime = Date.now() - startTime;
 
     console.log(`✅ Generated ${typeCount} types for ${mapping.library}`);
-    
+
     if (result.metadata.schemaCount > 0) {
       console.log(`   📊 Processed ${result.metadata.schemaCount} schemas`);
     }
-
   } catch (error) {
     console.error(`❌ Failed to generate types for ${mapping.library}:`, error);
     result.errors.push(String(error));
@@ -187,7 +194,10 @@ export interface ${libraryName.split('-').map(word =>
 /**
  * Simple type generator from OpenAPI schema
  */
-function generateTypeFromSchema(schemaName: string, schema: Record<string, unknown>): string | null {
+function generateTypeFromSchema(
+  schemaName: string,
+  schema: Record<string, unknown>
+): string | null {
   try {
     if (!schema || typeof schema !== 'object') {
       return null;
@@ -195,16 +205,18 @@ function generateTypeFromSchema(schemaName: string, schema: Record<string, unkno
 
     const properties = (schema.properties as Record<string, unknown>) || {};
     const required = (schema.required as string[]) || [];
-    
+
     const interfaceProps: string[] = [];
-    
+
     for (const [propName, propSchema] of Object.entries(properties)) {
       const isRequired = required.includes(propName);
       const optional = isRequired ? '' : '?';
       const propType = getTypeScriptType(propSchema as Record<string, unknown>);
       const propSchemaObj = propSchema as Record<string, unknown>;
-      
-      interfaceProps.push(`  /** ${(propSchemaObj?.title as string) || propName} */`);
+
+      interfaceProps.push(
+        `  /** ${(propSchemaObj?.title as string) || propName} */`
+      );
       interfaceProps.push(`  ${propName}${optional}: ${propType};`);
     }
 
@@ -212,7 +224,10 @@ function generateTypeFromSchema(schemaName: string, schema: Record<string, unkno
     return `
 /**
  * ${(schemaObj.title as string) || schemaName}
- * ${(schemaObj.description as string) || `Generated from OpenAPI schema: ${schemaName}`}
+ * ${
+   (schemaObj.description as string) ||
+   `Generated from OpenAPI schema: ${schemaName}`
+ }
  */
 export interface ${schemaName} {
 ${interfaceProps.join('\n')}
@@ -240,40 +255,51 @@ function getTypeScriptType(schema: Record<string, unknown>): string {
       if (schema.format === 'binary') return 'string';
       return 'string';
     }
-    
+
     case 'number':
     case 'integer':
       return 'number';
-    
+
     case 'boolean':
       return 'boolean';
-    
+
     case 'array': {
-      const itemType = schema.items ? getTypeScriptType(schema.items as Record<string, unknown>) : 'unknown';
+      const itemType = schema.items
+        ? getTypeScriptType(schema.items as Record<string, unknown>)
+        : 'unknown';
       return `${itemType}[]`;
     }
-    
+
     case 'object': {
       if (schema.additionalProperties) {
-        const valueType = getTypeScriptType(schema.additionalProperties as Record<string, unknown>);
+        const valueType = getTypeScriptType(
+          schema.additionalProperties as Record<string, unknown>
+        );
         return `Record<string, ${valueType}>`;
       }
       return 'Record<string, unknown>';
     }
-    
+
     default:
       // Handle anyOf, oneOf, etc.
       if (schema.anyOf) {
-        const types = (schema.anyOf as Record<string, unknown>[]).map((subSchema: Record<string, unknown>) => getTypeScriptType(subSchema));
+        const types = (schema.anyOf as Record<string, unknown>[]).map(
+          (subSchema: Record<string, unknown>) => getTypeScriptType(subSchema)
+        );
         return types.join(' | ');
       }
       if (schema.oneOf) {
-        const types = (schema.oneOf as Record<string, unknown>[]).map((subSchema: Record<string, unknown>) => getTypeScriptType(subSchema));
+        const types = (schema.oneOf as Record<string, unknown>[]).map(
+          (subSchema: Record<string, unknown>) => getTypeScriptType(subSchema)
+        );
         return types.join(' | ');
       }
       // Handle $ref - use 'unknown' to avoid missing type errors
       if (schema.$ref) {
-        const refName = (schema.$ref as string).replace('#/components/schemas/', '');
+        const refName = (schema.$ref as string).replace(
+          '#/components/schemas/',
+          ''
+        );
         // For now, use 'unknown' to prevent missing type errors
         // TODO: Implement proper cross-library type imports
         return 'unknown';
@@ -285,7 +311,9 @@ function getTypeScriptType(schema: Record<string, unknown>): string {
 /**
  * Main function - generates types for all configured libraries
  */
-async function main(options: GenerationOptions = {}): Promise<GenerationSummary> {
+async function main(
+  options: GenerationOptions = {}
+): Promise<GenerationSummary> {
   console.log('🚀 Starting OpenAPI types generation...\n');
 
   const startTime = Date.now();
@@ -295,10 +323,13 @@ async function main(options: GenerationOptions = {}): Promise<GenerationSummary>
     const spec = await fetchOpenAPISpec(OPENAPI_URL);
 
     // Step 2: Generate types for each library (or specified subset)
-    const librariesToGenerate = options.libraries || Object.keys(LIBRARY_MAPPINGS);
+    const librariesToGenerate =
+      options.libraries || Object.keys(LIBRARY_MAPPINGS);
     const results: GenerationResult[] = [];
 
-    console.log(`📋 Generating types for ${librariesToGenerate.length} libraries...\n`);
+    console.log(
+      `📋 Generating types for ${librariesToGenerate.length} libraries...\n`
+    );
 
     // Generate types for each library
     for (const libraryName of librariesToGenerate) {
@@ -313,8 +344,8 @@ async function main(options: GenerationOptions = {}): Promise<GenerationSummary>
     }
 
     // Step 3: Create generation summary
-    const successful = results.filter(r => r.success);
-    const failed = results.filter(r => !r.success);
+    const successful = results.filter((r) => r.success);
+    const failed = results.filter((r) => !r.success);
     const totalProcessingTime = Date.now() - startTime;
 
     const summary: GenerationSummary = {
@@ -324,38 +355,56 @@ async function main(options: GenerationOptions = {}): Promise<GenerationSummary>
       totalProcessingTime,
       results,
       specMetadata: {
-        version: (spec as Record<string, unknown>).openapi as string || 'unknown',
-        title: ((spec as Record<string, unknown>).info as Record<string, unknown>)?.title as string || 'unknown',
-        totalPaths: Object.keys((spec as Record<string, unknown>).paths || {}).length,
-        totalSchemas: Object.keys(((spec as Record<string, unknown>).components as Record<string, unknown>)?.schemas || {}).length,
+        version:
+          ((spec as Record<string, unknown>).openapi as string) || 'unknown',
+        title:
+          (((spec as Record<string, unknown>).info as Record<string, unknown>)
+            ?.title as string) || 'unknown',
+        totalPaths: Object.keys((spec as Record<string, unknown>).paths || {})
+          .length,
+        totalSchemas: Object.keys(
+          (
+            (spec as Record<string, unknown>).components as Record<
+              string,
+              unknown
+            >
+          )?.schemas || {}
+        ).length,
       },
     };
 
     // Step 4: Report results
     console.log('\n📊 Generation Summary:');
     console.log('='.repeat(60));
-    
-    console.log(`✅ Successful: ${successful.length}/${results.length} libraries`);
+
+    console.log(
+      `✅ Successful: ${successful.length}/${results.length} libraries`
+    );
     console.log(`⏱️  Total time: ${Math.round(totalProcessingTime / 1000)}s`);
-    
+
     if (successful.length > 0) {
-      const totalTypes = successful.reduce((sum, r) => sum + r.metadata.typeCount, 0);
+      const totalTypes = successful.reduce(
+        (sum, r) => sum + r.metadata.typeCount,
+        0
+      );
       console.log(`📝 Generated ${totalTypes} TypeScript types`);
     }
 
     if (failed.length > 0) {
       console.log(`\n❌ Failed: ${failed.length}/${results.length} libraries`);
-      failed.forEach(result => {
+      failed.forEach((result) => {
         console.log(`   - ${result.library}:`);
-        result.errors.forEach(error => console.log(`     ${error}`));
+        result.errors.forEach((error) => console.log(`     ${error}`));
       });
     }
 
     // Success details
     if (options.verbose && successful.length > 0) {
       console.log('\n✅ Successfully Generated:');
-      successful.forEach(result => {
-        console.log(`   - ${result.library}: ${result.metadata.typeCount} types (${result.metadata.processingTime}ms)`);
+      successful.forEach((result) => {
+        console.log(
+          `   - ${result.library}: ${result.metadata.typeCount} types (${result.metadata.processingTime}ms)`
+        );
       });
     }
 
@@ -366,10 +415,9 @@ async function main(options: GenerationOptions = {}): Promise<GenerationSummary>
     console.log('3. Enjoy type safety! 🎯');
 
     return summary;
-
   } catch (error) {
     console.error('💥 Type generation failed:', error);
-    
+
     // Return failed summary
     return {
       totalLibraries: 0,
@@ -436,7 +484,7 @@ function parseArgs(args: string[]): GenerationOptions {
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
-    
+
     switch (arg) {
       case '--force':
         options.force = true;
@@ -450,7 +498,7 @@ function parseArgs(args: string[]): GenerationOptions {
       case '--libraries':
         // Next argument should be comma-separated library names
         if (i + 1 < args.length) {
-          options.libraries = args[i + 1].split(',').map(lib => lib.trim());
+          options.libraries = args[i + 1].split(',').map((lib) => lib.trim());
           i++; // Skip next argument as it's consumed
         }
         break;
@@ -466,29 +514,31 @@ const isWatchMode = process.argv.includes('--watch');
 
 if (isMainModule) {
   const options = parseArgs(process.argv.slice(2));
-  
+
   if (isWatchMode) {
     startWatchMode(options).catch((error) => {
       console.error('💥 Watch mode failed:', error);
       process.exit(1);
     });
   } else {
-    main(options).then((summary) => {
-      if (summary.failedLibraries > 0) {
+    main(options)
+      .then((summary) => {
+        if (summary.failedLibraries > 0) {
+          process.exit(1);
+        }
+      })
+      .catch((error) => {
+        console.error('💥 Unexpected error:', error);
         process.exit(1);
-      }
-    }).catch((error) => {
-      console.error('💥 Unexpected error:', error);
-      process.exit(1);
-    });
+      });
   }
 }
 
 // Export functions for use in other scripts
-export { 
-  main, 
-  fetchOpenAPISpec, 
-  generateTypesForLibrary, 
+export {
+  main,
+  fetchOpenAPISpec,
+  generateTypesForLibrary,
   startWatchMode,
-  LIBRARY_MAPPINGS 
+  LIBRARY_MAPPINGS,
 };

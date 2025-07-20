@@ -1,6 +1,6 @@
 /**
  * Library mapping configuration for OpenAPI type generation
- * 
+ *
  * This file defines how OpenAPI tags and schemas map to specific Nx libraries.
  * Each mapping specifies which parts of the API belong to which library.
  */
@@ -15,26 +15,18 @@ export const LIBRARY_MAPPINGS: Record<string, LibraryMapping> = {
     library: '@cockpit-app/types-ai-budget-expenses',
     outputPath: 'libs/types/ai-budget/expenses/src',
     includedTags: ['ai-budget/expenses'],
-    includedSchemas: [
-      'Expense',
-      'ExpenseCreate',
-      'ExpenseUpdate',
-    ],
+    includedSchemas: ['Expense', 'ExpenseCreate', 'ExpenseUpdate'],
     description: 'TypeScript types for AI Budget expense management',
   },
-  
+
   'ai-budget-categories': {
     library: '@cockpit-app/types-ai-budget-categories',
     outputPath: 'libs/types/ai-budget/categories/src',
     includedTags: ['ai-budget/categories'],
-    includedSchemas: [
-      'Category',
-      'CategoryCreate',
-      'CategoryUpdate',
-    ],
+    includedSchemas: ['Category', 'CategoryCreate', 'CategoryUpdate'],
     description: 'TypeScript types for AI Budget category management',
   },
-  
+
   'ai-budget-payment-methods': {
     library: '@cockpit-app/types-ai-budget-payment-methods',
     outputPath: 'libs/types/ai-budget/payment-methods/src',
@@ -46,31 +38,23 @@ export const LIBRARY_MAPPINGS: Record<string, LibraryMapping> = {
     ],
     description: 'TypeScript types for AI Budget payment method management',
   },
-  
+
   'todo-items': {
     library: '@cockpit-app/types-todo-items',
     outputPath: 'libs/types/todo/items/src',
     includedTags: ['todo/items'],
-    includedSchemas: [
-      'TodoItem',
-      'TodoItemCreate',
-      'TodoItemUpdate',
-    ],
+    includedSchemas: ['TodoItem', 'TodoItemCreate', 'TodoItemUpdate'],
     description: 'TypeScript types for Todo item management',
   },
-  
+
   'todo-projects': {
     library: '@cockpit-app/types-todo-projects',
     outputPath: 'libs/types/todo/projects/src',
     includedTags: ['todo/projects'],
-    includedSchemas: [
-      'TodoProject',
-      'TodoProjectCreate',
-      'TodoProjectUpdate',
-    ],
+    includedSchemas: ['TodoProject', 'TodoProjectCreate', 'TodoProjectUpdate'],
     description: 'TypeScript types for Todo project management',
   },
-  
+
   'shared-auth': {
     library: '@cockpit-app/types-shared-auth',
     outputPath: 'libs/types/shared/auth/src',
@@ -80,21 +64,21 @@ export const LIBRARY_MAPPINGS: Record<string, LibraryMapping> = {
       'LoginResponse',
       'PasswordChangeRequest',
       'PasswordChangeResponse',
-      'PasswordResetRequest', 
+      'PasswordResetRequest',
       'PasswordResetResponse',
       'UserInfoResponse',
       'SimpleRefreshResponse',
     ],
     description: 'TypeScript types for authentication and authorization',
   },
-  
+
   'shared-users': {
     library: '@cockpit-app/types-shared-users',
     outputPath: 'libs/types/shared/users/src',
     includedTags: ['shared/users'],
     includedSchemas: [
       'UserCreate',
-      'UserUpdate', 
+      'UserUpdate',
       'UserWithRole',
       'UserWithPermissions',
       'UserPermissionAssign',
@@ -102,18 +86,15 @@ export const LIBRARY_MAPPINGS: Record<string, LibraryMapping> = {
     ],
     description: 'TypeScript types for user management',
   },
-  
+
   'shared-roles': {
     library: '@cockpit-app/types-shared-roles',
     outputPath: 'libs/types/shared/roles/src',
     includedTags: ['shared/roles'],
-    includedSchemas: [
-      'UserRole',
-      'Permission',
-    ],
+    includedSchemas: ['UserRole', 'Permission'],
     description: 'TypeScript types for role and permission management',
   },
-  
+
   'shared-utils': {
     library: '@cockpit-app/types-shared-utils',
     outputPath: 'libs/types/shared/utils/src',
@@ -124,7 +105,7 @@ export const LIBRARY_MAPPINGS: Record<string, LibraryMapping> = {
     ],
     description: 'TypeScript types for shared utilities (OCR, etc.)',
   },
-  
+
   'system-health': {
     library: '@cockpit-app/types-system-health',
     outputPath: 'libs/types/system/health/src',
@@ -132,7 +113,7 @@ export const LIBRARY_MAPPINGS: Record<string, LibraryMapping> = {
     includedSchemas: [],
     description: 'TypeScript types for system health monitoring',
   },
-  
+
   'system-root': {
     library: '@cockpit-app/types-system-root',
     outputPath: 'libs/types/system/root/src',
@@ -161,11 +142,11 @@ export function getLibraryMapping(name: string): LibraryMapping | undefined {
  */
 export function getAllIncludedTags(): string[] {
   const tags = new Set<string>();
-  
-  Object.values(LIBRARY_MAPPINGS).forEach(mapping => {
-    mapping.includedTags.forEach(tag => tags.add(tag));
+
+  Object.values(LIBRARY_MAPPINGS).forEach((mapping) => {
+    mapping.includedTags.forEach((tag) => tags.add(tag));
   });
-  
+
   return Array.from(tags).sort();
 }
 
@@ -174,11 +155,11 @@ export function getAllIncludedTags(): string[] {
  */
 export function getAllIncludedSchemas(): string[] {
   const schemas = new Set<string>();
-  
-  Object.values(LIBRARY_MAPPINGS).forEach(mapping => {
-    mapping.includedSchemas?.forEach(schema => schemas.add(schema));
+
+  Object.values(LIBRARY_MAPPINGS).forEach((mapping) => {
+    mapping.includedSchemas?.forEach((schema) => schemas.add(schema));
   });
-  
+
   return Array.from(schemas).sort();
 }
 
@@ -186,16 +167,18 @@ export function getAllIncludedSchemas(): string[] {
  * Finds which library a tag belongs to
  */
 export function findLibraryForTag(tag: string): LibraryMapping | undefined {
-  return Object.values(LIBRARY_MAPPINGS).find(mapping => 
-    mapping.includedTags.some(includedTag => tag.includes(includedTag))
+  return Object.values(LIBRARY_MAPPINGS).find((mapping) =>
+    mapping.includedTags.some((includedTag) => tag.includes(includedTag))
   );
 }
 
 /**
  * Finds which library a schema belongs to
  */
-export function findLibraryForSchema(schema: string): LibraryMapping | undefined {
-  return Object.values(LIBRARY_MAPPINGS).find(mapping => 
+export function findLibraryForSchema(
+  schema: string
+): LibraryMapping | undefined {
+  return Object.values(LIBRARY_MAPPINGS).find((mapping) =>
     mapping.includedSchemas?.includes(schema)
   );
 }

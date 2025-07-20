@@ -59,8 +59,8 @@ export function filterOpenAPISpec(
     paths: {},
     components: {
       schemas: {},
-      securitySchemes: spec.components?.securitySchemes || {}
-    }
+      securitySchemes: spec.components?.securitySchemes || {},
+    },
   };
 
   // Filter paths by tags
@@ -71,8 +71,8 @@ export function filterOpenAPISpec(
     for (const [method, operation] of Object.entries(pathItem)) {
       if (typeof operation === 'object' && operation?.tags) {
         const operationTags = operation.tags as string[];
-        const hasIncludedTag = operationTags.some(tag => 
-          includedTags.some(includedTag => tag.includes(includedTag))
+        const hasIncludedTag = operationTags.some((tag) =>
+          includedTags.some((includedTag) => tag.includes(includedTag))
         );
 
         if (hasIncludedTag) {
@@ -92,7 +92,8 @@ export function filterOpenAPISpec(
     for (const schemaName of includedSchemas) {
       if (spec.components.schemas[schemaName]) {
         if (filteredSpec.components && filteredSpec.components.schemas) {
-          filteredSpec.components.schemas[schemaName] = spec.components.schemas[schemaName];
+          filteredSpec.components.schemas[schemaName] =
+            spec.components.schemas[schemaName];
         }
       }
     }
@@ -102,7 +103,8 @@ export function filterOpenAPISpec(
     for (const schemaName of referencedSchemas) {
       if (spec.components.schemas[schemaName]) {
         if (filteredSpec.components && filteredSpec.components.schemas) {
-          filteredSpec.components.schemas[schemaName] = spec.components.schemas[schemaName];
+          filteredSpec.components.schemas[schemaName] =
+            spec.components.schemas[schemaName];
         }
       }
     }
@@ -114,7 +116,9 @@ export function filterOpenAPISpec(
 /**
  * Extracts schema names referenced in paths
  */
-function extractReferencedSchemas(paths: Record<string, OpenAPIPathItem>): Set<string> {
+function extractReferencedSchemas(
+  paths: Record<string, OpenAPIPathItem>
+): Set<string> {
   const schemas = new Set<string>();
 
   function extractFromObject(obj: unknown): void {
@@ -162,7 +166,7 @@ export function extractAllTags(spec: OpenAPIDocument): string[] {
   for (const pathItem of Object.values(spec.paths)) {
     for (const operation of Object.values(pathItem)) {
       if (typeof operation === 'object' && operation?.tags) {
-        (operation.tags as string[]).forEach(tag => tags.add(tag));
+        (operation.tags as string[]).forEach((tag) => tags.add(tag));
       }
     }
   }
@@ -174,7 +178,7 @@ export function extractAllTags(spec: OpenAPIDocument): string[] {
  * Gets all schema names from the OpenAPI spec
  */
 export function extractAllSchemas(spec: OpenAPIDocument): string[] {
-  return spec.components?.schemas 
+  return spec.components?.schemas
     ? Object.keys(spec.components.schemas).sort()
     : [];
 }
