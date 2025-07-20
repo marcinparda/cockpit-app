@@ -1,0 +1,19 @@
+{
+  "name": "types-shared-roles",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/types/shared/roles/src",
+  "projectType": "library",
+  "tags": ["scope:types", "domain:shared", "type:types"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/types/shared/roles",
+        "main": "libs/types/shared/roles/src/index.ts",
+        "tsConfig": "libs/types/shared/roles/tsconfig.lib.json",
+        "assets": ["libs/types/shared/roles/*.md"]
+      }
+    }
+  }
+}

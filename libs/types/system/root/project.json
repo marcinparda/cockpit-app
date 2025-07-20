@@ -1,0 +1,19 @@
+{
+  "name": "types-system-root",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/types/system/root/src",
+  "projectType": "library",
+  "tags": ["scope:types", "domain:system", "type:types"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/types/system/root",
+        "main": "libs/types/system/root/src/index.ts",
+        "tsConfig": "libs/types/system/root/tsconfig.lib.json",
+        "assets": ["libs/types/system/root/*.md"]
+      }
+    }
+  }
+}

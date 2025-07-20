@@ -1,0 +1,19 @@
+{
+  "name": "types-shared-users",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/types/shared/users/src",
+  "projectType": "library",
+  "tags": ["scope:types", "domain:shared", "type:types"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/types/shared/users",
+        "main": "libs/types/shared/users/src/index.ts",
+        "tsConfig": "libs/types/shared/users/tsconfig.lib.json",
+        "assets": ["libs/types/shared/users/*.md"]
+      }
+    }
+  }
+}

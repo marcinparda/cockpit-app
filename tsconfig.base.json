@@ -21,7 +21,34 @@
     "lib": ["ES2022", "dom"],
     "paths": {
       "@cockpit-app/shared/utils": ["libs/shared/utils/src/index.ts"],
-      "@cockpit-app/shared/vue-ui": ["libs/shared/vue-ui/src/index.ts"]
+      "@cockpit-app/shared/vue-ui": ["libs/shared/vue-ui/src/index.ts"],
+      "@cockpit-app/types-ai-budget-categories": [
+        "libs/types/ai-budget/categories/src/index.ts"
+      ],
+      "@cockpit-app/types-ai-budget-expenses": [
+        "libs/types/ai-budget/expenses/src/index.ts"
+      ],
+      "@cockpit-app/types-ai-budget-payment-methods": [
+        "libs/types/ai-budget/payment-methods/src/index.ts"
+      ],
+      "@cockpit-app/types-shared-auth": ["libs/types/shared/auth/src/index.ts"],
+      "@cockpit-app/types-shared-roles": [
+        "libs/types/shared/roles/src/index.ts"
+      ],
+      "@cockpit-app/types-shared-users": [
+        "libs/types/shared/users/src/index.ts"
+      ],
+      "@cockpit-app/types-shared-utils": [
+        "libs/types/shared/utils/src/index.ts"
+      ],
+      "@cockpit-app/types-system-health": [
+        "libs/types/system/health/src/index.ts"
+      ],
+      "@cockpit-app/types-system-root": ["libs/types/system/root/src/index.ts"],
+      "@cockpit-app/types-todo-items": ["libs/types/todo/items/src/index.ts"],
+      "@cockpit-app/types-todo-projects": [
+        "libs/types/todo/projects/src/index.ts"
+      ]
     },
     "rootDir": "."
   },
