@@ -1,80 +1,35 @@
-name: CI/CD Pipeline
+name: Deploy to Production
 
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
 
 jobs:
+  validate-types:
+    name: Validate API Types
+    uses: ./.github/workflows/validate-types.yml
+    with:
+      create-pr-on-drift: false
+      force-update-types: false
+
   build-and-test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Create Angular environment files
-        run: |
-          mkdir -p apps/ai-budget/src/environments
-          cat > apps/ai-budget/src/environments/environment.production.ts << EOL
-          export const environment = {
-            production: true,
-            apiUrl: '${{ secrets.API_URL || 'http://localhost:8000' }}',
-          };
-          EOL
-
-      - name: Build
-        run: npm run build -- ai-budget --configuration=production
-
-      # - name: Test
-      #   run: npm run test -- ai-budget --watch=false
+    name: Build and Test Applications
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      app-name: 'ai-budget'
+      configuration: 'production'
+      run-tests: false
+      api-url: ${{ secrets.API_URL || 'http://localhost:8000' }}
 
   deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Cloudflared
-        run: |
-          sudo mkdir -p --mode=0755 /usr/share/keyrings
-          curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
-          echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared jammy main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
-          sudo apt-get update && sudo apt-get install cloudflared
-
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.RASPBERRY_PI_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-          cat <<EOF > ~/.ssh/config
-          Host ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
-            User ${{ secrets.RASPBERRY_PI_USERNAME }}
-            IdentityFile ~/.ssh/id_ed25519
-            ProxyCommand cloudflared access ssh --hostname %h
-          EOF
-          chmod 600 ~/.ssh/config
-        shell: bash
-
-      - name: Deploy via SSH
-        run: |
-          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "\
-            eval \"\$(ssh-agent -s)\" && \
-            ssh-add ~/.ssh/github && \
-            cd ~/cockpit-app && \
-            git pull && \
-            docker compose down && docker compose up -d --build"
-
-        shell: bash
+    name: Deploy to Production
+    needs: [validate-types, build-and-test]
+    uses: ./.github/workflows/deploy-reusable.yml
+    with:
+      environment: 'production'
+      skip-pre-check: false
+    secrets:
+      RASPBERRY_PI_SSH_KEY: ${{ secrets.RASPBERRY_PI_SSH_KEY }}
+      SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+      CLOUDFLARE_TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+      RASPBERRY_PI_USERNAME: ${{ secrets.RASPBERRY_PI_USERNAME }}
