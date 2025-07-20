@@ -4,6 +4,23 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { environment } from '../../../environments/environment';
 
+// Import generated types
+import type {
+  Expense,
+  ExpenseCreate,
+  ExpenseUpdate,
+} from '@cockpit-app/types-ai-budget-expenses';
+import type {
+  Category,
+  CategoryCreate,
+  CategoryUpdate,
+} from '@cockpit-app/types-ai-budget-categories';
+import type {
+  PaymentMethod,
+  PaymentMethodCreate,
+  PaymentMethodUpdate,
+} from '@cockpit-app/types-ai-budget-payment-methods';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -19,48 +36,58 @@ export class ApiService {
     });
   }
 
-  getCockpitData(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/api/v1/payment_methods`, {
-      headers: this.getHeaders(),
-    });
+  getCockpitData(): Observable<PaymentMethod[]> {
+    return this.http.get<PaymentMethod[]>(
+      `${this.apiUrl}/api/v1/payment_methods`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 
   // Expense endpoints
-  getExpenses(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/api/v1/expenses/`, {
+  getExpenses(): Observable<Expense[]> {
+    return this.http.get<Expense[]>(`${this.apiUrl}/api/v1/expenses/`, {
       headers: this.getHeaders(),
     });
   }
 
-  createExpense(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/api/v1/expenses/`, data, {
+  createExpense(data: ExpenseCreate): Observable<Expense> {
+    return this.http.post<Expense>(`${this.apiUrl}/api/v1/expenses/`, data, {
       headers: this.getHeaders(),
     });
   }
 
   // Category endpoints
-  getCategories(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/api/v1/categories/`, {
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.apiUrl}/api/v1/categories/`, {
       headers: this.getHeaders(),
     });
   }
 
-  createCategory(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/api/v1/categories/`, data, {
+  createCategory(data: CategoryCreate): Observable<Category> {
+    return this.http.post<Category>(`${this.apiUrl}/api/v1/categories/`, data, {
       headers: this.getHeaders(),
     });
   }
 
   // Payment method endpoints
-  getPaymentMethods(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/api/v1/payment_methods/`, {
-      headers: this.getHeaders(),
-    });
+  getPaymentMethods(): Observable<PaymentMethod[]> {
+    return this.http.get<PaymentMethod[]>(
+      `${this.apiUrl}/api/v1/payment_methods/`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 
-  createPaymentMethod(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/api/v1/payment_methods/`, data, {
-      headers: this.getHeaders(),
-    });
+  createPaymentMethod(data: PaymentMethodCreate): Observable<PaymentMethod> {
+    return this.http.post<PaymentMethod>(
+      `${this.apiUrl}/api/v1/payment_methods/`,
+      data,
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 }

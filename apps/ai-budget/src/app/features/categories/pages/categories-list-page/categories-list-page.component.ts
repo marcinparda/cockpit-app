@@ -13,7 +13,7 @@ import { ApiService } from '../../../api/api.service';
 })
 export class CategoriesListPageComponent implements OnInit {
   categories: any[] = [];
-  isLoading: boolean = false;
+  isLoading = false;
   error: string | null = null;
 
   constructor(private apiService: ApiService) {}

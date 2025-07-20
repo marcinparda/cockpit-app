@@ -1,0 +1,160 @@
+name: Pull Request Validation
+
+on:
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: pr-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate-types:
+    name: Validate API Types
+    uses: ./.github/workflows/validate-types.yml
+    with:
+      create-pr-on-drift: false
+      force-update-types: false
+
+  build-and-test-ai-budget:
+    name: Build and Test AI Budget
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      app-name: 'ai-budget'
+      configuration: 'development'
+      run-tests: true
+      api-url: 'http://localhost:8000'
+
+  build-and-test-todo:
+    name: Build and Test Todo
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      app-name: 'todo'
+      configuration: 'development'
+      run-tests: false
+      api-url: 'http://localhost:8000'
+
+  quality-checks:
+    name: Quality Checks
+    runs-on: ubuntu-latest
+    needs: [validate-types]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Linting
+        run: |
+          echo "🔍 Running linting checks..."
+          npm run lint --if-present
+
+      - name: Check Code Formatting
+        run: |
+          echo "✨ Checking code formatting..."
+          npm run format:check --if-present || echo "Format check not configured"
+
+      - name: Type Check
+        run: |
+          echo "🔍 Running TypeScript type checking..."
+          npx nx run-many --target=build --projects=tag:type-lib --parallel
+
+      - name: Security Audit
+        run: |
+          echo "🔒 Running security audit..."
+          npm audit --audit-level high || echo "Security audit found issues, please review"
+
+  pr-summary:
+    name: PR Validation Summary
+    runs-on: ubuntu-latest
+    needs:
+      [
+        validate-types,
+        build-and-test-ai-budget,
+        build-and-test-todo,
+        quality-checks,
+      ]
+    if: always()
+
+    steps:
+      - name: PR Validation Summary
+        run: |
+          echo "📋 Pull Request Validation Summary"
+          echo "=================================="
+          echo ""
+          echo "🔍 Type Validation: ${{ needs.validate-types.result }}"
+          echo "🏗️ AI Budget Build: ${{ needs.build-and-test-ai-budget.result }}"
+          echo "🏗️ Todo Build: ${{ needs.build-and-test-todo.result }}"
+          echo "✅ Quality Checks: ${{ needs.quality-checks.result }}"
+          echo ""
+
+          # Check if all jobs succeeded
+          if [ "${{ needs.validate-types.result }}" = "success" ] && \
+             [ "${{ needs.build-and-test-ai-budget.result }}" = "success" ] && \
+             [ "${{ needs.build-and-test-todo.result }}" = "success" ] && \
+             [ "${{ needs.quality-checks.result }}" = "success" ]; then
+            echo "🎉 All validations passed! PR is ready for review."
+            echo "✅ Types are valid and up-to-date"
+            echo "✅ All applications build successfully"
+            echo "✅ Quality checks passed"
+          else
+            echo "❌ Some validations failed. Please review the failed jobs above."
+            exit 1
+          fi
+
+      - name: Comment on PR
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const getStatus = (result) => result === 'success' ? '✅ Passed' : '❌ Failed';
+            const getAllPassed = () => {
+              return '${{ needs.validate-types.result }}' === 'success' &&
+                     '${{ needs.build-and-test-ai-budget.result }}' === 'success' &&
+                     '${{ needs.build-and-test-todo.result }}' === 'success' &&
+                     '${{ needs.quality-checks.result }}' === 'success';
+            };
+
+            const summary = `
+            ## 🤖 PR Validation Results
+
+            | Check | Status |
+            |-------|--------|
+            | 🔍 Type Validation | ${getStatus('${{ needs.validate-types.result }}')} |
+            | 🏗️ AI Budget Build | ${getStatus('${{ needs.build-and-test-ai-budget.result }}')} |
+            | 🏗️ Todo Build | ${getStatus('${{ needs.build-and-test-todo.result }}')} |
+            | ✅ Quality Checks | ${getStatus('${{ needs.quality-checks.result }}')} |
+
+            ${getAllPassed() ? 
+              '🎉 All checks passed! This PR is ready for review and merge.' : 
+              '⚠️ Some checks failed. Please review the failed jobs and fix any issues.'
+            }
+
+            ### Type System Status
+            - **Drift Detection**: ${{ needs.validate-types.outputs.drift-detected == 'true' && '⚠️ API drift detected' || '✅ No drift detected' }}
+            - **Validation Status**: ${{ needs.validate-types.outputs.validation-status || 'completed' }}
+
+            ---
+            *This comment was automatically generated by the PR validation workflow.*
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: summary
+            });

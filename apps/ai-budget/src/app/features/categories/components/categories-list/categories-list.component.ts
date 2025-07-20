@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ApiService } from '../../../../services/api.service';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
+import type { Category } from '@cockpit-app/types-ai-budget-categories';
 
 @Component({
   selector: 'app-categories-list',
@@ -11,8 +12,8 @@ import { NavigationHeaderComponent } from '../../../../shared/components/navigat
   imports: [CommonModule, RouterModule, NavigationHeaderComponent],
 })
 export class CategoriesListComponent implements OnInit {
-  categories: any[] = [];
-  isLoading: boolean = false;
+  categories: Category[] = [];
+  isLoading = false;
   error: string | null = null;
 
   constructor(private apiService: ApiService) {}

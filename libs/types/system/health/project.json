@@ -1,0 +1,19 @@
+{
+  "name": "types-system-health",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/types/system/health/src",
+  "projectType": "library",
+  "tags": ["scope:types", "domain:system", "type:types"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/types/system/health",
+        "main": "libs/types/system/health/src/index.ts",
+        "tsConfig": "libs/types/system/health/tsconfig.lib.json",
+        "assets": ["libs/types/system/health/*.md"]
+      }
+    }
+  }
+}

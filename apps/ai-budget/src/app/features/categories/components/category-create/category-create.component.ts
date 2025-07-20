@@ -4,6 +4,10 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 import { ApiService } from '../../../api/api.service';
+import type {
+  Category,
+  CategoryCreate,
+} from '@cockpit-app/types-ai-budget-categories';
 
 @Component({
   selector: 'app-category-create',
@@ -12,13 +16,13 @@ import { ApiService } from '../../../api/api.service';
   imports: [CommonModule, RouterModule, FormsModule, NavigationHeaderComponent],
 })
 export class CategoryCreateComponent implements OnInit {
-  newCategory: any = {
+  newCategory: CategoryCreate = {
     name: '',
     parent_id: null,
   };
-  categories: any[] = [];
-  isLoading: boolean = false;
-  isSaving: boolean = false;
+  categories: Category[] = [];
+  isLoading = false;
+  isSaving = false;
   error: string | null = null;
 
   constructor(private apiService: ApiService, private router: Router) {}
@@ -49,14 +53,20 @@ export class CategoryCreateComponent implements OnInit {
     this.error = null;
 
     // Convert parent_id from string to number or null
-    if (this.newCategory.parent_id === '') {
+    if (
+      this.newCategory.parent_id === '' ||
+      this.newCategory.parent_id === undefined
+    ) {
       this.newCategory.parent_id = null;
-    } else if (this.newCategory.parent_id !== null) {
+    } else if (
+      this.newCategory.parent_id !== null &&
+      typeof this.newCategory.parent_id === 'string'
+    ) {
       this.newCategory.parent_id = parseInt(this.newCategory.parent_id);
     }
 
     this.apiService.createCategory(this.newCategory).subscribe({
-      next: (_) => {
+      next: () => {
         this.isSaving = false;
         this.router.navigate(['/categories']);
       },

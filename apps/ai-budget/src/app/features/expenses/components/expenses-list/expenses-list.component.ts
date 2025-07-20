@@ -12,7 +12,7 @@ import { ApiService } from '../../../api/api.service';
 })
 export class ExpensesListComponent implements OnInit {
   expenses: any[] = [];
-  isLoading: boolean = false;
+  isLoading = false;
   error: string | null = null;
 
   constructor(private apiService: ApiService) {}

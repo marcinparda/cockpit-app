@@ -64,6 +64,78 @@ When building for production, the CLI will automatically use the production envi
 ng build --configuration production
 ```
 
+## API Types System
+
+This project includes a comprehensive OpenAPI types system that provides type-safe API integration across applications. The system automatically generates TypeScript interfaces from the OpenAPI specification and organizes them into domain-specific libraries.
+
+### 📚 Type Libraries
+
+The project includes specialized type libraries organized by domain.
+
+### 🔧 Available Scripts
+
+#### Core Type Management
+
+```bash
+# Generate types from OpenAPI specification
+npm run generate:types
+
+# Generate types in watch mode (for development)
+npm run generate:types:watch
+
+# Force regeneration of all types
+npm run generate:types:force
+
+# Build all type libraries
+npm run build:types
+
+# Complete type update pipeline (generate + build + verify)
+npm run update:types
+```
+
+#### Quality Assurance & Testing
+
+```bash
+# Verify type coverage and integrity
+npm run verify:types
+
+# Run comprehensive type generation tests
+npm run test:types
+
+# Check for API drift (changes in OpenAPI spec)
+npm run check:drift
+
+# View type documentation
+npm run docs:types
+```
+
+### 🔄 Automated Workflows
+
+#### CI/CD Integration
+
+```yaml
+# .github/workflows/api-types.yml
+- name: Check API Drift
+  run: npm run check:drift
+
+- name: Update Types if Needed
+  run: npm run update:types
+```
+
+The type system includes automated drift detection for CI/CD pipelines:
+
+```yaml
+# .github/workflows/api-types.yml
+- name: Check API Drift
+  run: npm run check:drift
+
+- name: Update Types if Needed
+  run: npm run update:types
+
+- name: Validate Type Coverage
+  run: npm run verify:types
+```
+
 ## Running unit tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:

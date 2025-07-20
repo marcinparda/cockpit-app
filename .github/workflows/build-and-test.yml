@@ -1,0 +1,134 @@
+name: Build and Test
+
+on:
+  workflow_call:
+    inputs:
+      app-name:
+        description: 'Application name to build'
+        required: false
+        default: 'ai-budget'
+        type: string
+      configuration:
+        description: 'Build configuration'
+        required: false
+        default: 'production'
+        type: string
+      run-tests:
+        description: 'Whether to run tests'
+        required: false
+        default: false
+        type: boolean
+      api-url:
+        description: 'API URL for environment configuration'
+        required: false
+        default: 'http://localhost:8000'
+        type: string
+    outputs:
+      build-status:
+        description: 'Build completion status'
+        value: ${{ jobs.build-and-test.outputs.build-status }}
+      test-status:
+        description: 'Test completion status'
+        value: ${{ jobs.build-and-test.outputs.test-status }}
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    name: Build and Test ${{ inputs.app-name }}
+    outputs:
+      build-status: ${{ steps.build-summary.outputs.build-status }}
+      test-status: ${{ steps.test-summary.outputs.test-status }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Quick Type Validation
+        run: |
+          echo "🔍 Running quick type validation..."
+          npm run check:drift
+          npm run verify:types
+
+      - name: Create Environment Files
+        run: |
+          echo "🔧 Creating environment configuration for ${{ inputs.app-name }}..."
+          mkdir -p apps/${{ inputs.app-name }}/src/environments
+
+          case "${{ inputs.app-name }}" in
+            "ai-budget")
+              cat > apps/${{ inputs.app-name }}/src/environments/environment.${{ inputs.configuration }}.ts << EOL
+          export const environment = {
+            production: ${{ inputs.configuration == 'production' }},
+            apiUrl: '${{ inputs.api-url }}',
+          };
+          EOL
+              ;;
+            "todo")
+              cat > apps/${{ inputs.app-name }}/src/environments/environment.${{ inputs.configuration }}.ts << EOL
+          export const environment = {
+            production: ${{ inputs.configuration == 'production' }},
+            apiUrl: '${{ inputs.api-url }}',
+          };
+          EOL
+              ;;
+            *)
+              echo "⚠️ Unknown app: ${{ inputs.app-name }}, using default environment"
+              ;;
+          esac
+
+      - name: Build Application
+        id: build
+        run: |
+          echo "🏗️ Building ${{ inputs.app-name }} with ${{ inputs.configuration }} configuration..."
+          npm run build -- ${{ inputs.app-name }} --configuration=${{ inputs.configuration }}
+          echo "build-completed=true" >> $GITHUB_OUTPUT
+
+      - name: Run Tests
+        id: test
+        if: inputs.run-tests == true
+        run: |
+          echo "🧪 Running tests for ${{ inputs.app-name }}..."
+          npm run test -- ${{ inputs.app-name }} --watch=false --browsers=ChromeHeadless
+          echo "tests-completed=true" >> $GITHUB_OUTPUT
+
+      - name: Build Summary
+        id: build-summary
+        run: |
+          echo "✅ Build completed successfully for ${{ inputs.app-name }}"
+          echo "📦 Configuration: ${{ inputs.configuration }}"
+          echo "🎯 API URL: ${{ inputs.api-url }}"
+          echo "build-status=success" >> $GITHUB_OUTPUT
+
+      - name: Test Summary
+        id: test-summary
+        run: |
+          if [ "${{ inputs.run-tests }}" == "true" ]; then
+            if [ "${{ steps.test.outputs.tests-completed }}" == "true" ]; then
+              echo "✅ Tests completed successfully"
+              echo "test-status=success" >> $GITHUB_OUTPUT
+            else
+              echo "❌ Tests failed"
+              echo "test-status=failed" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "⏭️ Tests skipped"
+            echo "test-status=skipped" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload Build Artifacts
+        if: steps.build.outputs.build-completed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ inputs.app-name }}-${{ inputs.configuration }}
+          path: |
+            dist/apps/${{ inputs.app-name }}
+          retention-days: 30

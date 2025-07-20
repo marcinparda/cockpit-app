@@ -8,9 +8,9 @@
 - Always write JSDocs, or Python docstrings for all exported functions, classes and components.
 - For saving you thoughts or summaries use .md extension files, save them in .ai folder in appropriate folder. If folder does not exist, create it.
 - Appropriate folder for .md thoughts/summaries should be the name of the feature/fix/improvement you are working on right now. .md files names convention:
-  - requirements.md - for requirements of the feature
+  - requirements.md - for requirements of the feature - these should be buisness requirements, not technical ones
   - initial-notes.md - my for initial notes about the feature
-  - development-plan.md - for development plan of the feature
+  - development-plan.md - for development plan of the feature, this should be technical plan, based on business requirements
   - step-x.md - for each step of the feature development, where x is the number of the step
 - You can find openapi API documentation on page https://api.parda.me/openapi.json.
 
@@ -43,6 +43,11 @@
 - Use Vue Router for navigation.
 - Write tests with Vue Test Utils and Vitest.
 
+## TypeScript
+
+- For types for requests and responses use types libs like `@cockpit-app/types-ai-budget-expenses`, `@cockpit-app/types-todo-items`, etc.
+- Don't use `any` type, prefer `unknown` or specific types.
+
 ## Documentation
 
 - Add JSDoc comments to exported functions and components in JS/TS.
@@ -53,8 +58,10 @@
 - Use NX workspace conventions for organizing apps and libraries.
 - Use proper imports from `@cockpit-app` libraries.
 - Do not use relative imports in apps and libs.
+- When generating new js/ts libraries/apps, use vite and vitest.
 
 ## Deployment
+
 - Use Docker for containerization.
 - Use GitHub Actions for CI/CD pipelines.
 - Deploys apps on personal Raspberry Pi machine.
