@@ -80,6 +80,10 @@ jobs:
         run: |
           echo "🚀 Deploying to ${{ inputs.environment }}..."
           ssh ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "
+            echo '🔑 Starting SSH agent...'
+            eval \"\$(ssh-agent -s)\" && \
+            ssh-add ~/.ssh/github && \
+            
             echo '📂 Navigating to application directory...'
             cd ~/cockpit-app
             
