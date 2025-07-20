@@ -23,6 +23,10 @@ on:
         required: false
         default: 'http://localhost:8000'
         type: string
+    secrets:
+      API_URL:
+        description: 'Production API URL (overrides api-url input if provided)'
+        required: false
     outputs:
       build-status:
         description: 'Build completion status'
@@ -58,6 +62,17 @@ jobs:
           npm run check:drift
           npm run verify:types
 
+      - name: Determine API URL
+        id: api-config
+        run: |
+          if [ -n "${{ secrets.API_URL }}" ]; then
+            echo "api-url=${{ secrets.API_URL }}" >> $GITHUB_OUTPUT
+            echo "🔧 Using API URL from secret"
+          else
+            echo "api-url=${{ inputs.api-url }}" >> $GITHUB_OUTPUT
+            echo "🔧 Using API URL from input: ${{ inputs.api-url }}"
+          fi
+
       - name: Create Environment Files
         run: |
           echo "🔧 Creating environment configuration for ${{ inputs.app-name }}..."
@@ -68,7 +83,7 @@ jobs:
               cat > apps/${{ inputs.app-name }}/src/environments/environment.${{ inputs.configuration }}.ts << EOL
           export const environment = {
             production: ${{ inputs.configuration == 'production' }},
-            apiUrl: '${{ inputs.api-url }}',
+            apiUrl: '${{ steps.api-config.outputs.api-url }}',
           };
           EOL
               ;;
@@ -76,7 +91,7 @@ jobs:
               cat > apps/${{ inputs.app-name }}/src/environments/environment.${{ inputs.configuration }}.ts << EOL
           export const environment = {
             production: ${{ inputs.configuration == 'production' }},
-            apiUrl: '${{ inputs.api-url }}',
+            apiUrl: '${{ steps.api-config.outputs.api-url }}',
           };
           EOL
               ;;
@@ -105,7 +120,7 @@ jobs:
         run: |
           echo "✅ Build completed successfully for ${{ inputs.app-name }}"
           echo "📦 Configuration: ${{ inputs.configuration }}"
-          echo "🎯 API URL: ${{ inputs.api-url }}"
+          echo "🎯 API URL: ${{ steps.api-config.outputs.api-url }}"
           echo "build-status=success" >> $GITHUB_OUTPUT
 
       - name: Test Summary
