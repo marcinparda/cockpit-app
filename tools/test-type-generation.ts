@@ -18,10 +18,9 @@
  */
 
 import { execSync } from 'child_process';
-import { existsSync, readFileSync, mkdtempSync, rmSync } from 'fs';
+import { existsSync, readFileSync, rmSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { tmpdir } from 'os';
 
 // Get current directory (ES modules)
 const __filename = fileURLToPath(import.meta.url);
@@ -61,9 +60,19 @@ function executeCommand(
       stdio: 'pipe',
     });
     return { stdout, success: true };
-  } catch (error) {
+  } catch (error: unknown) {
+    let errorMessage = 'Unknown error';
+    if (error && typeof error === 'object' && 'stdout' in error && error.stdout) {
+      errorMessage = String(error.stdout);
+    } else if (error && typeof error === 'object' && 'stderr' in error && error.stderr) {
+      errorMessage = String(error.stderr);
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
+    } else {
+      errorMessage = String(error);
+    }
     return {
-      stdout: error instanceof Error ? error.message : String(error),
+      stdout: errorMessage,
       success: false,
     };
   }
@@ -187,8 +196,9 @@ async function testTypeScriptCompilation(): Promise<TestResult> {
   try {
     console.log('⚙️ Testing TypeScript compilation...');
 
-    // Create a temporary test file
-    const tempDir = mkdtempSync(join(tmpdir(), 'type-test-'));
+    // Create a temporary test directory within the workspace
+    const tempDir = join(WORKSPACE_ROOT, 'tmp', 'type-test-' + Date.now());
+    require('fs').mkdirSync(tempDir, { recursive: true });
     const testFile = join(tempDir, 'test-imports.ts');
 
     // Write test imports
@@ -215,7 +225,9 @@ const todoItem: TodoItem = {
   name: 'Test',
   description: 'Test description',
   is_closed: false,
-  project_id: 1
+  project_id: 1,
+  created_at: '2024-01-01T00:00:00Z',
+  updated_at: '2024-01-01T00:00:00Z'
 };
 
 const loginRequest: LoginRequest = {
@@ -228,9 +240,24 @@ export { expense, todoItem, loginRequest };
 
     require('fs').writeFileSync(testFile, testContent);
 
-    // Try to compile with TypeScript
+    // Create a temporary tsconfig.json that extends the base configuration
+    const tempTsConfig = join(tempDir, 'tsconfig.json');
+    const relativePath = require('path').relative(tempDir, join(WORKSPACE_ROOT, 'tsconfig.base.json'));
+    const tsConfigContent = `{
+  "extends": "${relativePath}",
+  "compilerOptions": {
+    "noEmit": true,
+    "skipLibCheck": true
+  },
+  "include": ["test-imports.ts"],
+  "exclude": ["node_modules"]
+}`;
+    require('fs').writeFileSync(tempTsConfig, tsConfigContent);
+
+    // Try to compile with TypeScript using the temporary config
     const result = executeCommand(
-      `npx tsc --noEmit --skipLibCheck "${testFile}"`
+      `"${join(WORKSPACE_ROOT, 'node_modules/.bin/tsc')}" --project "${tempTsConfig}"`,
+      WORKSPACE_ROOT
     );
 
     // Clean up
