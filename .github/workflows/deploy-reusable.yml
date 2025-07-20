@@ -120,10 +120,18 @@ jobs:
             docker compose down --remove-orphans
             
             echo '🏗️ Building and starting services...'
-            docker compose up -d --build
+            docker compose up -d --build --remove-orphans
+            
+            echo '⏳ Waiting for services to start...'
+            sleep 10
+            
+            echo '🏥 Checking service health...'
+            docker compose ps
             
             echo '✅ Deployment completed successfully'
           "
+
+        shell: bash
 
       - name: Verify Deployment
         run: |
