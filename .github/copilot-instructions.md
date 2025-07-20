@@ -43,6 +43,9 @@
 - Use Vue Router for navigation.
 - Write tests with Vue Test Utils and Vitest.
 
+## TypeScript
+- For types for requests and responses use types libs like `@cockpit-app/types-ai-budget-expenses`, `@cockpit-app/types-todo-items`, etc. 
+
 ## Documentation
 
 - Add JSDoc comments to exported functions and components in JS/TS.
