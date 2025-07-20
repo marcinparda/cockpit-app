@@ -25,7 +25,9 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Component initialization logic can be added here if needed in the future
+  }
 
   onSubmit(): void {
     if (this.loginForm.invalid) {

@@ -4,6 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 import { ApiService } from '../../../api/api.service';
+import type { PaymentMethodCreate } from '@cockpit-app/types-ai-budget-payment-methods';
 
 @Component({
   selector: 'app-payment-method-create',
@@ -13,7 +14,7 @@ import { ApiService } from '../../../api/api.service';
   imports: [CommonModule, RouterModule, FormsModule, NavigationHeaderComponent],
 })
 export class PaymentMethodCreateComponent {
-  newPaymentMethod: any = {
+  newPaymentMethod: PaymentMethodCreate = {
     name: '',
   };
   isSaving = false;
@@ -26,7 +27,7 @@ export class PaymentMethodCreateComponent {
     this.error = null;
 
     this.apiService.createPaymentMethod(this.newPaymentMethod).subscribe({
-      next: (_) => {
+      next: () => {
         this.isSaving = false;
         this.router.navigate(['/payment-methods']);
       },

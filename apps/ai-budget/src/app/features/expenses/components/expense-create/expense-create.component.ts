@@ -10,17 +10,8 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 import { ApiService } from '../../../api/api.service';
-
-interface Category {
-  id: number;
-  name: string;
-  parent_id: number | null;
-}
-
-interface PaymentMethod {
-  id: number;
-  name: string;
-}
+import type { Category } from '@cockpit-app/types-ai-budget-categories';
+import type { PaymentMethod } from '@cockpit-app/types-ai-budget-payment-methods';
 
 @Component({
   selector: 'app-expense-create',
@@ -107,7 +98,7 @@ export class ExpenseCreateComponent implements OnInit {
     this.errorMessage = '';
 
     this.apiService.createExpense(this.expenseForm.value).subscribe({
-      next: (_) => {
+      next: () => {
         this.isSubmitting = false;
         this.router.navigate(['/expenses']);
       },

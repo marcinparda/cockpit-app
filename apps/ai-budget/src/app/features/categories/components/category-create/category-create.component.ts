@@ -4,6 +4,10 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 import { ApiService } from '../../../api/api.service';
+import type {
+  Category,
+  CategoryCreate,
+} from '@cockpit-app/types-ai-budget-categories';
 
 @Component({
   selector: 'app-category-create',
@@ -12,11 +16,11 @@ import { ApiService } from '../../../api/api.service';
   imports: [CommonModule, RouterModule, FormsModule, NavigationHeaderComponent],
 })
 export class CategoryCreateComponent implements OnInit {
-  newCategory: any = {
+  newCategory: CategoryCreate = {
     name: '',
     parent_id: null,
   };
-  categories: any[] = [];
+  categories: Category[] = [];
   isLoading = false;
   isSaving = false;
   error: string | null = null;
@@ -56,7 +60,7 @@ export class CategoryCreateComponent implements OnInit {
     }
 
     this.apiService.createCategory(this.newCategory).subscribe({
-      next: (_) => {
+      next: () => {
         this.isSaving = false;
         this.router.navigate(['/categories']);
       },
