@@ -62,9 +62,19 @@ function executeCommand(
     return { stdout, success: true };
   } catch (error: unknown) {
     let errorMessage = 'Unknown error';
-    if (error && typeof error === 'object' && 'stdout' in error && error.stdout) {
+    if (
+      error &&
+      typeof error === 'object' &&
+      'stdout' in error &&
+      error.stdout
+    ) {
       errorMessage = String(error.stdout);
-    } else if (error && typeof error === 'object' && 'stderr' in error && error.stderr) {
+    } else if (
+      error &&
+      typeof error === 'object' &&
+      'stderr' in error &&
+      error.stderr
+    ) {
       errorMessage = String(error.stderr);
     } else if (error instanceof Error) {
       errorMessage = error.message;
@@ -242,7 +252,10 @@ export { expense, todoItem, loginRequest };
 
     // Create a temporary tsconfig.json that extends the base configuration
     const tempTsConfig = join(tempDir, 'tsconfig.json');
-    const relativePath = require('path').relative(tempDir, join(WORKSPACE_ROOT, 'tsconfig.base.json'));
+    const relativePath = require('path').relative(
+      tempDir,
+      join(WORKSPACE_ROOT, 'tsconfig.base.json')
+    );
     const tsConfigContent = `{
   "extends": "${relativePath}",
   "compilerOptions": {
@@ -256,7 +269,10 @@ export { expense, todoItem, loginRequest };
 
     // Try to compile with TypeScript using the temporary config
     const result = executeCommand(
-      `"${join(WORKSPACE_ROOT, 'node_modules/.bin/tsc')}" --project "${tempTsConfig}"`,
+      `"${join(
+        WORKSPACE_ROOT,
+        'node_modules/.bin/tsc'
+      )}" --project "${tempTsConfig}"`,
       WORKSPACE_ROOT
     );
 
