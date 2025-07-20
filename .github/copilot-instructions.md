@@ -53,8 +53,10 @@
 - Use NX workspace conventions for organizing apps and libraries.
 - Use proper imports from `@cockpit-app` libraries.
 - Do not use relative imports in apps and libs.
+- When generating new js/ts libraries/apps, use vite and vitest.
 
 ## Deployment
+
 - Use Docker for containerization.
 - Use GitHub Actions for CI/CD pipelines.
 - Deploys apps on personal Raspberry Pi machine.
