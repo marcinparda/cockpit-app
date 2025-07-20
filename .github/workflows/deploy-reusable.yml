@@ -99,7 +99,7 @@ jobs:
             mkdir -p apps/todo/src/environments
             
             # AI Budget environment
-            cat > apps/ai-budget/src/environments/environment.production.ts << 'EOF'
+            cat > apps/ai-budget/src/environments/environment.ts << 'EOF'
           export const environment = {
             production: true,
             apiUrl: '${{ secrets.API_URL }}',
@@ -107,7 +107,7 @@ jobs:
           EOF
             
             # Todo environment  
-            cat > apps/todo/src/environments/environment.production.ts << 'EOF'
+            cat > apps/todo/src/environments/environment.ts << 'EOF'
           export const environment = {
             production: true,
             apiUrl: '${{ secrets.API_URL }}',
@@ -120,13 +120,7 @@ jobs:
             docker compose down --remove-orphans
             
             echo '🏗️ Building and starting services...'
-            docker compose up -d --build --remove-orphans
-            
-            echo '⏳ Waiting for services to start...'
-            sleep 10
-            
-            echo '🏥 Checking service health...'
-            docker compose ps
+            docker compose up -d --build
             
             echo '✅ Deployment completed successfully'
           "
