@@ -115,7 +115,7 @@ jobs:
             docker compose down --remove-orphans
             
             echo '🏗️ Building and starting services...'
-            docker compose up -d --build --remove-orphans
+            docker compose up -d --remove-orphans
             
             echo '⏳ Waiting for services to start...'
             sleep 10
