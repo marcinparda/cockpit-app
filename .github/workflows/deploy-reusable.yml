@@ -134,21 +134,19 @@ jobs:
             docker compose -f docker-compose.prod.yml down --remove-orphans || true
             
             echo '📦 Setting up image environment variables...'
-            export TODO_IMAGE='ghcr.io/marcinparda/cockpit-app/todo:latest'
-            export AI_BUDGET_IMAGE='ghcr.io/marcinparda/cockpit-app/ai-budget:latest'
             
             echo '🚚 Pulling latest images...'
-            docker pull \\\$TODO_IMAGE
-            docker pull \\\$AI_BUDGET_IMAGE
-            
+            docker pull ghcr.io/marcinparda/cockpit-app/todo:latest
+            docker pull ghcr.io/marcinparda/cockpit-app/ai-budget:latest
+
             echo '🏗️ Starting services with new images...'
-            TODO_IMAGE=\\\$TODO_IMAGE AI_BUDGET_IMAGE=\\\$AI_BUDGET_IMAGE docker compose -f docker-compose.prod.yml up -d --remove-orphans
-            
+            TODO_IMAGE=ghcr.io/marcinparda/cockpit-app/todo:latest AI_BUDGET_IMAGE=ghcr.io/marcinparda/cockpit-app/ai-budget:latest docker compose -f docker-compose.prod.yml up -d --remove-orphans
+
             echo '⏳ Waiting for services to start...'
             sleep 10
             
             echo '🏥 Checking service health...'
-            docker compose -f docker-compose.prod.yml ps
+            docker compose -f docker-compose.prod.yml ps 
             
             echo '🧹 Cleaning up old images...'
             docker image prune -f
