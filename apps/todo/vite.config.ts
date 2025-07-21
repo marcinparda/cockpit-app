@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
+// Test comment for affected deployment detection
 export default defineConfig(({ mode }) => {
   const env =
     mode === 'production' ? { production: true } : { production: false };

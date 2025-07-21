@@ -12,12 +12,23 @@ HEAD_SHA=${2:-"HEAD"}
 
 echo "📊 Comparing changes from $BASE_SHA to $HEAD_SHA"
 
+# Check if we have uncommitted changes
+UNCOMMITTED_CHANGES=""
+if [ "$HEAD_SHA" = "HEAD" ] && [ -n "$(git status --porcelain)" ]; then
+    echo "📝 Detected uncommitted changes"
+    UNCOMMITTED_CHANGES="--uncommitted"
+fi
+
 # Get all applications in the workspace
 ALL_APPS=$(npx nx show projects --type=app --json | jq -r '.[]')
 echo "📱 Available applications: $(echo $ALL_APPS | tr '\n' ' ')"
 
-# Get affected projects that are applications with build target
-AFFECTED_PROJECTS=$(npx nx show projects --affected --type=app --base=$BASE_SHA --head=$HEAD_SHA 2>/dev/null || echo "")
+# Get affected projects that are applications
+if [ -n "$UNCOMMITTED_CHANGES" ]; then
+    AFFECTED_PROJECTS=$(npx nx show projects --affected --type=app --uncommitted 2>/dev/null || echo "")
+else
+    AFFECTED_PROJECTS=$(npx nx show projects --affected --type=app --base=$BASE_SHA --head=$HEAD_SHA 2>/dev/null || echo "")
+fi
 
 echo "🎯 Affected projects: $AFFECTED_PROJECTS"
 
