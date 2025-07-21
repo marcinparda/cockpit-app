@@ -4,16 +4,23 @@ FROM node:18-alpine AS build
 # Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy package files first for better caching
 COPY package.json package-lock.json ./
+COPY nx.json tsconfig.base.json ./
 
-# Install dependencies
-RUN npm ci
+# Install dependencies (this layer will be cached if package files don't change)
+RUN npm ci --frozen-lockfile
 
-# Copy source files
-COPY . .
+# Copy only necessary files for todo app build
+COPY apps/todo ./apps/todo
+COPY libs ./libs
 
-# Build the application (disable interactive mode)
+# Copy root-level configuration files that Nx may need
+COPY jest.config.ts jest.preset.js karma.conf.js ./
+COPY eslint.config.mjs ./
+COPY vitest.workspace.ts ./
+
+# Build only the todo application
 RUN npx nx build todo --skip-nx-cache --configuration=production
 
 # Production image

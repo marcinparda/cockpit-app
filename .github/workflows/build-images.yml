@@ -76,7 +76,7 @@ jobs:
             ${{ inputs.push-latest && format('{0}/{1}/todo:latest', env.REGISTRY, steps.vars.outputs.repo-lower) || '' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
 
       - name: Build and push AI Budget app
         uses: docker/build-push-action@v5
@@ -89,7 +89,7 @@ jobs:
             ${{ inputs.push-latest && format('{0}/{1}/ai-budget:latest', env.REGISTRY, steps.vars.outputs.repo-lower) || '' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
 
       - name: Build Summary
         run: |
