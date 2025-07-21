@@ -126,12 +126,10 @@ jobs:
             echo '✅ Deployment completed successfully'
           "
 
-        shell: bash
-
       - name: Verify Deployment
         run: |
           echo "✅ Verifying deployment health..."
-          ssh ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "
+          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "
             echo '🔍 Checking running containers...'
             docker compose ps --filter 'status=running'
             
