@@ -8,7 +8,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npx nx build ai-budget --configuration=production
+RUN npx nx build ai-budget --skip-nx-cache --configuration=production
 
 # Stage 2: Serve the app with Nginx
 FROM nginx:alpine

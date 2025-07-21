@@ -13,8 +13,8 @@ RUN npm ci
 # Copy source files
 COPY . .
 
-# Build the application
-RUN npm run build -- --project=todo --configuration=production
+# Build the application (disable interactive mode)
+RUN npx nx build todo --skip-nx-cache --configuration=production
 
 # Production image
 FROM nginx:alpine
