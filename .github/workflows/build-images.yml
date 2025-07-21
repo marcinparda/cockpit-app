@@ -36,7 +36,7 @@ jobs:
       image-tag: ${{ steps.vars.outputs.image-tag }}
       todo-image: ${{ steps.vars.outputs.todo-image }}
       ai-budget-image: ${{ steps.vars.outputs.ai-budget-image }}
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,9 +45,11 @@ jobs:
         id: vars
         run: |
           IMAGE_TAG="${{ inputs.image-tag }}"
+          REPO_LOWER=$(echo "${{ env.IMAGE_NAME_PREFIX }}" | tr '[:upper:]' '[:lower:]')
           echo "image-tag=${IMAGE_TAG}" >> $GITHUB_OUTPUT
-          echo "todo-image=${REGISTRY}/${IMAGE_NAME_PREFIX}/todo:${IMAGE_TAG}" >> $GITHUB_OUTPUT
-          echo "ai-budget-image=${REGISTRY}/${IMAGE_NAME_PREFIX}/ai-budget:${IMAGE_TAG}" >> $GITHUB_OUTPUT
+          echo "repo-lower=${REPO_LOWER}" >> $GITHUB_OUTPUT
+          echo "todo-image=${REGISTRY}/${REPO_LOWER}/todo:${IMAGE_TAG}" >> $GITHUB_OUTPUT
+          echo "ai-budget-image=${REGISTRY}/${REPO_LOWER}/ai-budget:${IMAGE_TAG}" >> $GITHUB_OUTPUT
 
       - name: Log in to Container Registry
         uses: docker/login-action@v3
@@ -67,7 +69,7 @@ jobs:
           push: true
           tags: |
             ${{ steps.vars.outputs.todo-image }}
-            ${{ inputs.push-latest && format('{0}/{1}/todo:latest', env.REGISTRY, env.IMAGE_NAME_PREFIX) || '' }}
+            ${{ inputs.push-latest && format('{0}/{1}/todo:latest', env.REGISTRY, steps.vars.outputs.repo-lower) || '' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64,linux/arm64
@@ -80,7 +82,7 @@ jobs:
           push: true
           tags: |
             ${{ steps.vars.outputs.ai-budget-image }}
-            ${{ inputs.push-latest && format('{0}/{1}/ai-budget:latest', env.REGISTRY, env.IMAGE_NAME_PREFIX) || '' }}
+            ${{ inputs.push-latest && format('{0}/{1}/ai-budget:latest', env.REGISTRY, steps.vars.outputs.repo-lower) || '' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64,linux/arm64
