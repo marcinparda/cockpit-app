@@ -23,6 +23,10 @@ on:
         required: false
         default: 'http://localhost:8000'
         type: string
+      browsers:
+        description: 'Browser configuration for tests'
+        required: false
+        type: string
     secrets:
       API_URL:
         description: 'Production API URL (overrides api-url input if provided)'
@@ -112,7 +116,11 @@ jobs:
         if: inputs.run-tests == true
         run: |
           echo "🧪 Running tests for ${{ inputs.app-name }}..."
-          npm run test -- ${{ inputs.app-name }} --watch=false --browsers=ChromeHeadless
+          if [ -n "${{ inputs.browsers }}" ]; then
+            npm run test -- ${{ inputs.app-name }} --watch=false --browsers=${{ inputs.browsers }}
+          else
+            npm run test -- ${{ inputs.app-name }} --watch=false
+          fi
           echo "tests-completed=true" >> $GITHUB_OUTPUT
 
       - name: Build Summary

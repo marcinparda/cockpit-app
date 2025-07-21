@@ -18,7 +18,7 @@ jobs:
     with:
       app-name: 'todo'
       configuration: 'production'
-      run-tests: false
+      run-tests: true
     secrets:
       API_URL: ${{ secrets.API_URL }}
 
@@ -28,7 +28,9 @@ jobs:
     with:
       app-name: 'ai-budget'
       configuration: 'production'
-      run-tests: false
+      run-tests: true
+      browsers: 'ChromeHeadless'
+
     secrets:
       API_URL: ${{ secrets.API_URL }}
 
