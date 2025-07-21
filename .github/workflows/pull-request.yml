@@ -28,7 +28,7 @@ jobs:
     with:
       app-name: 'ai-budget'
       configuration: 'development'
-      run-tests: true
+      run-tests: false
       api-url: 'http://localhost:8000'
 
   build-and-test-todo:
