@@ -28,7 +28,7 @@ const handleLogin = () => {
         <form @submit.prevent="handleLogin">
           <div class="flex flex-col pb-8">
             <label for="apiKey" class="pb-1"
-              >Enter your API Key to log in</label
+              >Enter your API Key to log in [remove this text]</label
             >
             <InputText
               id="apiKey"
