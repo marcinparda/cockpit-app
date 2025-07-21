@@ -12,7 +12,17 @@ jobs:
       create-pr-on-drift: false
       force-update-types: false
 
-  build-and-test:
+  build-and-test-todo:
+    name: Build and Test Applications
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      app-name: 'todo'
+      configuration: 'production'
+      run-tests: false
+    secrets:
+      API_URL: ${{ secrets.API_URL }}
+
+  build-and-test-ai-budget:
     name: Build and Test Applications
     uses: ./.github/workflows/build-and-test.yml
     with:
@@ -24,7 +34,7 @@ jobs:
 
   deploy:
     name: Deploy to Production
-    needs: [validate-types, build-and-test]
+    needs: [validate-types, build-and-test-todo, build-and-test-ai-budget]
     uses: ./.github/workflows/deploy-reusable.yml
     with:
       environment: 'production'
