@@ -260,7 +260,6 @@ The following secrets must be configured in your GitHub repository:
 
 ## Troubleshooting
 
-- The SSH connection uses verbose logging (`-vvv`) to help with debugging connection issues
 - Check the GitHub Actions logs for detailed deployment information
 - Ensure all secrets are properly configured before running the workflow
 - The StrictHostKeyChecking option is set to "no" for the deployment SSH connection
