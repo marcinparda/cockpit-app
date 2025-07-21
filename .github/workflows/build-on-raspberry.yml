@@ -1,0 +1,98 @@
+name: Build Todo on Raspberry Pi
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'apps/todo/**'
+      - 'libs/**'
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch:
+    inputs:
+      force-build:
+        description: 'Force build even if no changes detected'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  build-on-raspberry:
+    runs-on: ubuntu-latest
+    name: Build Todo App on Raspberry Pi
+
+    steps:
+      - name: Setup Cloudflare Tunnel
+        run: |
+          echo "☁️ Setting up Cloudflare tunnel..."
+          sudo mkdir -p --mode=0755 /usr/share/keyrings
+          curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
+          echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared jammy main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
+          sudo apt-get update && sudo apt-get install cloudflared
+
+      - name: Setup SSH Configuration
+        run: |
+          echo "🔐 Setting up SSH configuration..."
+          mkdir -p ~/.ssh
+          echo "${{ secrets.RASPBERRY_PI_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+          cat <<EOF > ~/.ssh/config
+          Host ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+            User ${{ secrets.RASPBERRY_PI_USERNAME }}
+            IdentityFile ~/.ssh/id_ed25519
+            ProxyCommand cloudflared access ssh --hostname %h
+            StrictHostKeyChecking no
+          EOF
+          chmod 600 ~/.ssh/config
+
+      - name: Build Todo App on Raspberry Pi
+        run: |
+          echo "🏗️ Building Todo app on Raspberry Pi..."
+          ssh -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "
+            echo '🔑 Starting SSH agent...'
+            eval \"\$(ssh-agent -s)\" && \
+            ssh-add ~/.ssh/github && \
+            
+            echo '📂 Navigating to cockpit-app directory...'
+            cd /cockpit-app
+            
+            echo '📥 Fetching latest changes from GitHub...'
+            git fetch origin
+            git reset --hard origin/master
+            
+            echo '� Creating production environment files...'
+            mkdir -p apps/todo/src/environments
+            
+            # Todo environment  
+            cat > apps/todo/src/environments/environment.ts << 'EOF'
+          export const environment = {
+            production: true,
+            apiUrl: '${{ secrets.API_URL }}',
+          };
+          EOF
+            
+            echo '✅ Environment files created successfully'
+            
+            echo '�📦 Installing dependencies...'
+            npm ci --frozen-lockfile
+            
+            echo '🏗️ Building Todo app...'
+            npx nx build todo --skip-nx-cache --configuration=production
+            
+            echo '✅ Build completed successfully!'
+            echo '📊 Build output:'
+            ls -la dist/apps/todo/
+          "
+
+      - name: Build Summary
+        run: |
+          echo "🎉 Todo app build completed on Raspberry Pi!"
+          echo "============================================="
+          echo "📁 Location: /cockpit-app/dist/apps/todo"
+          echo "🔧 Configuration: production"
+          echo "⚡ Cache: disabled (--skip-nx-cache)"
