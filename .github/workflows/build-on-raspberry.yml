@@ -59,7 +59,7 @@ jobs:
             ssh-add ~/.ssh/github && \
             
             echo '📂 Navigating to cockpit-app directory...'
-            cd /cockpit-app
+            cd ~/cockpit-app
             
             echo '📥 Fetching latest changes from GitHub...'
             git fetch origin
