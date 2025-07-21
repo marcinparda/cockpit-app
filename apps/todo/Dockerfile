@@ -1,15 +1,21 @@
-# Base image
-FROM node:18-alpine AS build
+# Base image - use Node 20 to match Nx requirements
+FROM node:20-alpine AS build
 
 # Set working directory
 WORKDIR /app
+
+# Optimize Nx for Docker environment
+ENV NX_DAEMON=false
+ENV NX_PARALLEL=1
+ENV NX_SKIP_NX_CACHE=true
+ENV CI=true
 
 # Copy package files first for better caching
 COPY package.json package-lock.json ./
 COPY nx.json tsconfig.base.json ./
 
 # Install dependencies (this layer will be cached if package files don't change)
-RUN npm ci --frozen-lockfile
+RUN npm ci --frozen-lockfile --production=false
 
 # Copy only necessary files for todo app build
 COPY apps/todo ./apps/todo
@@ -20,7 +26,7 @@ COPY jest.config.ts jest.preset.js karma.conf.js ./
 COPY eslint.config.mjs ./
 COPY vitest.workspace.ts ./
 
-# Build only the todo application
+# Build only the todo application with optimized settings
 RUN npx nx build todo --skip-nx-cache --configuration=production
 
 # Production image
