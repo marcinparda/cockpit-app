@@ -1,18 +1,20 @@
 services:
   ai-budget:
     image: ${AI_BUDGET_IMAGE:-ghcr.io/marcinparda/cockpit-app/ai-budget:latest}
-    container_name: ai-budget
+    container_name: ai-budget-prod
     ports:
       - '4200:80'
     environment:
       - NODE_ENV=production
     restart: unless-stopped
+    pull_policy: always
 
   todo:
     image: ${TODO_IMAGE:-ghcr.io/marcinparda/cockpit-app/todo:latest}
-    container_name: todo
+    container_name: todo-prod
     ports:
       - '4201:80'
     environment:
       - NODE_ENV=production
     restart: unless-stopped
+    pull_policy: always

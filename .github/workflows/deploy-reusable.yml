@@ -134,8 +134,8 @@ jobs:
             docker compose -f docker-compose.prod.yml down --remove-orphans || true
             
             echo '📦 Setting up image environment variables...'
-            export TODO_IMAGE='${{ inputs.todo-image }}'
-            export AI_BUDGET_IMAGE='${{ inputs.ai-budget-image }}'
+            export TODO_IMAGE='ghcr.io/marcinparda/cockpit-app/todo:latest'
+            export AI_BUDGET_IMAGE='ghcr.io/marcinparda/cockpit-app/ai-budget:latest'
             
             echo '🚚 Pulling latest images...'
             docker pull \\\$TODO_IMAGE
