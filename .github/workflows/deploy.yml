@@ -30,17 +30,27 @@ jobs:
       configuration: 'production'
       run-tests: true
       browsers: 'ChromeHeadless'
-
     secrets:
       API_URL: ${{ secrets.API_URL }}
 
+  build-images:
+    name: Build and Push Docker Images
+    needs: [validate-types, build-and-test-todo, build-and-test-ai-budget]
+    uses: ./.github/workflows/build-images.yml
+    with:
+      image-tag: ${{ github.sha }}
+      push-latest: true
+
   deploy:
     name: Deploy to Production
-    needs: [validate-types, build-and-test-todo, build-and-test-ai-budget]
+    needs: [build-images]
     uses: ./.github/workflows/deploy-reusable.yml
     with:
       environment: 'production'
       skip-pre-check: false
+      image-tag: ${{ needs.build-images.outputs.image-tag }}
+      todo-image: ${{ needs.build-images.outputs.todo-image }}
+      ai-budget-image: ${{ needs.build-images.outputs.ai-budget-image }}
     secrets:
       RASPBERRY_PI_SSH_KEY: ${{ secrets.RASPBERRY_PI_SSH_KEY }}
       SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}

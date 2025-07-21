@@ -13,6 +13,21 @@ on:
         required: false
         default: false
         type: boolean
+      image-tag:
+        description: 'Docker image tag to deploy'
+        required: false
+        default: 'latest'
+        type: string
+      todo-image:
+        description: 'Full todo image name with tag'
+        required: false
+        default: 'ghcr.io/marcinparda/cockpit-app/todo:latest'
+        type: string
+      ai-budget-image:
+        description: 'Full ai-budget image name with tag'
+        required: false
+        default: 'ghcr.io/marcinparda/cockpit-app/ai-budget:latest'
+        type: string
     secrets:
       RASPBERRY_PI_SSH_KEY:
         required: true
@@ -43,6 +58,7 @@ jobs:
           echo "✅ Type Coverage: Verified across 11 libraries"
           echo "✅ Type Compilation: All libraries built"
           echo "🌍 Environment: ${{ inputs.environment }}"
+          echo "🏷️ Image Tag: ${{ inputs.image-tag }}"
           echo ""
           echo "🎯 Ready for deployment to ${{ inputs.environment }}"
 
@@ -111,19 +127,36 @@ jobs:
             
             echo '✅ Environment files created successfully'
             
-            echo '🔄 Stopping existing services...'
-            docker compose down --remove-orphans
+            echo '🐳 Logging into GitHub Container Registry...'
+            echo '${{ github.token }}' | docker login ghcr.io -u '${{ github.actor }}' --password-stdin
             
-            echo '🏗️ Building and starting services...'
-            docker compose up -d --remove-orphans
+            echo '🔄 Stopping existing services...'
+            docker compose -f docker-compose.prod.yml down --remove-orphans || true
+            
+            echo '📦 Setting up image environment variables...'
+            export TODO_IMAGE='${{ inputs.todo-image }}'
+            export AI_BUDGET_IMAGE='${{ inputs.ai-budget-image }}'
+            
+            echo '🚚 Pulling latest images...'
+            docker pull \\\$TODO_IMAGE
+            docker pull \\\$AI_BUDGET_IMAGE
+            
+            echo '🏗️ Starting services with new images...'
+            TODO_IMAGE=\\\$TODO_IMAGE AI_BUDGET_IMAGE=\\\$AI_BUDGET_IMAGE docker compose -f docker-compose.prod.yml up -d --remove-orphans
             
             echo '⏳ Waiting for services to start...'
             sleep 10
             
             echo '🏥 Checking service health...'
-            docker compose ps
+            docker compose -f docker-compose.prod.yml ps
+            
+            echo '🧹 Cleaning up old images...'
+            docker image prune -f
             
             echo '✅ Deployment completed successfully'
+            echo '🏷️ Deployed image tag: ${{ inputs.image-tag }}'
+            echo '📦 Todo image: ${{ inputs.todo-image }}'
+            echo '📦 AI Budget image: ${{ inputs.ai-budget-image }}'
           "
 
       - name: Deployment Summary
@@ -133,7 +166,10 @@ jobs:
           echo "✅ Environment: ${{ inputs.environment }}"
           echo "✅ SSH Connection: Successful"
           echo "✅ Code Update: Latest changes pulled"
-          echo "✅ Services: Restarted with latest build"
+          echo "✅ Image Tag: ${{ inputs.image-tag }}"
+          echo "✅ Todo Image: ${{ inputs.todo-image }}"
+          echo "✅ AI Budget Image: ${{ inputs.ai-budget-image }}"
+          echo "✅ Services: Restarted with latest images from registry"
           echo "✅ Health Check: All services running"
           echo ""
-          echo "🌐 Application is now live in ${{ inputs.environment }}"
+          echo "🌐 Application is now live in ${{ inputs.environment }} with fresh code!"
