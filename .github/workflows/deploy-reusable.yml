@@ -74,9 +74,9 @@ jobs:
           EOF
           chmod 600 ~/.ssh/config
 
-      - name: Pull Latest Changes
+      - name: Deploy Application
         run: |
-          echo "� Pulling latest changes from repository..."
+          echo "🚀 Deploying to ${{ inputs.environment }}..."
           ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "
             echo '🔑 Starting SSH agent...'
             eval \"\$(ssh-agent -s)\" && \
@@ -88,16 +88,6 @@ jobs:
             echo '📥 Pulling latest changes...'
             git fetch origin
             git reset --hard origin/master
-            
-            echo '✅ Latest changes pulled successfully'
-          "
-
-      - name: Create Production Environment Files
-        run: |
-          echo "🔧 Creating production environment files..."
-          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "
-            echo '📂 Navigating to application directory...'
-            cd ~/cockpit-app
             
             echo '🔧 Creating production environment files...'
             mkdir -p apps/ai-budget/src/environments
@@ -120,14 +110,6 @@ jobs:
           EOF
             
             echo '✅ Environment files created successfully'
-          "
-
-      - name: Deploy Application
-        run: |
-          echo "🚀 Deploying application to ${{ inputs.environment }}..."
-          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "
-            echo '📂 Navigating to application directory...'
-            cd ~/cockpit-app
             
             echo '🔄 Stopping existing services...'
             docker compose down --remove-orphans
@@ -135,30 +117,13 @@ jobs:
             echo '🏗️ Building and starting services...'
             docker compose up -d --build --remove-orphans
             
-            echo '✅ Deployment completed successfully'
-          "
-
-      - name: Verify Deployment
-        run: |
-          echo "✅ Verifying deployment health..."
-          ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "
-            echo '📂 Navigating to application directory...'
-            cd ~/cockpit-app
-            
             echo '⏳ Waiting for services to start...'
             sleep 10
             
-            echo '🔍 Checking running containers...'
-            docker compose ps --filter status=running
+            echo '🏥 Checking service health...'
+            docker compose ps
             
-            echo '📊 Checking container logs (last 20 lines)...'
-            docker compose logs --tail=20
-            
-            echo '💾 Checking disk space...'
-            df -h
-            
-            echo '🔧 Checking system resources...'
-            free -h
+            echo '✅ Deployment completed successfully'
           "
 
       - name: Deployment Summary
