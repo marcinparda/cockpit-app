@@ -4,6 +4,7 @@ import { createApp } from 'vue';
 import App from './app/App.vue';
 import './styles.css';
 
+// Test change for affected deployment detection
 const app = createApp(App);
 app.use(router);
 app.use(primeVuePlugin);

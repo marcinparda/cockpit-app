@@ -1,0 +1,172 @@
+name: Deploy Affected Applications
+
+on:
+  push:
+    branches: [master]
+  workflow_call:
+    inputs:
+      force-full-deployment:
+        description: 'Force full deployment of all applications'
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      RASPBERRY_PI_SSH_KEY:
+        required: true
+      SSH_KNOWN_HOSTS:
+        required: true
+      CLOUDFLARE_TUNNEL_DOMAIN:
+        required: true
+      RASPBERRY_PI_USERNAME:
+        required: true
+      API_URL:
+        required: true
+  workflow_dispatch:
+    inputs:
+      force-full-deployment:
+        description: 'Force full deployment of all applications'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  analyze-affected:
+    name: Analyze Affected Applications
+    runs-on: ubuntu-latest
+    outputs:
+      affected-apps: ${{ steps.affected.outputs.affected-apps }}
+      affected-apps-json: ${{ steps.affected.outputs.affected-apps-json }}
+      has-affected-apps: ${{ steps.affected.outputs.has-affected-apps }}
+      deployment-strategy: ${{ steps.strategy.outputs.deployment-strategy }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Need full history for affected analysis
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Analyze affected applications
+        id: affected
+        run: |
+          echo "🔍 Analyzing affected applications..."
+          chmod +x ./tools/deployment/analyze-affected.sh
+          ./tools/deployment/analyze-affected.sh origin/master HEAD
+
+      - name: Determine deployment strategy
+        id: strategy
+        run: |
+          if [ "${{ inputs.force-full-deployment }}" = "true" ]; then
+            echo "🚀 Force full deployment requested"
+            echo "deployment-strategy=full" >> $GITHUB_OUTPUT
+          elif [ "${{ steps.affected.outputs.has-affected-apps }}" = "true" ]; then
+            echo "🎯 Selective deployment - affected apps: ${{ steps.affected.outputs.affected-apps }}"
+            echo "deployment-strategy=selective" >> $GITHUB_OUTPUT
+          else
+            echo "⏭️ No affected applications - skipping deployment"
+            echo "deployment-strategy=skip" >> $GITHUB_OUTPUT
+          fi
+
+  validate-types:
+    name: Validate API Types
+    needs: analyze-affected
+    if: needs.analyze-affected.outputs.deployment-strategy != 'skip'
+    uses: ./.github/workflows/validate-types.yml
+    with:
+      create-pr-on-drift: false
+      force-update-types: false
+
+  build-and-test-affected:
+    name: Build and Test Affected Applications
+    needs: analyze-affected
+    if: needs.analyze-affected.outputs.has-affected-apps == 'true'
+    strategy:
+      matrix:
+        app: ${{ fromJson(needs.analyze-affected.outputs.affected-apps-json) }}
+      fail-fast: false # Continue with other apps even if one fails
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      app-name: ${{ matrix.app }}
+      configuration: 'production'
+      run-tests: true
+      browsers: ${{ matrix.app == 'ai-budget' && 'ChromeHeadless' || '' }}
+    secrets:
+      API_URL: ${{ secrets.API_URL }}
+
+  build-and-test-all:
+    name: Build and Test All Applications (Full Deployment)
+    needs: analyze-affected
+    if: needs.analyze-affected.outputs.deployment-strategy == 'full'
+    strategy:
+      matrix:
+        app: ['todo', 'ai-budget']
+      fail-fast: false
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      app-name: ${{ matrix.app }}
+      configuration: 'production'
+      run-tests: true
+      browsers: ${{ matrix.app == 'ai-budget' && 'ChromeHeadless' || '' }}
+    secrets:
+      API_URL: ${{ secrets.API_URL }}
+
+  deploy-selective:
+    name: Deploy Affected Applications
+    needs: [analyze-affected, validate-types, build-and-test-affected]
+    if: needs.analyze-affected.outputs.deployment-strategy == 'selective'
+    uses: ./.github/workflows/deploy-selective.yml
+    with:
+      affected-apps: ${{ needs.analyze-affected.outputs.affected-apps }}
+      environment: 'production'
+    secrets:
+      RASPBERRY_PI_SSH_KEY: ${{ secrets.RASPBERRY_PI_SSH_KEY }}
+      SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+      CLOUDFLARE_TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+      RASPBERRY_PI_USERNAME: ${{ secrets.RASPBERRY_PI_USERNAME }}
+      API_URL: ${{ secrets.API_URL }}
+
+  deploy-full:
+    name: Deploy All Applications
+    needs: [analyze-affected, validate-types, build-and-test-all]
+    if: needs.analyze-affected.outputs.deployment-strategy == 'full'
+    uses: ./.github/workflows/deploy-reusable.yml
+    with:
+      environment: 'production'
+      skip-pre-check: false
+    secrets:
+      RASPBERRY_PI_SSH_KEY: ${{ secrets.RASPBERRY_PI_SSH_KEY }}
+      SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+      CLOUDFLARE_TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+      RASPBERRY_PI_USERNAME: ${{ secrets.RASPBERRY_PI_USERNAME }}
+      API_URL: ${{ secrets.API_URL }}
+
+  deployment-summary:
+    name: Deployment Summary
+    runs-on: ubuntu-latest
+    needs: [analyze-affected, deploy-selective, deploy-full]
+    if: always() && needs.analyze-affected.outputs.deployment-strategy != 'skip'
+    
+    steps:
+      - name: Deployment Summary
+        run: |
+          echo "🎉 Deployment Summary"
+          echo "===================="
+          echo "Strategy: ${{ needs.analyze-affected.outputs.deployment-strategy }}"
+          
+          if [ "${{ needs.analyze-affected.outputs.deployment-strategy }}" = "selective" ]; then
+            echo "✅ Affected Apps Deployed: ${{ needs.analyze-affected.outputs.affected-apps }}"
+            echo "⚡ Selective deployment completed successfully!"
+          elif [ "${{ needs.analyze-affected.outputs.deployment-strategy }}" = "full" ]; then
+            echo "✅ Full Deployment: All applications deployed"
+            echo "🔄 Complete rebuild and deployment finished!"
+          fi
+          
+          echo "🌐 Applications are now live in production"

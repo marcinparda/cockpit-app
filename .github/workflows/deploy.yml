@@ -3,44 +3,23 @@ name: Deploy to Production
 on:
   push:
     branches: [master]
+  workflow_dispatch:
+    inputs:
+      deployment-type:
+        description: 'Deployment type'
+        required: false
+        default: 'affected'
+        type: choice
+        options:
+          - affected
+          - full
 
 jobs:
-  validate-types:
-    name: Validate API Types
-    uses: ./.github/workflows/validate-types.yml
-    with:
-      create-pr-on-drift: false
-      force-update-types: false
-
-  build-and-test-todo:
-    name: Build and Test Applications
-    uses: ./.github/workflows/build-and-test.yml
-    with:
-      app-name: 'todo'
-      configuration: 'production'
-      run-tests: true
-    secrets:
-      API_URL: ${{ secrets.API_URL }}
-
-  build-and-test-ai-budget:
-    name: Build and Test Applications
-    uses: ./.github/workflows/build-and-test.yml
-    with:
-      app-name: 'ai-budget'
-      configuration: 'production'
-      run-tests: true
-      browsers: 'ChromeHeadless'
-
-    secrets:
-      API_URL: ${{ secrets.API_URL }}
-
   deploy:
-    name: Deploy to Production
-    needs: [validate-types, build-and-test-todo, build-and-test-ai-budget]
-    uses: ./.github/workflows/deploy-reusable.yml
+    name: Deploy Applications
+    uses: ./.github/workflows/deploy-nx-affected.yml
     with:
-      environment: 'production'
-      skip-pre-check: false
+      force-full-deployment: ${{ inputs.deployment-type == 'full' }}
     secrets:
       RASPBERRY_PI_SSH_KEY: ${{ secrets.RASPBERRY_PI_SSH_KEY }}
       SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
