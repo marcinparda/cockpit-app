@@ -2,7 +2,11 @@ name: Deploy
 
 on:
   push:
-    branches: [master]
+    branches:
+      [
+        master,
+        refactor/implement-deployment-strategy-from-nx-docker-rpi-deployment-repo,
+      ]
 
 permissions:
   contents: read
