@@ -16,6 +16,12 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Accept API_URL as build argument
+ARG API_URL
+# Replace http://localhost:8000 in environment.ts before build
+RUN sed -i "s|http://localhost:8000|${API_URL}|g" apps/ai-budget/src/environments/environment.ts
+RUN sed -i "s|http://localhost:8000|${API_URL}|g" apps/todo/src/environments/environment.ts
+
 # Build all applications
 RUN npx nx run-many --target=build --configuration=production
 
