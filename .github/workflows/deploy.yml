@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Deploy
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
 jobs:
   checks:
     uses: ./.github/workflows/checks.yml
-    
+
   validate-types:
     name: Validate API Types
     uses: ./.github/workflows/validate-types.yml
