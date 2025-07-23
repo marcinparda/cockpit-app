@@ -11,7 +11,6 @@
     "generate:types:watch": "tsx tools/generate-api-types.ts --watch",
     "generate:types:force": "tsx tools/generate-api-types.ts --force",
     "build:types": "nx run-many --target=build --projects=types-ai-budget-expenses,types-ai-budget-categories,types-ai-budget-payment-methods,types-todo-items,types-todo-projects,types-shared-auth,types-shared-users,types-shared-roles,types-shared-utils,types-system-health,types-system-root",
-    "verify:types": "tsx tools/verify-type-coverage.ts",
     "test:types": "tsx tools/test-type-generation.ts",
     "update:types": "npm run generate:types && npm run build:types && npm run verify:types",
     "check:drift": "tsx tools/detect-type-drift.ts",

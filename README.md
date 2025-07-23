@@ -96,9 +96,6 @@ npm run update:types
 #### Quality Assurance & Testing
 
 ```bash
-# Verify type coverage and integrity
-npm run verify:types
-
 # Run comprehensive type generation tests
 npm run test:types
 
@@ -139,7 +136,8 @@ The type system includes automated drift detection for CI/CD pipelines:
 ## Running unit tests
 
 To execute unit tests with the Vitest.
-```
+
+````
 
 ## Running end-to-end tests
 
@@ -147,7 +145,7 @@ For end-to-end (e2e) testing, run:
 
 ```bash
 ng e2e
-```
+````
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 

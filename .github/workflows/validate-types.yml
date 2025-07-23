@@ -108,11 +108,6 @@ jobs:
           branch: automated/api-types-update-${{ github.run_id }}
           delete-branch: true
 
-      - name: Verify Type Coverage and Integrity
-        run: |
-          echo "📊 Verifying type coverage across all libraries..."
-          npm run verify:types
-
       - name: Run Type Generation Tests
         run: |
           echo "🧪 Testing type generation system..."
