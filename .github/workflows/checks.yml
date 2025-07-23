@@ -23,8 +23,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      
-
       - name: Get last successful commit SHA from this workflow
         id: last_success
         run: |
