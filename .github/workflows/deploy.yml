@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Deploy
 
 on:
   push:
@@ -9,6 +9,9 @@ permissions:
   packages: write
 
 jobs:
+  checks:
+    uses: ./.github/workflows/checks.yml
+
   validate-types:
     name: Validate API Types
     uses: ./.github/workflows/validate-types.yml
@@ -16,48 +19,17 @@ jobs:
       create-pr-on-drift: false
       force-update-types: false
 
-  build-and-test-todo:
-    name: Build and Test Applications
-    uses: ./.github/workflows/build-and-test.yml
-    with:
-      app-name: 'todo'
-      configuration: 'production'
-      run-tests: true
-    secrets:
-      API_URL: ${{ secrets.API_URL }}
-
-  build-and-test-ai-budget:
-    name: Build and Test Applications
-    uses: ./.github/workflows/build-and-test.yml
-    with:
-      app-name: 'ai-budget'
-      configuration: 'production'
-      run-tests: true
-      browsers: 'ChromeHeadless'
-    secrets:
-      API_URL: ${{ secrets.API_URL }}
-
   build-images:
-    name: Build and Push Docker Images
-    needs: [validate-types, build-and-test-todo, build-and-test-ai-budget]
+    needs: [checks, validate-types]
     uses: ./.github/workflows/build-images.yml
-    with:
-      image-tag: ${{ github.sha }}
-      push-latest: true
 
-  deploy:
-    name: Deploy to Production
-    needs: [build-images]
-    uses: ./.github/workflows/deploy-reusable.yml
+  deploy-to-raspberry:
+    needs: build-images
+    uses: ./.github/workflows/deploy-to-production.yml
     with:
-      environment: 'production'
-      skip-pre-check: false
-      image-tag: ${{ needs.build-images.outputs.image-tag }}
-      todo-image: ${{ needs.build-images.outputs.todo-image }}
-      ai-budget-image: ${{ needs.build-images.outputs.ai-budget-image }}
+      image-name: '${{ needs.build-images.outputs.image_name }}'
     secrets:
-      RASPBERRY_PI_SSH_KEY: ${{ secrets.RASPBERRY_PI_SSH_KEY }}
-      SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
       CLOUDFLARE_TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
       RASPBERRY_PI_USERNAME: ${{ secrets.RASPBERRY_PI_USERNAME }}
-      API_URL: ${{ secrets.API_URL }}
+      RASPBERRY_PI_SSH_KEY: ${{ secrets.RASPBERRY_PI_SSH_KEY }}
+      SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}

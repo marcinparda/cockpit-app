@@ -138,10 +138,7 @@ The type system includes automated drift detection for CI/CD pipelines:
 
 ## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+To execute unit tests with the Vitest.
 ```
 
 ## Running end-to-end tests

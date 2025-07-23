@@ -1,0 +1,118 @@
+name: Deploy to Production
+
+on:
+  workflow_call:
+    inputs:
+      image-name:
+        description: 'Docker image name to deploy'
+        required: false
+        type: string
+    secrets:
+      CLOUDFLARE_TUNNEL_DOMAIN:
+        required: true
+      RASPBERRY_PI_USERNAME:
+        required: true
+      RASPBERRY_PI_SSH_KEY:
+        required: true
+      SSH_KNOWN_HOSTS:
+        required: true
+  workflow_dispatch:
+    inputs:
+      image-name:
+        description: 'Docker image name to deploy'
+        required: false
+        type: string
+
+env:
+  IMAGE_NAME: ${{ inputs.image-name || format('ghcr.io/{0}/cockpit-frontend-apps:latest', github.repository) }}
+  CONTAINER_NAME: cockpit-frontend-apps
+
+jobs:
+  deploy-to-production:
+    runs-on: ubuntu-latest
+    outputs:
+      deployment-status: ${{ steps.deploy.outcome }}
+      image-name: ${{ env.IMAGE_NAME }}
+      deployment-url: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+
+    steps:
+      - name: Set up Cloudflared
+        run: |
+          echo "☁️ Setting up Cloudflare tunnel..."
+          sudo mkdir -p --mode=0755 /usr/share/keyrings
+          curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
+          echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared jammy main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
+          sudo apt-get update && sudo apt-get install cloudflared
+
+      - name: Setup SSH Configuration
+        run: |
+          echo "🔐 Setting up SSH configuration..."
+          mkdir -p ~/.ssh
+          echo "${{ secrets.RASPBERRY_PI_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          cat <<EOF > ~/.ssh/config
+          Host ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
+            User ${{ secrets.RASPBERRY_PI_USERNAME }}
+            IdentityFile ~/.ssh/id_ed25519
+            ProxyCommand cloudflared access ssh --hostname %h
+            StrictHostKeyChecking no
+          EOF
+          chmod 600 ~/.ssh/config
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Raspberry Pi
+        id: deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🚀 Starting deployment to Raspberry Pi..."
+
+          echo "📤 Copying deployment script to Raspberry Pi..."
+          scp deploy.sh ${{ secrets.RASPBERRY_PI_USERNAME }}@${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}:~/deploy.sh
+
+          echo "⚡️ Executing deployment script on Raspberry Pi..."
+          ssh ${{ secrets.RASPBERRY_PI_USERNAME }}@${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} \
+            "chmod +x ~/deploy.sh && \
+            GITHUB_TOKEN='${{ secrets.GITHUB_TOKEN }}' \
+            IMAGE_NAME='${{ env.IMAGE_NAME }}' \
+            CONTAINER_NAME='${{ env.CONTAINER_NAME }}' \
+            GITHUB_ACTOR='${{ github.actor }}' \
+            ~/deploy.sh"
+
+          echo "🎉 Deployment to Raspberry Pi completed successfully!"
+
+      - name: Cleanup SSH
+        if: always()
+        run: |
+          echo "🧹 Cleaning up SSH keys..."
+          rm -f ~/.ssh/id_rsa
+          rm -f deploy.sh
+
+  summary:
+    needs: deploy-to-production
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Deployment Summary
+        run: |
+          echo "# 🚀 Production Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          if [[ "${{ needs.deploy-to-production.outputs.deployment-status }}" == "success" ]]; then
+            echo "## 🎉 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Your application has been successfully deployed to the Raspberry Pi." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## ❌ Deployment Failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "The deployment to Raspberry Pi encountered an error. Please check the logs above for details." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 🔧 Troubleshooting Tips" >> $GITHUB_STEP_SUMMARY
+            echo "1. Verify SSH connection and credentials" >> $GITHUB_STEP_SUMMARY
+            echo "2. Check Docker image availability" >> $GITHUB_STEP_SUMMARY
+            echo "3. Ensure Raspberry Pi has sufficient resources" >> $GITHUB_STEP_SUMMARY
+            echo "4. Review container logs on the target system" >> $GITHUB_STEP_SUMMARY
+          fi

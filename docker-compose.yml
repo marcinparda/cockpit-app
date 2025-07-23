@@ -1,22 +1,12 @@
 services:
-  ai-budget:
+  nx-multi-app:
     build:
       context: .
-      dockerfile: apps/ai-budget/Dockerfile
-    container_name: ai-budget
+      dockerfile: Dockerfile
+    container_name: cockpit-frontend-apps
     ports:
-      - '4200:80'
-    environment:
-      - NODE_ENV=production
-    restart: unless-stopped
-
-  todo:
-    build:
-      context: .
-      dockerfile: apps/todo/Dockerfile
-    container_name: todo
-    ports:
-      - '4201:80'
+      - '4200:80' # ai-budget
+      - '4201:81' # todo
     environment:
       - NODE_ENV=production
     restart: unless-stopped

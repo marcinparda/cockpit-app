@@ -36,6 +36,8 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
+    "@analogjs/vite-plugin-angular": "~1.14.1",
+    "@analogjs/vitest-angular": "~1.14.1",
     "@angular-devkit/build-angular": "^19.0.0",
     "@angular-devkit/core": "^19.0.0",
     "@angular-devkit/schematics": "^19.0.0",
@@ -80,11 +82,6 @@
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
     "jsonc-eslint-parser": "^2.1.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
     "nx": "21.0.3",
     "openapi-typescript": "^7.8.0",
     "postcss": "^8.4.21",

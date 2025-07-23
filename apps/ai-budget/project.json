@@ -67,16 +67,9 @@
       }
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@nx/vite:test",
       "options": {
-        "polyfills": ["zone.js", "zone.js/testing"],
-        "tsConfig": "apps/ai-budget/tsconfig.spec.json",
-        "assets": [
-          "apps/ai-budget/src/favicon.ico",
-          "apps/ai-budget/src/assets"
-        ],
-        "styles": ["apps/ai-budget/src/styles.css"],
-        "scripts": []
+        "configFile": "apps/ai-budget/vite.config.mts"
       }
     }
   }
