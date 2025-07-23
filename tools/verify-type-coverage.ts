@@ -77,15 +77,6 @@ function extractSchemaNames(spec: Record<string, unknown>): string[] {
 }
 
 /**
- * Find all generated type files
- */
-async function findGeneratedTypes(): Promise<string[]> {
-  const pattern = join(WORKSPACE_ROOT, 'libs/types/**/*.types.ts');
-  const files = await glob(pattern);
-  return files;
-}
-
-/**
  * Extract type names from a TypeScript file
  */
 function extractTypeNames(filePath: string): string[] {
@@ -137,10 +128,6 @@ async function verifyTypeCoverage(): Promise<VerificationReport> {
     const spec = await fetchOpenAPISpec();
     const allSchemas = extractSchemaNames(spec);
     console.log(`📋 Found ${allSchemas.length} schemas in OpenAPI spec\n`);
-
-    // Find all generated type files
-    const typeFiles = await findGeneratedTypes();
-    console.log(`📁 Found ${typeFiles.length} type files\n`);
 
     // Extract all generated types
     const allGeneratedTypes: string[] = [];
