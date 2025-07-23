@@ -14,8 +14,5 @@
 # Generated files and build artifacts
 tmp/
 
-# Configuration files that may have specific formatting
-karma.conf.js
-
 # GitHub templates and instructions
 .github/instructions/
