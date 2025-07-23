@@ -36,7 +36,8 @@ module.exports = () => {
     port: 9876,
     colors: true,
     logLevel: constants.LOG_INFO,
-    autoWatch: true,browsers: ['ChromeHeadlessNoSandbox'],
+    autoWatch: false,
+    browsers: ['ChromeHeadlessNoSandbox'],
     customLaunchers: {
       ChromeHeadlessNoSandbox: {
         base: 'ChromeHeadless',
