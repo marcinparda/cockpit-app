@@ -22,6 +22,8 @@ jobs:
   build-images:
     needs: [checks, validate-types]
     uses: ./.github/workflows/build-images.yml
+    secrets:
+      API_URL: ${{ secrets.API_URL }}
 
   deploy-to-raspberry:
     needs: build-images

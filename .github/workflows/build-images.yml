@@ -2,6 +2,9 @@ name: Build Images
 
 on:
   workflow_call:
+    secrets:
+      API_URL:
+        required: true
     outputs:
       image_name:
         description: 'The built Docker image name'
