@@ -129,30 +129,6 @@ async function verifyTypeCoverage(): Promise<VerificationReport> {
     const allSchemas = extractSchemaNames(spec);
     console.log(`📋 Found ${allSchemas.length} schemas in OpenAPI spec\n`);
 
-    // Extract all generated types
-    const allGeneratedTypes: string[] = [];
-    const libraryStats: Record<
-      string,
-      { schemas: number; types: number; coverage: number }
-    > = {};
-
-    for (const filePath of typeFiles) {
-      const types = extractTypeNames(filePath);
-      const libraryName = getLibraryName(filePath);
-
-      allGeneratedTypes.push(...types);
-
-      if (!libraryStats[libraryName]) {
-        libraryStats[libraryName] = { schemas: 0, types: 0, coverage: 0 };
-      }
-
-      libraryStats[libraryName].types += types.length;
-
-      console.log(`  📦 ${libraryName}: ${types.length} types`);
-      types.forEach((type) => console.log(`    • ${type}`));
-      console.log('');
-    }
-
     // Calculate coverage
     const uniqueGeneratedTypes = [...new Set(allGeneratedTypes)];
     const coverage =
