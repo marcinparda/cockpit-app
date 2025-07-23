@@ -1,0 +1,54 @@
+name: Checks
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_call:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      
+
+      - name: Get last successful commit SHA from this workflow
+        id: last_success
+        run: |
+          echo "Trying to find last successful SHA for workflow 'Deploy' on branch ${{ github.ref_name }}"
+
+          gh run list \
+            --workflow="Deploy" \
+            --branch=${{ github.ref_name }} \
+            --status=success \
+            --json headSha \
+            --limit 1 > result.json
+
+          LAST_SUCCESSFUL_SHA=$(jq -r '.[0].headSha // empty' result.json)
+
+          if [ -z "$LAST_SUCCESSFUL_SHA" ]; then
+            echo "⚠️ No successful run found. Falling back to origin/master"
+            git fetch origin master
+            LAST_SUCCESSFUL_SHA=$(git rev-parse origin/master)
+          fi
+
+          echo "🔍 Last successful/known good SHA for affected check: $LAST_SUCCESSFUL_SHA"
+          echo "LAST_SUCCESSFUL_SHA=$LAST_SUCCESSFUL_SHA" >> $GITHUB_ENV
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run affected checks
+        run: npx nx affected --targets=lint,build,test --base=$LAST_SUCCESSFUL_SHA --head=HEAD
