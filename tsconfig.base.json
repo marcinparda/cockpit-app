@@ -20,6 +20,7 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     "paths": {
+      "@cockpit-app/shared/react-ui": ["libs/shared/react-ui/src/index.ts"],
       "@cockpit-app/shared/utils": ["libs/shared/utils/src/index.ts"],
       "@cockpit-app/shared/vue-ui": ["libs/shared/vue-ui/src/index.ts"],
       "@cockpit-app/types-ai-budget-categories": [
@@ -48,8 +49,7 @@
       "@cockpit-app/types-todo-items": ["libs/types/todo/items/src/index.ts"],
       "@cockpit-app/types-todo-projects": [
         "libs/types/todo/projects/src/index.ts"
-      ],
-      "@cockpit-app/shared/react-ui": ["libs/shared/react-ui/src/index.ts"]
+      ]
     },
     "rootDir": "."
   },
