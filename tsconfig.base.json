@@ -48,7 +48,8 @@
       "@cockpit-app/types-todo-items": ["libs/types/todo/items/src/index.ts"],
       "@cockpit-app/types-todo-projects": [
         "libs/types/todo/projects/src/index.ts"
-      ]
+      ],
+      "@cockpit-app/shared/react-ui": ["libs/shared/react-ui/src/index.ts"]
     },
     "rootDir": "."
   },
