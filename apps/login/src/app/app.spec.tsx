@@ -30,6 +30,7 @@ describe('App', () => {
   it('renders LoginPage if user is not logged in', async () => {
     mockIsLoggedIn.mockRejectedValue(new Error('Not logged in'));
     const { findByText } = render(<App />);
+
     // Check for a unique heading in the login page
     expect(await findByText('Login to your account')).toBeInTheDocument();
   });

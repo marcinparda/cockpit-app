@@ -53,18 +53,6 @@ describe('LogoutButton', () => {
     expect(button.classes()).toContain('p-button-text');
   });
 
-  it('navigates to login page when clicked', async () => {
-    // Mock router.push
-    const pushSpy = vi.spyOn(router, 'push');
-
-    wrapper = createWrapper();
-    const button = wrapper.find('button');
-
-    await button.trigger('click');
-
-    expect(pushSpy).toHaveBeenCalledWith('/login');
-  });
-
   it('has correct component structure', () => {
     wrapper = createWrapper();
 

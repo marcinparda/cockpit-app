@@ -10,14 +10,18 @@ export function App() {
   const [shouldRenderLogin, setShouldRenderLogin] = useState(false);
 
   useEffect(() => {
-    isLoggedIn().then((loggedIn) => {
-      if (loggedIn) {
-        window.location.replace(environment.cockpitUrl);
-        return;
-      } else {
+    isLoggedIn()
+      .then((loggedIn) => {
+        if (loggedIn) {
+          window.location.replace(environment.cockpitUrl);
+          return;
+        } else {
+          setShouldRenderLogin(true);
+        }
+      })
+      .catch(() => {
         setShouldRenderLogin(true);
-      }
-    });
+      });
   }, []);
 
   if (!shouldRenderLogin) return null;
