@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { isLoggedIn } from '@cockpit-app/shared/auth';
 import LoginPage from './login/page';
-import { REDIRECT_URL } from '../consts/environments';
+import { environment } from '../environments/environments';
 
 /**
  * Main App component for Login app. Handles manual routing and authentication redirect.
@@ -13,7 +13,7 @@ export function App() {
     isLoggedIn()
       .then((loggedIn) => {
         if (loggedIn) {
-          window.location.replace(REDIRECT_URL);
+          window.location.replace(environment.cockpitUrl);
           return;
         }
       })

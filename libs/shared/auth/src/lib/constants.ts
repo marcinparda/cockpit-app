@@ -10,7 +10,3 @@ export const AUTH_API_ENDPOINTS = {
   USER_ROLES: '/api/v1/auth/me/role',
   USER_PERMISSIONS: '/api/v1/auth/me/permissions',
 };
-
-export const AUTH_ENV_KEYS = {
-  API_BASE_URL: 'VITE_API_BASE_URL',
-};
