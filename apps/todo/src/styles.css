@@ -1,3 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss' source(none);
+@source "../../../libs/shared/vue-ui/src/**/*.{ts,tsx,js,jsx,html,css}";
+@source "./**/*.{vue,ts,tsx,js,jsx,html,css}";
