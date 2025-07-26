@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig(({ mode }) => {
   const env =
@@ -19,7 +20,12 @@ export default defineConfig(({ mode }) => {
       port: 4300,
       host: 'localhost',
     },
-    plugins: [vue(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
+    plugins: [
+      vue(),
+      nxViteTsPaths(),
+      tailwindcss(),
+      nxCopyAssetsPlugin(['*.md']),
+    ],
     build: {
       outDir: '../../dist/apps/todo',
       emptyOutDir: true,

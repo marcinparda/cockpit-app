@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { authService } from './auth.service';
-import router from '../router';
+import { logout, refreshAccessToken } from '@cockpit-app/shared/auth';
 
 const httpClient = axios.create({
   withCredentials: true,
@@ -18,10 +17,19 @@ httpClient.interceptors.request.use(
 // Response interceptor to handle unauthorized responses
 httpClient.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     if (error.response && error.response.status === 401) {
-      authService.logout();
-      router.push('/login');
+
+      const refreshed = await refreshAccessToken();
+      if (refreshed) {
+        const config = error.config;
+        return httpClient(config);
+      } else {
+        await logout();
+        const redirectUrl = new URL('https://login.parda.me');
+        redirectUrl.searchParams.set('redirect_uri', window.location.href);
+        window.location.href = redirectUrl.toString();
+      }
     }
     return Promise.reject(error);
   }

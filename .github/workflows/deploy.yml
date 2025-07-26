@@ -24,6 +24,8 @@ jobs:
     uses: ./.github/workflows/build-images.yml
     secrets:
       API_URL: ${{ secrets.API_URL }}
+      LOGIN_URL: ${{ secrets.LOGIN_URL }}
+      COCKPIT_URL: ${{ secrets.COCKPIT_URL }}
 
   deploy-to-raspberry:
     needs: build-images

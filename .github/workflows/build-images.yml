@@ -5,6 +5,10 @@ on:
     secrets:
       API_URL:
         required: true
+      LOGIN_URL:
+        required: true
+      COCKPIT_URL:
+        required: true
     outputs:
       image_name:
         description: 'The built Docker image name'
@@ -47,6 +51,8 @@ jobs:
           cache-to: type=gha,mode=max
           build-args: |
             API_URL=${{ secrets.API_URL }}
+            LOGIN_URL=${{ secrets.LOGIN_URL }}
+            COCKPIT_URL=${{ secrets.COCKPIT_URL }}
 
       - name: Build Summary
         run: |
