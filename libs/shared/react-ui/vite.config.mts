@@ -57,5 +57,6 @@ export default defineConfig(() => ({
       reportsDirectory: '../../../coverage/libs/shared/react-ui',
       provider: 'v8' as const,
     },
+    setupFiles: './setupTests.ts',
   },
 }));
