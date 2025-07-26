@@ -1,5 +1,6 @@
 import { cn, Label, Input, Button } from '@cockpit-app/shared/react-ui';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { login } from '@cockpit-app/shared/auth';
 import { environment } from '../environments/environments';
 
@@ -7,7 +8,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<'form'>) {
-  const [state, formAction] = useFormState(
+  const [state, formAction] = useActionState(
     async (_prevState: unknown, formData: FormData) => {
       const email = formData.get('email') as string;
       const password = formData.get('password') as string;

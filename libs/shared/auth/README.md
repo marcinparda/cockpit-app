@@ -22,7 +22,7 @@ await logout();
 
 - Service classes: `AuthService`, `PermissionsService`
 - Types: `UserInfo`, `AuthState`, `AuthError`
-- Convenience functions: `isLoggedIn`, `getCurrentUser`, `refreshAccessToken`, `logout`, `isAdmin`, `hasPermission`, `getUserRole`, `hasRole`, `makeAuthenticatedRequest`, `makeAuthenticatedRequestWithRetry`
+- Convenience functions: `isLoggedIn`, `getCurrentUser`, `refreshAccessToken`, `logout`, `isAdmin`, `hasPermission`, `getUserRole`, `hasRole`
 
 ## Usage Examples
 

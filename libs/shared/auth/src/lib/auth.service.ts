@@ -120,6 +120,9 @@ export class AuthService {
       if (refreshed) {
         res = await this.makeAuthenticatedRequest(url, options);
       }
+      if (res.status === 401) {
+        this.logout();
+      }
     }
     return res;
   }

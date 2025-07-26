@@ -12,12 +12,6 @@ export const refreshAccessToken = () => authService.refreshAccessToken();
 export const login = (email: string, password: string) =>
   authService.login(email, password);
 export const logout = () => authService.logout();
-export const makeAuthenticatedRequest = (url: string, options?: RequestInit) =>
-  authService.makeAuthenticatedRequest(url, options);
-export const makeAuthenticatedRequestWithRetry = (
-  url: string,
-  options?: RequestInit
-) => authService.makeAuthenticatedRequestWithRetry(url, options);
 export const isAdmin = () => permissionsService.isAdmin();
 export const hasPermission = (permission: string) =>
   permissionsService.hasPermission(permission);
