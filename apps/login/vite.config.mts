@@ -44,5 +44,6 @@ export default defineConfig(() => ({
       reportsDirectory: '../../coverage/apps/login',
       provider: 'v8' as const,
     },
+    setupFiles: './setupTests.ts',
   },
 }));
