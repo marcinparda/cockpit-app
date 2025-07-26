@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { isLoggedIn } from '@cockpit-app/shared/auth';
 import LoginPage from './login/page';
 
 /**
@@ -7,29 +8,19 @@ import LoginPage from './login/page';
 export function App() {
   const [shouldRenderLogin, setShouldRenderLogin] = useState(false);
 
-  useEffect(function handleManualRouting() {
-    // Check for authentication cookies
-    function getCookie(name: string): string | undefined {
-      const match = document.cookie.match(
-        new RegExp('(^| )' + name + '=([^;]+)')
-      );
-      return match ? decodeURIComponent(match[2]) : undefined;
-    }
-    const accessToken = getCookie('access_token');
-    const refreshToken = getCookie('refresh_token');
-    if (accessToken || refreshToken) {
-      window.location.replace('https://cockpit.parda.me');
-      return;
-    }
-    // Only render login page for /login or root
-    if (
-      window.location.pathname === '/login' ||
-      window.location.pathname === '/'
-    ) {
+  useEffect(() => {
+    isLoggedIn().then((loggedIn) => {
+      if (loggedIn) {
+        window.location.replace('https://cockpit.parda.me');
+        return;
+      }
+    }).catch((error) => {
+      console.error('Error checking login status:', error);
       setShouldRenderLogin(true);
-    } else {
-      // Redirect to /login for any other path
-      window.location.replace('/login');
+    });
+
+    if (window.location.pathname !== '/') {
+      window.location.replace('/');
     }
   }, []);
 

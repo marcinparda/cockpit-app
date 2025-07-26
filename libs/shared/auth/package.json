@@ -1,0 +1,21 @@
+{
+  "name": "auth",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./src/index.js"
+    }
+  },
+  "peerDependencies": {
+    "@cockpit-app/types-shared-auth": "0.0.1"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}
