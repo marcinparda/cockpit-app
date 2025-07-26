@@ -9,6 +9,8 @@ const permissionsService = new PermissionsService();
 export const isLoggedIn = () => authService.isLoggedIn();
 export const getCurrentUser = () => authService.getCurrentUser();
 export const refreshAccessToken = () => authService.refreshAccessToken();
+export const login = (email: string, password: string) =>
+  authService.login(email, password);
 export const logout = () => authService.logout();
 export const makeAuthenticatedRequest = (url: string, options?: RequestInit) =>
   authService.makeAuthenticatedRequest(url, options);

@@ -16,19 +16,13 @@ export class AuthService {
    */
   public async isLoggedIn(): Promise<boolean> {
     try {
-      console.log(
-        `Checking login status at`,
-        AUTH_API_ENDPOINTS.USER,
-        buildApiUrl(AUTH_API_ENDPOINTS.USER)
-      );
       const url = buildApiUrl(AUTH_API_ENDPOINTS.USER);
 
       const res = await fetch(url, {
         credentials: 'include',
       });
       if (!res.ok) return false;
-      const data = await res.json();
-      return !!data?.authenticated;
+      return true;
     } catch {
       return false;
     }
@@ -59,6 +53,27 @@ export class AuthService {
       const res = await fetch(url, {
         method: 'POST',
         credentials: 'include',
+      });
+      return res.ok;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Logs in the user by sending email and password to the API.
+   * Returns true if login was successful, false otherwise.
+   */
+  public async login(email: string, password: string): Promise<boolean> {
+    try {
+      const url = buildApiUrl(AUTH_API_ENDPOINTS.LOGIN);
+      const res = await fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
       });
       return res.ok;
     } catch {
