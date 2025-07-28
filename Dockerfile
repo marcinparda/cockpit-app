@@ -55,7 +55,7 @@ RUN sed -i "s|http://localhost:4203|${COCKPIT_URL}|g" apps/cockpit/src/environme
 RUN sed -i "s|http://localhost:4203|${COCKPIT_URL}|g" libs/shared/auth/src/environments/environments.ts
 
 # Build all applications
-RUN npx nx run-many --target=build --configuration=production
+RUN npx nx run-many --target=build --configuration=production --parallel=8
 
 # Production stage
 FROM nginx:alpine
@@ -64,10 +64,11 @@ FROM nginx:alpine
 COPY --from=build /app/dist/apps/ai-budget /usr/share/nginx/html/ai-budget
 COPY --from=build /app/dist/apps/todo /usr/share/nginx/html/todo
 COPY --from=build /app/dist/apps/login /usr/share/nginx/html/login
+COPY --from=build /app/dist/apps/cockpit /usr/share/nginx/html/cockpit
 
 # Copy custom nginx config that will handle both apps
 COPY nginx/multi-app.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80 81 82
+EXPOSE 80 81 82 83
 CMD ["nginx", "-g", "daemon off;"]
  
