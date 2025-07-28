@@ -2,9 +2,9 @@ import { AppLayout, NavLink, TopNavBar } from '@cockpit-app/cockpit-ui';
 import AppsPage from './apps/apps';
 import { LayoutDashboard } from 'lucide-react';
 import { TopNavBarRighContent } from './components/TopNavBarRighContent';
-import { useUser } from '@cockpit-app/shared-data-access';
+import { useUser } from '@cockpit-app/shared-react-data-access';
 import { AppSkeleton } from './skeleton';
-import { logout } from '@cockpit-app/shared/auth';
+import { logout } from '@cockpit-app/common-shared-data-access';
 
 const navLinks: NavLink[] = [
   { name: 'Apps', href: '/' },

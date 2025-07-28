@@ -3,10 +3,10 @@ import type {
   TodoItemCreate,
   TodoItemUpdate,
 } from '@cockpit-app/types-todo-items';
-import { environment } from '../environments/environments';
+import { environments } from '../environments/environments';
 import httpClient from './http.service'; // Import the HTTP client
 
-const API_URL = `${environment.apiUrl}/api/v1/todo/items`;
+const API_URL = `${environments.apiUrl}/api/v1/todo/items`;
 
 export const todoItemsService = {
   async getTodoItems(skip = 0, limit = 100): Promise<TodoItem[]> {

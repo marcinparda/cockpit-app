@@ -21,10 +21,12 @@
     "lib": ["ES2022", "dom"],
     "paths": {
       "@cockpit-app/cockpit-ui": ["libs/cockpit/ui/src/index.ts"],
-      "@cockpit-app/shared-data-access": [
+      "@cockpit-app/common-shared-data-access": [
+        "libs/shared/data-access/common/src/index.ts"
+      ],
+      "@cockpit-app/shared-react-data-access": [
         "libs/shared/data-access/react/src/index.ts"
       ],
-      "@cockpit-app/shared/auth": ["libs/shared/auth/src/index.ts"],
       "@cockpit-app/shared/react-ui": ["libs/shared/ui/react/src/index.ts"],
       "@cockpit-app/shared/utils": ["libs/shared/utils/src/index.ts"],
       "@cockpit-app/shared/vue-ui": ["libs/shared/ui/vue/src/index.ts"],

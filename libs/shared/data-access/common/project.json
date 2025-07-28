@@ -1,0 +1,9 @@
+{
+  "name": "common-shared-data-access",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/data-access/common/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project common-shared-data-access --web",
+  "targets": {}
+}

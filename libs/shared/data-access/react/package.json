@@ -1,9 +1,14 @@
 {
-  "name": "@cockpit-app/shared-data-access",
+  "name": "@cockpit-app/shared-react-data-access",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "main": "./index.js",
   "types": "./index.d.ts",
-  "dependencies": {}
+  "dependencies": {
+    "@cockpit-app/types-shared-auth": "0.0.1",
+    "@cockpit-app/shared/utils": "0.0.1",
+    "zod": "^4.0.10",
+    "@tanstack/react-query": "^5.83.0"
+  }
 }

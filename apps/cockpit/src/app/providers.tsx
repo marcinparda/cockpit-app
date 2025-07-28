@@ -1,4 +1,4 @@
-import { tanstackQueryClient } from '@cockpit-app/shared-data-access';
+import { tanstackQueryClient } from '@cockpit-app/shared-react-data-access';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 

@@ -1,7 +1,7 @@
 import { cn, Label, Input, Button } from '@cockpit-app/shared/react-ui';
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { login } from '@cockpit-app/shared/auth';
+import { login } from '@cockpit-app/common-shared-data-access';
 import { environment } from '../environments/environments';
 
 export function LoginForm({
