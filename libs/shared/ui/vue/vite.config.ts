@@ -8,7 +8,7 @@ import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
 export default defineConfig(() => ({
   root: __dirname,
-  cacheDir: '../../../node_modules/.vite/libs/shared/vue-ui',
+  cacheDir: '../../../../node_modules/.vite/libs/shared/vue-ui',
   plugins: [
     vue(),
     nxViteTsPaths(),
@@ -25,7 +25,7 @@ export default defineConfig(() => ({
   // Configuration for building your library.
   // See: https://vitejs.dev/guide/build.html#library-mode
   build: {
-    outDir: '../../../dist/libs/shared/vue-ui',
+    outDir: '../../../../dist/libs/shared/vue-ui',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
@@ -52,7 +52,7 @@ export default defineConfig(() => ({
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
     coverage: {
-      reportsDirectory: '../../../coverage/libs/shared/vue-ui',
+      reportsDirectory: '../../../../coverage/libs/shared/vue-ui',
       provider: 'v8' as const,
     },
   },
