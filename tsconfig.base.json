@@ -50,7 +50,8 @@
       "@cockpit-app/types-todo-items": ["libs/types/todo/items/src/index.ts"],
       "@cockpit-app/types-todo-projects": [
         "libs/types/todo/projects/src/index.ts"
-      ]
+      ],
+      "@cockpit-app/cockpit-ui": ["libs/cockpit/ui/src/index.ts"]
     },
     "rootDir": "."
   },
