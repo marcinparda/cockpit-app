@@ -10,7 +10,7 @@ export function App() {
   const [shouldRenderLogin, setShouldRenderLogin] = useState(false);
 
   useEffect(() => {
-    isLoggedIn()
+    isLoggedIn(false)
       .then((loggedIn) => {
         if (loggedIn) {
           window.location.replace(environment.cockpitUrl);

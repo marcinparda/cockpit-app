@@ -9,9 +9,9 @@ import {
 /**
  * Checks if the user is currently logged in (via API call).
  */
-async function isLoggedIn() {
+async function isLoggedIn(withRedirect = true): Promise<boolean> {
   try {
-    const user = await getCurrentUser();
+    const user = await getCurrentUser(withRedirect);
     if (!user) return false;
     return true;
   } catch {

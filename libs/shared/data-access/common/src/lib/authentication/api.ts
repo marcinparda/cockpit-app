@@ -29,10 +29,11 @@ export async function login(
   );
 }
 
-export async function getCurrentUser() {
+export async function getCurrentUser(withRedirect = true) {
   return await baseApi.getRequest<UserInfoResponse>(
     AUTHENTICATION_ENDPOINTS.USER,
-    currentUserSchema
+    currentUserSchema,
+    withRedirect
   );
 }
 
