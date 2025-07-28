@@ -16,7 +16,12 @@ export default defineConfig(() => ({
     port: 4303,
     host: 'localhost',
   },
-  plugins: [react(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md']), tailwindcss()],
+  plugins: [
+    react(),
+    nxViteTsPaths(),
+    nxCopyAssetsPlugin(['*.md']),
+    tailwindcss(),
+  ],
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
@@ -39,5 +44,6 @@ export default defineConfig(() => ({
       reportsDirectory: '../../coverage/apps/cockpit',
       provider: 'v8' as const,
     },
+    setupFiles: './setupTests.ts',
   },
 }));
