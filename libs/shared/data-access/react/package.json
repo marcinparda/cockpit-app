@@ -1,5 +1,5 @@
 {
-  "name": "@cockpit-app/cockpit-data-access",
+  "name": "@cockpit-app/shared-data-access",
   "version": "0.0.1",
   "private": true,
   "type": "module",
