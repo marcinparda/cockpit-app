@@ -1,6 +1,6 @@
 import { Button, TypographySmall } from '@cockpit-app/shared/react-ui';
 import { logout } from '@cockpit-app/common-shared-data-access';
-import { environment } from '../../environments/environments';
+import { environments } from '../../environments/environments';
 import { UserInfoResponse } from '@cockpit-app/types-shared-auth';
 
 interface TopNavBarRighContentProps {
@@ -10,7 +10,7 @@ interface TopNavBarRighContentProps {
 export function TopNavBarRighContent({ userInfo }: TopNavBarRighContentProps) {
   const handleLogout = async () => {
     await logout();
-    const redirectUrl = new URL(environment.loginUrl);
+    const redirectUrl = new URL(environments.loginUrl);
     redirectUrl.searchParams.set('redirect_uri', window.location.href);
     console.log(redirectUrl.toString());
 

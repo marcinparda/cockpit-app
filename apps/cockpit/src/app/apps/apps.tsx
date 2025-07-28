@@ -1,19 +1,19 @@
 import { AppCard } from '@cockpit-app/cockpit-ui';
 import { TypographyH1, TypographyP } from '@cockpit-app/shared/react-ui';
 import { CheckSquare, DollarSign } from 'lucide-react';
-import { environment } from '../../environments/environments';
+import { environments } from '../../environments/environments';
 
 const appsList = [
   {
     name: 'Todo App',
     description: 'A simple todo application to manage your tasks.',
-    url: environment.todoUrl,
+    url: environments.todoUrl,
     Icon: CheckSquare,
   },
   {
     name: 'Budget Tracker',
     description: 'Track your expenses and manage your budget effectively.',
-    url: environment.budgetUrl,
+    url: environments.budgetUrl,
     Icon: DollarSign,
   },
 ];

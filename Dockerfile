@@ -20,13 +20,39 @@ COPY . .
 ARG API_URL
 ARG LOGIN_URL
 ARG COCKPIT_URL
+ARG TODO_URL
+ARG BUDGET_URL
 
 # Replace local dev envs in environments files before build
 RUN sed -i "s|http://localhost:8000|${API_URL}|g" apps/ai-budget/src/environments/environments.ts
 RUN sed -i "s|http://localhost:8000|${API_URL}|g" apps/todo/src/environments/environments.ts
-RUN sed -i "s|http://localhost:4202|${LOGIN_URL}|g" apps/todo/src/environments/environments.ts
-RUN sed -i "s|http://localhost:4203|${COCKPIT_URL}|g" apps/login/src/environments/environments.ts
+RUN sed -i "s|http://localhost:8000|${API_URL}|g" apps/login/src/environments/environments.ts
+RUN sed -i "s|http://localhost:8000|${API_URL}|g" apps/cockpit/src/environments/environments.ts
 RUN sed -i "s|http://localhost:8000|${API_URL}|g" libs/shared/auth/src/environments/environments.ts
+
+RUN sed -i "s|http://localhost:4200|${BUDGET_URL}|g" apps/ai-budget/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4200|${BUDGET_URL}|g" apps/todo/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4200|${BUDGET_URL}|g" apps/login/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4200|${BUDGET_URL}|g" apps/cockpit/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4200|${BUDGET_URL}|g" libs/shared/auth/src/environments/environments.ts
+
+RUN sed -i "s|http://localhost:4201|${TODO_URL}|g" apps/ai-budget/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4201|${TODO_URL}|g" apps/todo/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4201|${TODO_URL}|g" apps/login/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4201|${TODO_URL}|g" apps/cockpit/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4201|${TODO_URL}|g" libs/shared/auth/src/environments/environments.ts
+
+RUN sed -i "s|http://localhost:4202|${LOGIN_URL}|g" apps/ai-budget/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4202|${LOGIN_URL}|g" apps/todo/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4202|${LOGIN_URL}|g" apps/login/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4202|${LOGIN_URL}|g" apps/cockpit/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4202|${LOGIN_URL}|g" libs/shared/auth/src/environments/environments.ts
+
+RUN sed -i "s|http://localhost:4203|${COCKPIT_URL}|g" apps/ai-budget/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4203|${COCKPIT_URL}|g" apps/todo/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4203|${COCKPIT_URL}|g" apps/login/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4203|${COCKPIT_URL}|g" apps/cockpit/src/environments/environments.ts
+RUN sed -i "s|http://localhost:4203|${COCKPIT_URL}|g" libs/shared/auth/src/environments/environments.ts
 
 # Build all applications
 RUN npx nx run-many --target=build --configuration=production

@@ -1,4 +1,4 @@
-export const environment = {
+export const environments = {
   budgetUrl: 'http://localhost:4200',
   todoUrl: 'http://localhost:4201',
   loginUrl: 'http://localhost:4202',

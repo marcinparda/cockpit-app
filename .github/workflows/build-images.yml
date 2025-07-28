@@ -9,6 +9,10 @@ on:
         required: true
       COCKPIT_URL:
         required: true
+      TODO_URL:
+        required: true
+      BUDGET_URL:
+        required: true
     outputs:
       image_name:
         description: 'The built Docker image name'
@@ -53,6 +57,8 @@ jobs:
             API_URL=${{ secrets.API_URL }}
             LOGIN_URL=${{ secrets.LOGIN_URL }}
             COCKPIT_URL=${{ secrets.COCKPIT_URL }}
+            TODO_URL=${{ secrets.TODO_URL }}
+            BUDGET_URL=${{ secrets.BUDGET_URL }}
 
       - name: Build Summary
         run: |

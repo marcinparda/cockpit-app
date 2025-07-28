@@ -26,6 +26,8 @@ jobs:
       API_URL: ${{ secrets.API_URL }}
       LOGIN_URL: ${{ secrets.LOGIN_URL }}
       COCKPIT_URL: ${{ secrets.COCKPIT_URL }}
+      TODO_URL: ${{ secrets.TODO_URL }}
+      BUDGET_URL: ${{ secrets.BUDGET_URL }}
 
   deploy-to-raspberry:
     needs: build-images
