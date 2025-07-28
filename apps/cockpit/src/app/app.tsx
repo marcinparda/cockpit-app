@@ -1,9 +1,10 @@
 import { AppLayout, NavLink, TopNavBar } from '@cockpit-app/cockpit-ui';
 import AppsPage from './apps/apps';
 import { LayoutDashboard } from 'lucide-react';
-import { LogoutButton } from './components/LogoutButton';
+import { TopNavBarRighContent } from './components/TopNavBarRighContent';
 import { useUser } from '@cockpit-app/cockpit-data-access';
 import { AppSkeleton } from './skeleton';
+import { logout } from '@cockpit-app/shared/auth';
 
 const navLinks: NavLink[] = [
   { name: 'Apps', href: '/' },
@@ -11,8 +12,13 @@ const navLinks: NavLink[] = [
 ];
 
 export default function App() {
-  const { isLoading } = useUser();
+  const { isLoading, data: userInfo } = useUser();
   if (isLoading) {
+    return <AppSkeleton />;
+  }
+
+  if (!userInfo) {
+    logout();
     return <AppSkeleton />;
   }
 
@@ -23,7 +29,7 @@ export default function App() {
           navLinks={navLinks}
           brandName="Cockpit"
           BrandIcon={LayoutDashboard}
-          rightContent={<LogoutButton />}
+          rightContent={<TopNavBarRighContent userInfo={userInfo} />}
         />
       }
     >

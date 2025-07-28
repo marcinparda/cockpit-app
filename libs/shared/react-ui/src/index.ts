@@ -5,3 +5,4 @@ export * from './lib/cn';
 export * from './lib/Card/Card';
 export * from './lib/TypographyH1/TypographyH1';
 export * from './lib/TypographyP/TypographyP';
+export * from './lib/TypographySmall/TypographySmall';
