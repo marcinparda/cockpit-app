@@ -5,7 +5,7 @@
     "declaration": true,
     "types": ["node", "vite/client"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../data-access/react/src/lib/api/endpoints.ts"],
   "exclude": [
     "vite.config.ts",
     "vite.config.mts",

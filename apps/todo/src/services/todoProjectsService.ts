@@ -3,10 +3,10 @@ import type {
   TodoProjectCreate,
   TodoProjectUpdate,
 } from '@cockpit-app/types-todo-projects';
-import { environment } from '../environments/environments';
+import { environments } from '../environments/environments';
 import httpClient from './http.service';
 
-const API_URL = `${environment.apiUrl}/api/v1/todo/projects`;
+const API_URL = `${environments.apiUrl}/api/v1/todo/projects`;
 
 export const todoProjectsService = {
   async getTodoProjects(): Promise<TodoProject[]> {

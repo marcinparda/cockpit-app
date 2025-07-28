@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { isLoggedIn } from '@cockpit-app/shared/auth';
+import { isLoggedIn } from '@cockpit-app/common-shared-data-access';
 import LoginPage from './login/page';
 import { environment } from '../environments/environments';
 
@@ -10,7 +10,7 @@ export function App() {
   const [shouldRenderLogin, setShouldRenderLogin] = useState(false);
 
   useEffect(() => {
-    isLoggedIn()
+    isLoggedIn(false)
       .then((loggedIn) => {
         if (loggedIn) {
           window.location.replace(environment.cockpitUrl);

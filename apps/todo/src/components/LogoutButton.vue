@@ -1,11 +1,11 @@
 <script setup>
 import { Button } from '@cockpit-app/shared/vue-ui';
-import { logout } from '@cockpit-app/shared/auth';
-import { environment } from '../environments/environments';
+import { logout } from '@cockpit-app/common-shared-data-access';
+import { environments } from '../environments/environments';
 
 const performLogout = async () => {
   await logout();
-  const redirectUrl = new URL(environment.loginUrl);
+  const redirectUrl = new URL(environments.loginUrl);
   redirectUrl.searchParams.set('redirect_uri', window.location.href);
   window.location.href = redirectUrl.toString();
 };

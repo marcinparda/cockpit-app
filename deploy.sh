@@ -29,6 +29,7 @@ docker run -d \
   -p 4200:80 \
   -p 4201:81 \
   -p 4202:82 \
+  -p 4203:83 \
   "$IMAGE_NAME"
 
 echo "✅ Deployment completed successfully"

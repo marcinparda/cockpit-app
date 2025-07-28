@@ -8,6 +8,7 @@ services:
       - '4200:80' # ai-budget
       - '4201:81' # todo
       - '4202:82' # login
+      - '4203:83' # cockpit
     environment:
       - NODE_ENV=production
     restart: unless-stopped

@@ -1,5 +1,6 @@
 @import 'tailwindcss' source(none);
-@source "../../../libs/shared/react-ui/src/**/*.{ts,tsx,js,jsx,html,css}";
+@source "../../../libs/shared/ui/**/*.{ts,tsx,js,jsx,html,css}";
+@source "../../../libs/login/ui/**/*.{ts,tsx,js,jsx,html,css}";
 @source "./**/*.{ts,tsx,js,jsx,html,css}";
 
 @import 'tw-animate-css';

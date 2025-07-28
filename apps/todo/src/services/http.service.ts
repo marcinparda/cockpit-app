@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { logout, refreshAccessToken } from '@cockpit-app/shared/auth';
+import {
+  logout,
+  refreshAccessToken,
+} from '@cockpit-app/common-shared-data-access';
+import { environments } from '../environments/environments';
 
 const httpClient = axios.create({
   withCredentials: true,
@@ -19,14 +23,12 @@ httpClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response && error.response.status === 401) {
-
-      const refreshed = await refreshAccessToken();
-      if (refreshed) {
+      try {
+        await refreshAccessToken();
         const config = error.config;
         return httpClient(config);
-      } else {
-        await logout();
-        const redirectUrl = new URL('https://login.parda.me');
+      } catch {
+        const redirectUrl = new URL(environments.loginUrl);
         redirectUrl.searchParams.set('redirect_uri', window.location.href);
         window.location.href = redirectUrl.toString();
       }

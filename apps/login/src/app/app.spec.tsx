@@ -1,10 +1,10 @@
 import { render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import * as auth from '@cockpit-app/shared/auth';
+import * as auth from '@cockpit-app/common-shared-data-access';
 import { App } from './app';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 
-vi.mock('@cockpit-app/shared/auth');
+vi.mock('@cockpit-app/common-shared-data-access');
 
 const mockIsLoggedIn = auth.isLoggedIn as unknown as ReturnType<typeof vi.fn>;
 

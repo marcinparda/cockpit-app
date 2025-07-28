@@ -1,0 +1,13 @@
+{
+  "name": "@cockpit-app/common-shared-data-access",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "dependencies": {
+    "@cockpit-app/types-shared-auth": "0.0.1",
+    "@cockpit-app/shared/utils": "0.0.1",
+    "zod": "^4.0.10"
+  }
+}
