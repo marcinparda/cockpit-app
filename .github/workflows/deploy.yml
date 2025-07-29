@@ -89,7 +89,18 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      # Check if ai-budget build output exists
+      - name: Check if ai-budget build output exists
+        id: ai_budget_exists
+        run: |
+          if [ -d "dist/apps/ai-budget" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build and push Docker image for ai-budget
+        if: steps.ai_budget_exists.outputs.exists == 'true'
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -102,7 +113,18 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      # Check if todo build output exists
+      - name: Check if todo build output exists
+        id: todo_exists
+        run: |
+          if [ -d "dist/apps/todo" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build and push Docker image for todo
+        if: steps.todo_exists.outputs.exists == 'true'
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -115,7 +137,18 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      # Check if login build output exists
+      - name: Check if login build output exists
+        id: login_exists
+        run: |
+          if [ -d "dist/apps/login" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build and push Docker image for login
+        if: steps.login_exists.outputs.exists == 'true'
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -128,7 +161,18 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      # Check if cockpit build output exists
+      - name: Check if cockpit build output exists
+        id: cockpit_exists
+        run: |
+          if [ -d "dist/apps/cockpit" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build and push Docker image for cockpit
+        if: steps.cockpit_exists.outputs.exists == 'true'
         uses: docker/build-push-action@v6
         with:
           context: .
