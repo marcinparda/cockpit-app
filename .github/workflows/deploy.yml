@@ -73,6 +73,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Fetch all history for all tags and branches
+        run: git fetch --prune --unshallow --tags
+
       - name: Run affected checks and builds
         run: npx nx affected --targets=lint,build,test --base=$LAST_SUCCESSFUL_SHA --head=HEAD --parallel=4
 
