@@ -2,11 +2,6 @@ name: Deploy to Production
 
 on:
   workflow_call:
-    inputs:
-      image-name:
-        description: 'Docker image name to deploy'
-        required: false
-        type: string
     secrets:
       CLOUDFLARE_TUNNEL_DOMAIN:
         required: true
@@ -23,16 +18,11 @@ on:
         required: false
         type: string
 
-env:
-  IMAGE_NAME: ${{ inputs.image-name || format('ghcr.io/{0}/cockpit-frontend-apps:latest', github.repository) }}
-  CONTAINER_NAME: cockpit-frontend-apps
-
 jobs:
   deploy-to-production:
     runs-on: ubuntu-latest
     outputs:
       deployment-status: ${{ steps.deploy.outcome }}
-      image-name: ${{ env.IMAGE_NAME }}
       deployment-url: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
 
     steps:
@@ -63,12 +53,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to Raspberry Pi
+
+      - name: Deploy all apps to Raspberry Pi
         id: deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
         run: |
-          echo "🚀 Starting deployment to Raspberry Pi..."
+          echo "🚀 Starting deployment of all apps to Raspberry Pi..."
 
           echo "📤 Copying deployment script to Raspberry Pi..."
           scp deploy.sh ${{ secrets.RASPBERRY_PI_USERNAME }}@${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}:~/deploy.sh
@@ -77,9 +70,9 @@ jobs:
           ssh ${{ secrets.RASPBERRY_PI_USERNAME }}@${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} \
             "chmod +x ~/deploy.sh && \
             GITHUB_TOKEN='${{ secrets.GITHUB_TOKEN }}' \
-            IMAGE_NAME='${{ env.IMAGE_NAME }}' \
-            CONTAINER_NAME='${{ env.CONTAINER_NAME }}' \
             GITHUB_ACTOR='${{ github.actor }}' \
+            OWNER='${{ github.repository_owner }}' \
+            REPO='${{ github.event.repository.name }}' \
             ~/deploy.sh"
 
           echo "🎉 Deployment to Raspberry Pi completed successfully!"
