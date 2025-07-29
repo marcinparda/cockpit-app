@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
 # Copy built files for the cockpit app
-COPY --from=build /dist/apps/cockpit /usr/share/nginx/html
+COPY  /dist/apps/cockpit /usr/share/nginx/html
 
 # Copy custom nginx config that will handle the cockpit app
 COPY apps/cockpit/nginx/cockpit.conf /etc/nginx/conf.d/default.conf
