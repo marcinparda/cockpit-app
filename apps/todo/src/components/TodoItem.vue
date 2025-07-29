@@ -36,7 +36,7 @@ function handleEditNameInput(val: string | undefined) {
         @update:model-value="handleEditNameInput"
         @keyup.enter="emit('save-edited-item')"
       />
-      <Button @click="emit('save-edited-item')" @click.stop> Save </Button>
+      <Button @click="emit('save-edited-item')" @click.stop>Save</Button>
       <Button
         severity="secondary"
         @click="emit('cancel-edited-item')"

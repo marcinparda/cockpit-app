@@ -12,7 +12,8 @@ const appsList = [
   },
   {
     name: 'Budget Tracker',
-    description: 'Track your expenses and manage your budget effectively with your team.',
+    description:
+      'Track your expenses and manage your budget effectively with your team.',
     url: environments.budgetUrl,
     Icon: DollarSign,
   },
@@ -26,7 +27,7 @@ export default function AppsPage() {
       </div>
       <div className="mb-4">
         <TypographyP>
-          Here are the list of cockpit apps that you have access to:
+          Here are the list of all cockpit apps that you have access to:
         </TypographyP>
       </div>
       <div className="flex flex-wrap items-center gap-4">
