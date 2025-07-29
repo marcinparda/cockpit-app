@@ -67,11 +67,11 @@ jobs:
       - name: Replace dev environments with production URLs
         run: |
           echo "Replacing dev URLs with production URLs in environment files"
-          sed -i 's|http://localhost:4200|${{ secrets.BUDGET_URL }}|g' apps/ai-budget/src/environments/environment.prod.ts
-          sed -i 's|http://localhost:4201|${{ secrets.TODO_URL }}|g' apps/todo/src/environments/environment.prod.ts
-          sed -i 's|http://localhost:4202|${{ secrets.LOGIN_URL }}|g' apps/login/src/environments/environment.prod.ts
-          sed -i 's|http://localhost:4203|${{ secrets.COCKPIT_URL }}|g' apps/cockpit/src/environments/environment.prod.ts
-          sed -i 's|http://localhost:8000|${{ secrets.API_URL }}|g' apps/ai-budget/src/environments/environment.prod.ts
+          sed -i 's|http://localhost:4200|${{ secrets.BUDGET_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
+          sed -i 's|http://localhost:4201|${{ secrets.TODO_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
+          sed -i 's|http://localhost:4202|${{ secrets.LOGIN_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
+          sed -i 's|http://localhost:4203|${{ secrets.COCKPIT_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
+          sed -i 's|http://localhost:8000|${{ secrets.API_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
 
       - name: Run affected checks and builds
         run: npx nx affected --targets=lint,build,test --base=$LAST_SUCCESSFUL_SHA --head=HEAD --parallel=4
