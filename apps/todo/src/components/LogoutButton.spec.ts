@@ -4,7 +4,7 @@ import { createRouter, createWebHistory, Router } from 'vue-router';
 import LogoutButton from './LogoutButton.vue';
 
 // Mock the Button component from vue-ui
-vi.mock('@cockpit-app/shared/vue-ui', () => ({
+vi.mock('@cockpit-app/shared-vue-ui', () => ({
   Button: {
     name: 'Button',
     template:

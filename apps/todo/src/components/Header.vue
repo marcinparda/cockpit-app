@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
-import { Menubar } from '@cockpit-app/shared/vue-ui';
+import { Menubar } from '@cockpit-app/shared-vue-ui';
 import LogoutButton from './LogoutButton.vue';
 
 type MenuItem = {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TodoItem as TodoItemType } from '../types/TodoItem';
 import TodoItem from './TodoItem.vue';
-import { Divider } from '@cockpit-app/shared/vue-ui';
+import { Divider } from '@cockpit-app/shared-vue-ui';
 
 const props = defineProps<{
   items: TodoItemType[];

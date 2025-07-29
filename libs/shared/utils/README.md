@@ -1,4 +1,4 @@
-# @cockpit-app/shared/utils
+# @cockpit-app/shared-utils
 
 A shared utilities library for the Cockpit App workspace containing common TypeScript utility functions.
 
@@ -20,7 +20,7 @@ Type-safe predicate functions for runtime type checking with proper TypeScript t
 The library is already configured in the workspace. Import functions as needed:
 
 ```typescript
-import { isString, isMeaningfulString } from '@cockpit-app/shared/utils';
+import { isString, isMeaningfulString } from '@cockpit-app/shared-utils';
 ```
 
 ## Usage Examples
@@ -28,7 +28,7 @@ import { isString, isMeaningfulString } from '@cockpit-app/shared/utils';
 ### Basic String Validation
 
 ```typescript
-import { isString, isMeaningfulString } from '@cockpit-app/shared/utils';
+import { isString, isMeaningfulString } from '@cockpit-app/shared-utils';
 
 // Basic string check
 const userInput: unknown = 'hello world';
@@ -56,7 +56,7 @@ processUserInput(123); // throws Error
 ### Form Validation
 
 ```typescript
-import { isMeaningfulString, isEmptyOrWhitespaceString } from '@cockpit-app/shared/utils';
+import { isMeaningfulString, isEmptyOrWhitespaceString } from '@cockpit-app/shared-utils';
 
 // Vue.js example
 function handleFormSubmit(formData: { name: string; email: string }) {
@@ -78,7 +78,7 @@ function handleFormSubmit(formData: { name: string; email: string }) {
 ### API Response Validation
 
 ```typescript
-import { isString, isNonEmptyString } from '@cockpit-app/shared/utils';
+import { isString, isNonEmptyString } from '@cockpit-app/shared-utils';
 
 interface TodoItem {
   id: number;

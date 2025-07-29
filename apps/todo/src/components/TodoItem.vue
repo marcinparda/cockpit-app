@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button, InputText, Checkbox } from '@cockpit-app/shared/vue-ui';
+import { Button, InputText, Checkbox } from '@cockpit-app/shared-vue-ui';
 import type { TodoItem as TodoItemType } from '@cockpit-app/types-todo-items';
 import { computed } from 'vue';
 

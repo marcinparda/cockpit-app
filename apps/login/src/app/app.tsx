@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { isLoggedIn } from '@cockpit-app/common-shared-data-access';
 import LoginPage from './login/page';
-import { environment } from '../environments/environments';
+import { environments } from '@cockpit-app/shared-utils';
 
 /**
  * Main App component for Login app. Handles manual routing and authentication redirect.
@@ -13,7 +13,7 @@ export function App() {
     isLoggedIn(false)
       .then((loggedIn) => {
         if (loggedIn) {
-          window.location.replace(environment.cockpitUrl);
+          window.location.replace(environments.cockpitUrl);
           return;
         } else {
           setShouldRenderLogin(true);

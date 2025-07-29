@@ -3,7 +3,7 @@ import type {
   TodoProjectCreate,
   TodoProjectUpdate,
 } from '@cockpit-app/types-todo-projects';
-import { environments } from '../environments/environments';
+import { environments } from '@cockpit-app/shared-utils';
 import httpClient from './http.service';
 
 const API_URL = `${environments.apiUrl}/api/v1/todo/projects`;

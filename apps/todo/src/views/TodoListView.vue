@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Button } from '@cockpit-app/shared/vue-ui';
-import { isMeaningfulString } from '@cockpit-app/shared/utils';
+import { Button } from '@cockpit-app/shared-vue-ui';
+import { isMeaningfulString } from '@cockpit-app/shared-utils';
 import { ref, computed } from 'vue';
 import { useTodoList } from '../composables/useTodoList';
 import TodoList from '../components/TodoList.vue';

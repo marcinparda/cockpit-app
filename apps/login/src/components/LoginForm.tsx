@@ -1,8 +1,8 @@
-import { cn, Label, Input, Button } from '@cockpit-app/shared/react-ui';
+import { cn, Label, Input, Button } from '@cockpit-app/shared-react-ui';
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { login } from '@cockpit-app/common-shared-data-access';
-import { environment } from '../environments/environments';
+import { environments } from '@cockpit-app/shared-utils';
 
 export function LoginForm({
   className,
@@ -14,7 +14,7 @@ export function LoginForm({
       const password = formData.get('password') as string;
       const loggedIn = await login(email, password);
       if (loggedIn) {
-        window.location.replace(environment.cockpitUrl);
+        window.location.replace(environments.cockpitUrl);
         return { error: null, success: true };
       }
       return { error: 'Invalid email or password', success: false };

@@ -1,7 +1,7 @@
 <script setup>
-import { Button } from '@cockpit-app/shared/vue-ui';
+import { Button } from '@cockpit-app/shared-vue-ui';
 import { logout } from '@cockpit-app/common-shared-data-access';
-import { environments } from '../environments/environments';
+import { environments } from '@cockpit-app/shared-utils';
 
 const performLogout = async () => {
   await logout();

@@ -27,9 +27,9 @@
       "@cockpit-app/shared-react-data-access": [
         "libs/shared/data-access/react/src/index.ts"
       ],
-      "@cockpit-app/shared/react-ui": ["libs/shared/ui/react/src/index.ts"],
-      "@cockpit-app/shared/utils": ["libs/shared/utils/src/index.ts"],
-      "@cockpit-app/shared/vue-ui": ["libs/shared/ui/vue/src/index.ts"],
+      "@cockpit-app/shared-react-ui": ["libs/shared/ui/react/src/index.ts"],
+      "@cockpit-app/shared-utils": ["libs/shared/utils/src/index.ts"],
+      "@cockpit-app/shared-vue-ui": ["libs/shared/ui/vue/src/index.ts"],
       "@cockpit-app/types-ai-budget-categories": [
         "libs/types/ai-budget/categories/src/index.ts"
       ],

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { InputText, Button, Dialog, Select } from '@cockpit-app/shared/vue-ui';
+import { InputText, Button, Dialog, Select } from '@cockpit-app/shared-vue-ui';
 import type { TodoProject } from '../types/TodoProject';
 
 /**

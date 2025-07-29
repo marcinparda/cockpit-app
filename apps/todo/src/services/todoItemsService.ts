@@ -3,7 +3,7 @@ import type {
   TodoItemCreate,
   TodoItemUpdate,
 } from '@cockpit-app/types-todo-items';
-import { environments } from '../environments/environments';
+import { environments } from '@cockpit-app/shared-utils';
 import httpClient from './http.service'; // Import the HTTP client
 
 const API_URL = `${environments.apiUrl}/api/v1/todo/items`;
