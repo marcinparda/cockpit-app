@@ -95,7 +95,12 @@ jobs:
           context: .
           file: apps/ai-budget/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}-ai-budget:latest
+          tags: |
+            ghcr.io/${{ github.repository }}-ai-budget:latest
+            ghcr.io/${{ github.repository }}-ai-budget:${{ github.sha }}
+          platforms: linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build and push Docker image for todo
         uses: docker/build-push-action@v6
@@ -103,7 +108,12 @@ jobs:
           context: .
           file: apps/todo/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}-todo:latest
+          tags: |
+            ghcr.io/${{ github.repository }}-todo:latest
+            ghcr.io/${{ github.repository }}-todo:${{ github.sha }}
+          platforms: linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build and push Docker image for login
         uses: docker/build-push-action@v6
@@ -111,7 +121,12 @@ jobs:
           context: .
           file: apps/login/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}-login:latest
+          tags: |
+            ghcr.io/${{ github.repository }}-login:latest
+            ghcr.io/${{ github.repository }}-login:${{ github.sha }}
+          platforms: linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build and push Docker image for cockpit
         uses: docker/build-push-action@v6
@@ -119,7 +134,12 @@ jobs:
           context: .
           file: apps/cockpit/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}-cockpit:latest
+          tags: |
+            ghcr.io/${{ github.repository }}-cockpit:latest
+            ghcr.io/${{ github.repository }}-cockpit:${{ github.sha }}
+          platforms: linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   deploy-to-raspberry:
     needs: [validate-types, build-test-and-push]
