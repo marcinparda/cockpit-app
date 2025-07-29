@@ -36,6 +36,15 @@ jobs:
           key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
 
+      - name: Replace dev environments with production URLs
+        run: |
+          echo "Replacing dev URLs with production URLs in environment files"
+          sed -i 's|http://localhost:4200|${{ secrets.BUDGET_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
+          sed -i 's|http://localhost:4201|${{ secrets.TODO_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
+          sed -i 's|http://localhost:4202|${{ secrets.LOGIN_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
+          sed -i 's|http://localhost:4203|${{ secrets.COCKPIT_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
+          sed -i 's|http://localhost:8000|${{ secrets.API_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
+
       - name: Install dependencies
         run: npm ci
 
@@ -63,15 +72,6 @@ jobs:
           echo "LAST_SUCCESSFUL_SHA=$LAST_SUCCESSFUL_SHA" >> $GITHUB_ENV
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Replace dev environments with production URLs
-        run: |
-          echo "Replacing dev URLs with production URLs in environment files"
-          sed -i 's|http://localhost:4200|${{ secrets.BUDGET_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
-          sed -i 's|http://localhost:4201|${{ secrets.TODO_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
-          sed -i 's|http://localhost:4202|${{ secrets.LOGIN_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
-          sed -i 's|http://localhost:4203|${{ secrets.COCKPIT_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
-          sed -i 's|http://localhost:8000|${{ secrets.API_URL }}|g' libs/shared/utils/src/lib/environments/environments.ts
 
       - name: Run affected checks and builds
         run: npx nx affected --targets=lint,build,test --base=$LAST_SUCCESSFUL_SHA --head=HEAD --parallel=4
