@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Button, InputText } from '@cockpit-app/shared/vue-ui';
+import { Button, InputText } from '@cockpit-app/shared-vue-ui';
 import { ref, defineEmits } from 'vue';
 import { todoProjectsService } from '../services/todoProjectsService';
 

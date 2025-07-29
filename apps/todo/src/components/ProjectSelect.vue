@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue';
-import { Select } from '@cockpit-app/shared/vue-ui';
+import { Select } from '@cockpit-app/shared-vue-ui';
 import { useRoute, useRouter } from 'vue-router';
 import { todoProjectsService } from '../services/todoProjectsService';
 import type { TodoProject } from '../types/TodoProject';
-import { isMeaningfulString } from '@cockpit-app/shared/utils';
+import { isMeaningfulString } from '@cockpit-app/shared-utils';
 
 const projects = ref<TodoProject[]>([]);
 const selectedProject = ref<string | null>(null);

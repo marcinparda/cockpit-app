@@ -5,7 +5,7 @@ import {
   SimpleRefreshResponse,
   UserInfoResponse,
 } from '@cockpit-app/types-shared-auth';
-import { baseApi } from '@cockpit-app/shared/utils';
+import { baseApi } from '@cockpit-app/shared-utils';
 import { AUTHENTICATION_ENDPOINTS } from './endpoints';
 import {
   currentUserSchema,

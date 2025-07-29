@@ -1,9 +1,6 @@
 import axios from 'axios';
-import {
-  logout,
-  refreshAccessToken,
-} from '@cockpit-app/common-shared-data-access';
-import { environments } from '../environments/environments';
+import { refreshAccessToken } from '@cockpit-app/common-shared-data-access';
+import { environments } from '@cockpit-app/shared-utils';
 
 const httpClient = axios.create({
   withCredentials: true,

@@ -3,7 +3,7 @@ import {
   CardTitle,
   CardContent,
   CardDescription,
-} from '@cockpit-app/shared/react-ui';
+} from '@cockpit-app/shared-react-ui';
 import { LucideProps } from 'lucide-react';
 import { ForwardRefExoticComponent, RefAttributes } from 'react';
 

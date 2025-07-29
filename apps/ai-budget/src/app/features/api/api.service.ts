@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environments';
+import { environments } from '@cockpit-app/shared-utils';
 
 // Import generated types
 import type {
@@ -21,7 +21,7 @@ import type {
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environments.apiUrl;
 
   constructor(private http: HttpClient) {}
 

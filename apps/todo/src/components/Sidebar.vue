@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { Menu } from '@cockpit-app/shared/vue-ui';
+import { Menu } from '@cockpit-app/shared-vue-ui';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { todoProjectsService } from '../services/todoProjectsService';

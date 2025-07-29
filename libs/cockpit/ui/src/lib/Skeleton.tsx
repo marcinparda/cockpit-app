@@ -1,4 +1,4 @@
-import { cn } from '@cockpit-app/shared/react-ui';
+import { cn } from '@cockpit-app/shared-react-ui';
 
 function Skeleton({ className, ...props }: React.ComponentProps<'div'>) {
   return (

@@ -1,7 +1,7 @@
 import { AppCard } from '@cockpit-app/cockpit-ui';
-import { TypographyH1, TypographyP } from '@cockpit-app/shared/react-ui';
+import { TypographyH1, TypographyP } from '@cockpit-app/shared-react-ui';
 import { CheckSquare, DollarSign } from 'lucide-react';
-import { environments } from '../../environments/environments';
+import { environments } from '@cockpit-app/shared-utils';
 
 const appsList = [
   {
