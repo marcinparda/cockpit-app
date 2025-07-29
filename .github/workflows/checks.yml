@@ -45,8 +45,6 @@ jobs:
 
           echo "🔍 Last successful/known good SHA for affected check: $LAST_SUCCESSFUL_SHA"
           echo "LAST_SUCCESSFUL_SHA=$LAST_SUCCESSFUL_SHA" >> $GITHUB_ENV
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run affected checks
         run: npx nx affected --targets=lint,build,test --base=$LAST_SUCCESSFUL_SHA --head=HEAD --parallel=8

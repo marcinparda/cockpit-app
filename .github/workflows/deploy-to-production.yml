@@ -11,19 +11,12 @@ on:
         required: true
       SSH_KNOWN_HOSTS:
         required: true
-  workflow_dispatch:
-    inputs:
-      image-name:
-        description: 'Docker image name to deploy'
-        required: false
-        type: string
 
 jobs:
   deploy-to-production:
     runs-on: ubuntu-latest
     outputs:
       deployment-status: ${{ steps.deploy.outcome }}
-      deployment-url: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}
 
     steps:
       - name: Set up Cloudflared

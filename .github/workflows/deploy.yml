@@ -70,8 +70,6 @@ jobs:
 
           echo "🔍 Last successful/known good SHA for affected check: $LAST_SUCCESSFUL_SHA"
           echo "LAST_SUCCESSFUL_SHA=$LAST_SUCCESSFUL_SHA" >> $GITHUB_ENV
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fetch all history for all tags and branches
         run: git fetch --prune --unshallow --tags
