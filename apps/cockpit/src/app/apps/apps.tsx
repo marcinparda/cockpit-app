@@ -5,14 +5,14 @@ import { environments } from '@cockpit-app/shared-utils';
 
 const appsList = [
   {
-    name: 'Todo App',
-    description: 'A simple todo application to manage your tasks.',
+    name: 'Todo',
+    description: 'Todo application to manage tasks between multiple people.',
     url: environments.todoUrl,
     Icon: CheckSquare,
   },
   {
     name: 'Budget Tracker',
-    description: 'Track your expenses and manage your budget effectively.',
+    description: 'Track your expenses and manage your budget effectively with your team.',
     url: environments.budgetUrl,
     Icon: DollarSign,
   },
