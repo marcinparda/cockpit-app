@@ -22,35 +22,7 @@ This repository uses several GitHub Actions workflows to automate validation, ty
 - **File:** `.github/workflows/deploy-to-production.yml`
 - **Purpose:** Deploys all built Docker images to the Raspberry Pi using SSH and Cloudflare Tunnel. Runs `deploy.sh` on the Pi to update containers. Provides a deployment summary and troubleshooting tips.
 
-### 2. Checks Workflow (`checks.yml`)
-
-- **File:** `.github/workflows/checks.yml`
-- **Purpose:** Runs on every pull request to `master` and on workflow calls. It:
-  - Installs dependencies
-  - Finds the last successful deploy SHA
-  - Runs `nx affected` for lint, build, and test on only changed projects
-  - Ensures only relevant code is checked, speeding up PR validation
-
-### 3. Scheduled Type Drift Check (`scheduled-type-check.yml`)
-
-- **File:** `.github/workflows/scheduled-type-check.yml`
-- **Purpose:** Runs daily at 6 AM UTC to check for API type drift:
-  - Calls `validate-types.yml` to check for OpenAPI/type drift
-  - If drift is detected, creates a PR with updated types
-  - Notifies via GitHub Issue if drift is found
-  - Cleans up old automated branches
-
-### 4. API Type Validation Workflow (`validate-types.yml`)
-
-- **File:** `.github/workflows/validate-types.yml`
-- **Purpose:** Validates and updates API types based on the OpenAPI spec. Used by other workflows and can be called directly. It:
-  - Checks for type drift
-  - Optionally forces type update
-  - Optionally creates a PR if drift is detected
-  - Runs type generation tests and compilation
-  - Outputs validation status and drift detection
-
-### 5. Deployment Script (`deploy.sh`)
+### 2. Deployment Script (`deploy.sh`)
 
 - **File:** `deploy.sh` (root of repository)
 - **Purpose:** Handles the actual deployment of all apps on the Raspberry Pi. This script is copied and executed remotely by the `deploy-to-production.yml` workflow.
@@ -66,6 +38,34 @@ This repository uses several GitHub Actions workflows to automate validation, ty
     - Performs a health check to ensure the container is running
   - If any container fails to start, logs are shown and the script exits with an error.
   - If all succeed, prints a success message.
+
+### 3. Checks Workflow (`checks.yml`)
+
+- **File:** `.github/workflows/checks.yml`
+- **Purpose:** Runs on every pull request to `master` and on workflow calls. It:
+  - Installs dependencies
+  - Finds the last successful deploy SHA
+  - Runs `nx affected` for lint, build, and test on only changed projects
+  - Ensures only relevant code is checked, speeding up PR validation
+
+### 4. API Type Validation Workflow (`validate-types.yml`)
+
+- **File:** `.github/workflows/validate-types.yml`
+- **Purpose:** Validates and updates API types based on the OpenAPI spec. Used by other workflows and can be called directly. It:
+  - Checks for type drift
+  - Optionally forces type update
+  - Optionally creates a PR if drift is detected
+  - Runs type generation tests and compilation
+  - Outputs validation status and drift detection
+
+### 5. Scheduled Type Drift Check (`scheduled-type-check.yml`)
+
+- **File:** `.github/workflows/scheduled-type-check.yml`
+- **Purpose:** Runs daily at 6 AM UTC to check for API type drift:
+  - Calls `validate-types.yml` to check for OpenAPI/type drift
+  - If drift is detected, creates a PR with updated types
+  - Notifies via GitHub Issue if drift is found
+  - Cleans up old automated branches
 
 **Note:** The script is designed for a single-node deployment (Raspberry Pi) and expects Docker to be installed and running. It is robust against missing containers/images and will always attempt to deploy the latest version of each app.
 
