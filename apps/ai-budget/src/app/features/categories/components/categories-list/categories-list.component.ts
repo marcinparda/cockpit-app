@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ApiService } from '../../../../services/api.service';
+import { ApiService } from '../../../api/api.service';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 import type { Category } from '@cockpit-app/api-types';
 

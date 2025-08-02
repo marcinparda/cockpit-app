@@ -7,7 +7,7 @@ interface UseUserOptions {
   withRedirect?: boolean;
 }
 
-export function useUser({ withRedirect = true }: UseUserOptions) {
+export function useUser({ withRedirect }: UseUserOptions = {}) {
   return useQuery<UserInfoResponse>({
     queryKey: [queryKeys.user],
     queryFn: () => getCurrentUser(withRedirect),

@@ -6,6 +6,10 @@ interface FetcherArgs<ResponseData> {
   url: string;
   responseDataSchema: z.ZodType<ResponseData>;
   options?: RequestInit;
+  /**
+   * Whether to redirect to the login page on 401 Unauthorized response.
+   * Defaults to true.
+   */
   withRedirect?: boolean;
   withCredentials?: boolean;
 }
