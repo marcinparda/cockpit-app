@@ -1,10 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCurrentUser } from '@cockpit-app/common-shared-data-access';
 import { queryKeys } from '../queryKeys';
+import { UserInfoResponse } from '@cockpit-app/api-types';
 
-export function useUser() {
+interface UseUserOptions {
+  withRedirect?: boolean;
+}
+
+export function useUser({ withRedirect = true }: UseUserOptions) {
   return useQuery<UserInfoResponse>({
     queryKey: [queryKeys.user],
-    queryFn: getCurrentUser,
+    queryFn: () => getCurrentUser(withRedirect),
   });
 }

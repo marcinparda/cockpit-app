@@ -7,6 +7,13 @@ import {
   passwordChangeResponseSchema,
   simpleRefreshResponseSchema,
 } from './schemas';
+import {
+  LoginResponse,
+  PasswordChangeRequest,
+  PasswordChangeResponse,
+  SimpleRefreshResponse,
+  UserInfoResponse,
+} from '@cockpit-app/api-types';
 
 export async function login(
   email: string,

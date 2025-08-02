@@ -1,3 +1,4 @@
+import { LoginResponse, PasswordChangeResponse, SimpleRefreshResponse, UserInfoResponse } from '@cockpit-app/api-types';
 import { z } from 'zod';
 
 export type LogoutResponse = {

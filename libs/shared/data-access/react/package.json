@@ -7,6 +7,7 @@
   "types": "./index.d.ts",
   "dependencies": {
     "@cockpit-app/common-shared-data-access": "0.0.1",
-    "@tanstack/react-query": "^5.83.0"
+    "@tanstack/react-query": "^5.83.0",
+    "@cockpit-app/api-types": "0.0.1"
   }
 }
