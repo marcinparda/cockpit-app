@@ -14,7 +14,7 @@ This repository uses several GitHub Actions workflows to automate validation, ty
 - **File:** `.github/workflows/deploy.yml`
 - **Purpose:** Handles CI/CD for all apps in the monorepo. On every push to `master`, it:
 
-  - Validates API types (calls `update-types.yml`)
+  - Validates API types (calls `validate-types.yml`)
   - Runs affected checks and builds (lint, build, test) only for changed projects
   - Builds and pushes Docker images for affected apps (ai-budget, todo, login, cockpit) to GHCR, only if their build output exists
   - Triggers deployment to Raspberry Pi via `deploy-to-production.yml`
@@ -48,9 +48,9 @@ This repository uses several GitHub Actions workflows to automate validation, ty
   - Runs `nx affected` for lint, build, and test on only changed projects
   - Ensures only relevant code is checked, speeding up PR validation
 
-### 4. API Type Validation Workflow (`update-types.yml`)
+### 4. API Type Validation Workflow (`validate-types.yml`)
 
-- **File:** `.github/workflows/update-types.yml`
+- **File:** `.github/workflows/validate-types.yml`
 - **Purpose:** Validates and updates API types based on the OpenAPI spec. Used by other workflows and can be called directly. It:
   - Checks for type drift
   - Optionally forces type update
@@ -62,7 +62,7 @@ This repository uses several GitHub Actions workflows to automate validation, ty
 
 - **File:** `.github/workflows/scheduled-type-check.yml`
 - **Purpose:** Runs daily at 6 AM UTC to check for API type drift:
-  - Calls `update-types.yml` to check for OpenAPI/type drift
+  - Calls `validate-types.yml` to check for OpenAPI/type drift
   - If drift is detected, creates a PR with updated types
   - Notifies via GitHub Issue if drift is found
   - Cleans up old automated branches

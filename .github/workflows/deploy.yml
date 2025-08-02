@@ -5,9 +5,9 @@ on:
     branches: [master]
 
 jobs:
-  update-types:
-    name: Update API Types
-    uses: ./.github/workflows/update-types.yml
+  validate-types:
+    name: Validate API Types
+    uses: ./.github/workflows/validate-types.yml
 
   build-test-and-push:
     runs-on: ubuntu-latest

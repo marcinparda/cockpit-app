@@ -1,0 +1,61 @@
+name: Validate API Types
+
+on:
+  workflow_call:
+    outputs:
+      validation-status:
+        description: 'Overall validation status (validated, outdated, or error)'
+        value: ${{ jobs.validate-types.outputs.validation-status }}
+      has_drift:
+        description: 'Whether type drift was detected'
+        value: ${{ jobs.validate-types.outputs.has_drift }}
+
+jobs:
+  validate-types:
+    runs-on: ubuntu-latest
+    name: Validate API Types
+    outputs:
+      validation-status: ${{ steps.validation-summary.outputs.status }}
+      has_drift: ${{ steps.validation-summary.outputs.has_drift }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate Types Are Up To Date
+        id: type-validation
+        continue-on-error: true
+        run: |
+          echo "🔍 Checking if types are up to date..."
+          npm run validate:types
+
+      - name: Validate Type Compilation
+        run: |
+          echo "🔨 Ensuring all type libraries compile successfully..."
+          npx nx run-many --target=lint,build --projects=api-types
+
+      - name: Validation Summary
+        id: validation-summary
+        run: |
+          if [ "${{ steps.type-validation.outcome }}" == "success" ]; then
+            echo "✅ Type validation completed successfully"
+            echo "🔍 Types are confirmed up to date"
+            echo "🔨 All libraries compiled"
+            echo "status=validated" >> $GITHUB_OUTPUT
+            echo "has_drift=false" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Type drift detected"
+            echo "🔄 Types need to be updated"
+            echo "🔨 All libraries compiled"
+            echo "status=outdated" >> $GITHUB_OUTPUT
+            echo "has_drift=true" >> $GITHUB_OUTPUT
+          fi
