@@ -10,8 +10,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 import { ApiService } from '../../../api/api.service';
-import type { Category } from '@cockpit-app/types-ai-budget-categories';
-import type { PaymentMethod } from '@cockpit-app/types-ai-budget-payment-methods';
+import type { Category, PaymentMethod } from '@cockpit-app/api-types';
 
 @Component({
   selector: 'app-expense-create',

@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { UserInfoResponse } from '@cockpit-app/types-shared-auth';
 import { getCurrentUser } from '@cockpit-app/common-shared-data-access';
 import { queryKeys } from '../queryKeys';
 

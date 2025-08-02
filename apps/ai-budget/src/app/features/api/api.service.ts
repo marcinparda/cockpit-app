@@ -7,15 +7,11 @@ import { environments } from '@cockpit-app/shared-utils';
 import type {
   Expense,
   ExpenseCreate,
-} from '@cockpit-app/types-ai-budget-expenses';
-import type {
   Category,
   CategoryCreate,
-} from '@cockpit-app/types-ai-budget-categories';
-import type {
   PaymentMethod,
   PaymentMethodCreate,
-} from '@cockpit-app/types-ai-budget-payment-methods';
+} from '@cockpit-app/api-types';
 
 @Injectable({
   providedIn: 'root',

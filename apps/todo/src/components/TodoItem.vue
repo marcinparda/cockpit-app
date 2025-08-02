@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { cn } from '@cockpit-app/shared-react-ui';
 import { Button, InputText, Checkbox } from '@cockpit-app/shared-vue-ui';
-import type { TodoItem as TodoItemType } from '@cockpit-app/types-todo-items';
+import type { TodoItem as TodoItemType } from '@cockpit-app/api-types';
 import { computed } from 'vue';
 
 const props = defineProps<{
@@ -60,12 +60,7 @@ function handleEditNameInput(val: string | undefined) {
       />
       <label>
         <span
-          :class="
-            cn(
-              'cursor-pointer',
-              item.is_closed ? 'line-through' : ''
-            )
-          "
+          :class="cn('cursor-pointer', item.is_closed ? 'line-through' : '')"
         >
           {{ item.name }}
         </span>

@@ -2,7 +2,7 @@ import type {
   TodoProject,
   TodoProjectCreate,
   TodoProjectUpdate,
-} from '@cockpit-app/types-todo-projects';
+} from '@cockpit-app/api-types';
 import { environments } from '@cockpit-app/shared-utils';
 import httpClient from './http.service';
 

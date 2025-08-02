@@ -4,12 +4,11 @@ import { isMeaningfulString } from '@cockpit-app/shared-utils';
 import { ref, computed } from 'vue';
 import { useTodoList } from '../composables/useTodoList';
 import TodoList from '../components/TodoList.vue';
-import type { TodoItem } from '../types/TodoItem';
+import type { TodoItem, TodoProject } from '@cockpit-app/api-types';
 import { useRoute } from 'vue-router';
 import Sidebar from '../components/Sidebar.vue';
 import ProjectSelect from '../components/ProjectSelect.vue';
 import { todoProjectsService } from '../services/todoProjectsService';
-import type { TodoProject } from '../types/TodoProject';
 import TodoItemCreateDialog from '../components/TodoItemCreateDialog.vue';
 
 const editingItemNewTitle = ref('');

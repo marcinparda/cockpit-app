@@ -4,7 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 import { ApiService } from '../../../api/api.service';
-import type { PaymentMethodCreate } from '@cockpit-app/types-ai-budget-payment-methods';
+import type { PaymentMethodCreate } from '@cockpit-app/api-types';
 
 @Component({
   selector: 'app-payment-method-create',

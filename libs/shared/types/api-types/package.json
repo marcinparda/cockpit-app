@@ -1,13 +1,11 @@
 {
-  "name": "@cockpit-app/shared-utils",
+  "name": "@cockpit-app/api-types",
   "version": "0.0.1",
   "private": true,
   "type": "commonjs",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "tslib": "^2.3.0",
-    "zod": "^4.0.10",
-    "@cockpit-app/api-types": "0.0.1"
+    "tslib": "^2.3.0"
   }
 }

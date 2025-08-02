@@ -3,7 +3,7 @@ import type {
   TodoItem,
   TodoItemCreate,
   TodoItemUpdate,
-} from '@cockpit-app/types-todo-items';
+} from '@cockpit-app/api-types';
 import { todoItemsService } from '../services/todoItemsService';
 
 export function useTodoList() {

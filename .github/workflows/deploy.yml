@@ -5,12 +5,9 @@ on:
     branches: [master]
 
 jobs:
-  validate-types:
-    name: Validate API Types
-    uses: ./.github/workflows/validate-types.yml
-    with:
-      create-pr-on-drift: false
-      force-update-types: false
+  update-types:
+    name: Update API Types
+    uses: ./.github/workflows/update-types.yml
 
   build-test-and-push:
     runs-on: ubuntu-latest
@@ -186,7 +183,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   deploy-to-raspberry:
-    needs: [validate-types, build-test-and-push]
+    needs: [update-types, build-test-and-push]
     uses: ./.github/workflows/deploy-to-production.yml
     secrets:
       CLOUDFLARE_TUNNEL_DOMAIN: ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}

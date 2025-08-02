@@ -4,10 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
 import { ApiService } from '../../../api/api.service';
-import type {
-  Category,
-  CategoryCreate,
-} from '@cockpit-app/types-ai-budget-categories';
+import type { Category, CategoryCreate } from '@cockpit-app/api-types';
 
 @Component({
   selector: 'app-category-create',
@@ -53,10 +50,7 @@ export class CategoryCreateComponent implements OnInit {
     this.error = null;
 
     // Convert parent_id from string to number or null
-    if (
-      this.newCategory.parent_id === '' ||
-      this.newCategory.parent_id === undefined
-    ) {
+    if (this.newCategory.parent_id === undefined) {
       this.newCategory.parent_id = null;
     } else if (
       this.newCategory.parent_id !== null &&

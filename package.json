@@ -7,14 +7,9 @@
     "build": "nx build",
     "watch": "nx build --watch --configuration development",
     "test": "nx test",
-    "generate:types": "tsx tools/generate-api-types.ts",
-    "generate:types:watch": "tsx tools/generate-api-types.ts --watch",
-    "generate:types:force": "tsx tools/generate-api-types.ts --force",
-    "build:types": "nx run-many --target=build --projects=types-ai-budget-expenses,types-ai-budget-categories,types-ai-budget-payment-methods,types-todo-items,types-todo-projects,types-shared-auth,types-shared-users,types-shared-roles,types-shared-utils,types-system-health,types-system-root",
-    "test:types": "tsx tools/test-type-generation.ts",
-    "update:types": "npm run generate:types && npm run build:types && npm run verify:types",
-    "check:drift": "tsx tools/detect-type-drift.ts",
-    "docs:types": "echo 'Type documentation generated - see libs/types/*/README.md files'"
+    "generate:types": "openapi-typescript ./libs/shared/types/api-types/src/openapi.json -o ./libs/shared/types/api-types/src/lib/openapi-types.d.ts",
+    "fetch-openapi": "curl -o ./libs/shared/types/api-types/src/openapi.json https://api.parda.me/openapi.json",
+    "update:types": "npm run fetch-openapi && npm run generate:types"
   },
   "private": true,
   "dependencies": {

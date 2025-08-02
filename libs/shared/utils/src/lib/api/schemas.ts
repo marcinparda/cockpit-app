@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { SimpleRefreshResponse } from '@cockpit-app/types-shared-auth';
+import { SimpleRefreshResponse } from '@cockpit-app/api-types';
 
 export type LogoutResponse = {
   detail: string;

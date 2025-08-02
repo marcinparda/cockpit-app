@@ -2,7 +2,7 @@ import type {
   TodoItem,
   TodoItemCreate,
   TodoItemUpdate,
-} from '@cockpit-app/types-todo-items';
+} from '@cockpit-app/api-types';
 import { environments } from '@cockpit-app/shared-utils';
 import httpClient from './http.service'; // Import the HTTP client
 

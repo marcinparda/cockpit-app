@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ApiService } from '../../../../services/api.service';
 import { NavigationHeaderComponent } from '../../../../shared/components/navigation-header/navigation-header.component';
-import type { Category } from '@cockpit-app/types-ai-budget-categories';
+import type { Category } from '@cockpit-app/api-types';
 
 @Component({
   selector: 'app-categories-list',

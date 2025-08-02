@@ -1,7 +1,7 @@
 import { Button, TypographySmall } from '@cockpit-app/shared-react-ui';
 import { logout } from '@cockpit-app/common-shared-data-access';
 import { environments } from '@cockpit-app/shared-utils';
-import { UserInfoResponse } from '@cockpit-app/types-shared-auth';
+import { UserInfoResponse } from '@cockpit-app/api-types';
 
 interface TopNavBarRighContentProps {
   userInfo: UserInfoResponse;

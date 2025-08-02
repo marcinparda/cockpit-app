@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TodoItem as TodoItemType } from '../types/TodoItem';
+import type { TodoItem as TodoItemType } from '@cockpit-app/api-types';
 import TodoItem from './TodoItem.vue';
 import { Divider } from '@cockpit-app/shared-vue-ui';
 

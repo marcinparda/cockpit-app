@@ -45,7 +45,7 @@
 
 ## TypeScript
 
-- For types for requests and responses use types libs like `@cockpit-app/types-ai-budget-expenses`, `@cockpit-app/types-todo-items`, etc.
+- For types for API requests and responses use import from lib `@cockpit-app/api-types`
 - Don't use `any` type, prefer `unknown` or specific types.
 
 ## Documentation

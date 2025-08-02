@@ -1,0 +1,46 @@
+name: Validate API Types
+
+on:
+  workflow_call:
+    outputs:
+      validation-status:
+        description: 'Overall validation status'
+        value: ${{ jobs.validate-types.outputs.validation-status }}
+
+jobs:
+  validate-types:
+    runs-on: ubuntu-latest
+    name: Validate API Types
+    outputs:
+      validation-status: ${{ steps.validation-summary.outputs.status }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Update Types
+        run: |
+          echo "🔄 Updating types..."
+          npm run update:types
+
+      - name: Validate Type Compilation
+        run: |
+          echo "🔨 Ensuring all type libraries compile successfully..."
+          npx nx run-many --target=lint,build --projects=api-types
+
+      - name: Validation Summary
+        id: validation-summary
+        run: |
+          echo "✅ Type validation completed successfully"
+          echo "🔄 Generation system tested"
+          echo "🔨 All libraries compiled"
+          echo "status=updated" >> $GITHUB_OUTPUT

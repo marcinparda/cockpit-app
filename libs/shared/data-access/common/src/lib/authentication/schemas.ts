@@ -1,13 +1,7 @@
 import { z } from 'zod';
-import {
-  UserInfoResponse,
-  SimpleRefreshResponse,
-  LoginResponse,
-  PasswordChangeResponse,
-} from '@cockpit-app/types-shared-auth';
 
 export type LogoutResponse = {
-  detail: string
+  detail: string;
 };
 
 // create shema basing on the UserInfoResponse type
