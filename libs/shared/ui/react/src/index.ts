@@ -7,3 +7,5 @@ export * from './lib/TypographyH1/TypographyH1';
 export * from './lib/TypographyP/TypographyP';
 export * from './lib/TypographySmall/TypographySmall';
 export * from './lib/Skeleton/Skeleton';
+export * from './lib/Badge/Badge';
+export * from './lib/Separator/Separator';
