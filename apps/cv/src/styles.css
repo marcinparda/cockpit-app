@@ -132,9 +132,243 @@
 
 @media print {
   @page {
-    margin: 0;
+    margin: 0.1in;
+    size: A4;
+    /* Remove default headers and footers */
+    @top-left {
+      content: '';
+    }
+    @top-center {
+      content: '';
+    }
+    @top-right {
+      content: '';
+    }
+    @bottom-left {
+      content: '';
+    }
+    @bottom-center {
+      content: '';
+    }
+    @bottom-right {
+      content: '';
+    }
   }
+
   body {
-    margin: 1cm; /* your desired margin for content */
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+    /* Hide browser's default print headers/footers */
+    orphans: 0;
+    widows: 0;
+  }
+
+  /* Force minimal margins on html and body */
+  html {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide any potential print artifacts */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Ensure all text and borders are visible */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Force all colors and backgrounds to print */
+  .print\:bg-white {
+    background-color: white !important;
+  }
+
+  .print\:m-0 {
+    margin: 0 !important;
+  }
+
+  /* Reset container padding/margins for print */
+  .print\:max-w-none {
+    max-width: none !important;
+  }
+
+  .print\:p-2 {
+    padding: 0.5rem !important;
+  }
+
+  .print\:p-4 {
+    padding: 1rem !important;
+  } /* Reduce overall padding */
+  .p-8 {
+    padding: 1rem !important;
+  }
+
+  /* Print-specific spacing */
+  .print\:mb-4 {
+    margin-bottom: 1rem !important;
+  }
+
+  .print\:mb-6 {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .print\:mb-2 {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .print\:mb-1 {
+    margin-bottom: 0.25rem !important;
+  }
+  .print\:text-3xl {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+
+  /* Ensure section spacing is appropriate for print */
+  .mb-8 {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .mb-6 {
+    margin-bottom: 1rem !important;
+  }
+
+  .mb-4 {
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* Force key achievements to display side by side */
+  .print\:grid-cols-2 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .print\:break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Ensure badges are visible with borders */
+  .bg-secondary,
+  [class*='bg-secondary'] {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #334155 !important;
+  }
+
+  /* Ensure section headers are bold and visible */
+  .border-b-2 {
+    border-bottom: 2px solid #000 !important;
+  }
+
+  /* Ensure text colors are preserved */
+  .text-gray-600 {
+    color: #4b5563 !important;
+  }
+
+  .text-gray-700 {
+    color: #374151 !important;
+  }
+
+  .text-blue-600 {
+    color: #2563eb !important;
+  }
+
+  /* Ensure proper line height for better readability */
+  .leading-relaxed {
+    line-height: 1.4 !important;
+  }
+
+  /* Prevent page breaks in the middle of sections */
+  .mb-8 > div,
+  .mb-6 > div,
+  .print\:mb-6 > div {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Force icons to be visible */
+  svg {
+    color: #4b5563 !important;
+  }
+
+  /* Adjust font sizes for print */
+  .text-4xl {
+    font-size: 2rem !important;
+  }
+
+  .text-xl {
+    font-size: 1.25rem !important;
+  }
+
+  .text-lg {
+    font-size: 1.125rem !important;
+  }
+
+  .text-base {
+    font-size: 1rem !important;
+  }
+
+  .text-sm {
+    font-size: 0.875rem !important;
+  }
+
+  .text-xs {
+    font-size: 0.75rem !important;
+  }
+
+  /* Fix grid layout for print */
+  .grid {
+    display: grid !important;
+  }
+
+  .grid-cols-1 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Ensure gap works in print */
+  .gap-4 {
+    gap: 1rem !important;
+  }
+
+  .gap-3 {
+    gap: 0.75rem !important;
+  }
+
+  .gap-2 {
+    gap: 0.5rem !important;
+  }
+
+  /* Ensure flexbox works in print */
+  .flex {
+    display: flex !important;
+  }
+
+  .flex-wrap {
+    flex-wrap: wrap !important;
+  }
+
+  .flex-shrink-0 {
+    flex-shrink: 0 !important;
+  }
+
+  /* Better list styling */
+  .list-disc {
+    list-style-type: disc !important;
+    padding-left: 1rem !important;
+  }
+
+  /* Ensure spacing is preserved */
+  .space-y-1 > * + * {
+    margin-top: 0.25rem !important;
   }
 }
