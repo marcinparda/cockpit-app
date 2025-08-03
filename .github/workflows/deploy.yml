@@ -163,16 +163,40 @@ jobs:
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Build and push Docker image for cockpit
-        if: steps.cockpit_exists.outputs.exists == 'true'
+      - name: Build and push Docker image for cv
+        if: steps.cv_exists.outputs.exists == 'true'
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: apps/cockpit/Dockerfile
+          file: apps/cv/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}-cockpit:latest
-            ghcr.io/${{ github.repository }}-cockpit:${{ github.sha }}
+            ghcr.io/${{ github.repository }}-cv:latest
+            ghcr.io/${{ github.repository }}-cv:${{ github.sha }}
+          platforms: linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Check if cv build output exists
+      - name: Check if cv build output exists
+        id: cv_exists
+        run: |
+          if [ -d "dist/apps/cv" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build and push Docker image for cv
+        if: steps.cv_exists.outputs.exists == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/cv/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}-cv:latest
+            ghcr.io/${{ github.repository }}-cv:${{ github.sha }}
           platforms: linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max

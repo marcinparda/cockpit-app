@@ -1,0 +1,9 @@
+{
+  "name": "cv",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/cv/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project cv --web",
+  "targets": {}
+}
