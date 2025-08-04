@@ -1,7 +1,6 @@
 import {
   Badge,
   TypographyH1,
-  TypographyP,
   TypographySmall,
 } from '@cockpit-app/shared-react-ui';
 import { Phone, Mail, Linkedin, MapPin, Diamond } from 'lucide-react';
