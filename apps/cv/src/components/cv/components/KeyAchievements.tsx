@@ -15,16 +15,14 @@ export function KeyAchievements({ achievements }: KeyAchievementsProps) {
   return (
     <section className="mb-4">
       <SectionTitle>KEY ACHIEVEMENTS</SectionTitle>
-      <div className="grid grid-cols-1 print:grid-cols-2 md:grid-cols-2 gap-4">
+      <div>
         {achievements.map((achievement, index) => (
-          <div key={index} className="flex gap-3 print:break-inside-avoid">
-            <Diamond className="w-5 h-5 mt-1 text-gray-600 flex-shrink-0" />
-            <div>
-              <h4 className="font-semibold text-sm mb-2">
-                {achievement.title}
-              </h4>
-              <TypographySmall>{achievement.description}</TypographySmall>
+          <div key={index} className="mb-2">
+            <div className="flex items-center gap-2">
+              <Diamond className="w-5 h-5 mt-1 text-gray-600 flex-shrink-0" />
+              <h4 className="font-semibold text-sm">{achievement.title}</h4>
             </div>
+            <TypographySmall>{achievement.description}</TypographySmall>
           </div>
         ))}
       </div>

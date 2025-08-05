@@ -1,4 +1,4 @@
-import { SectionTitle } from './SectionTitle';
+import { SectionTitle } from "./SectionTitle";
 
 export function Courses() {
   return (

@@ -31,22 +31,22 @@ const achievements = [
   {
     title: 'Helped excels carrier of my mentees and mine',
     description:
-      'I mentored several colleagues, building strong professional relationships with each of them. My mentees consistently excelled in their roles and received promotions year after year. I also achieved significant personal growth during my tenure - I initially joined the company as an "early senior" due to my lack experience, but thanks to my accomplishments both within and beyond project work, I earned a promotion to a higher position in less than a year.',
+      'I mentored several colleagues who consistently excelled and received promotions. My own achievements led to a rapid promotion from "early senior" to a higher position within a year.',
   },
   {
     title: 'Delivering with cut budget',
     description:
-      'In a project where I served as the sole developer, I was able to reduce the application development time from six months to four. Together with the client, we prioritized essential features and eliminated solutions that would accelerate the development process. Through close collaboration and focused effort, we successfully delivered a minimalistic product, and the client subsequently returned with an additional budget for further development.',
-  },
-  {
-    title: 'Great feedbacks',
-    description:
-      "So far, I've received mostly great feedback on my work - especially regarding the speed with which I can start contributing to projects and the appreciation for my efforts to improve software delivery processes.",
+      'As sole developer, I reduced development time from six to four months. We delivered a minimalistic product, and the client returned with more budget for further work.',
   },
   {
     title: 'Awarded "SPOT award" bonus',
     description:
-      "For quickly implementing and leading a side project automating the company's CV updating process, saving approximately 9.5 hours per month for over 100 employees.",
+      'I led a side project automating CV updates, saving 0.5 hours monthly for each of over 100 employees.',
+  },
+  {
+    title: 'Great feedbacks',
+    description:
+      "I've received great feedback for quickly contributing to projects and improving software delivery processes.",
   },
 ];
 
