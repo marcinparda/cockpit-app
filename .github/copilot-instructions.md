@@ -48,10 +48,19 @@
 - For types for API requests and responses use import from lib `@cockpit-app/api-types`
 - Don't use `any` type, prefer `unknown` or specific types.
 
-## Documentation
+## Comments
 
-- Add JSDoc comments to exported functions and components in JS/TS.
-- Do not write comments unless JSDoc.
+- Prefer Self-Explanatory Code Over Comments
+- Do Not Duplicate What the Code Does
+- Comments that simply restate what the code is doing add no value and create clutter. For example, do not write comments like i = i + 1; // add one to i
+- Use Comments to Explain Why, Not What
+- If You Can’t Write a Clear Comment, Refactor the Code
+- Avoid Obvious or Redundant Comments
+- Use Comments to Clarify Unusual or Non-Obvious Code
+- Use Comments for Legal or Informative Purposes
+- Provide References When Using External or Copied Code
+- Mark Incomplete or Temporary Work
+- Keep Comments Updated
 
 ## NX
 
