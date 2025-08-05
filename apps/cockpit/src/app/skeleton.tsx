@@ -1,4 +1,4 @@
-import { Skeleton } from '@cockpit-app/cockpit-ui';
+import { Skeleton } from '@cockpit-app/shared-react-ui';
 
 export const AppSkeleton = () => {
   return (
