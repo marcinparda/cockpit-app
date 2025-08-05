@@ -5,7 +5,6 @@
 - Always provide concise, well-commented code.
 - Prefer modern ES6+ syntax for JavaScript/TypeScript.
 - Use clear, descriptive variable and function names.
-- Always write JSDocs, or Python docstrings for all exported functions, classes and components.
 - For saving you thoughts or summaries use .md extension files, save them in .ai folder in appropriate folder. If folder does not exist, create it.
 - Appropriate folder for .md thoughts/summaries should be the name of the feature/fix/improvement you are working on right now. .md files names convention:
   - requirements.md - for requirements of the feature - these should be buisness requirements, not technical ones
