@@ -1,4 +1,4 @@
-import { Header } from './components/Header';
+import { Header, HeaderData } from './components/Header';
 import { Summary } from './components/Summary';
 import { Skills } from './components/Skills';
 import { KeyAchievements } from './components/KeyAchievements';
@@ -8,12 +8,15 @@ import { PersonalProjects } from './components/PersonalProjects';
 import { Courses } from './components/Courses';
 import { Footer } from './components/Footer';
 
-const headerData = {
+const headerData: HeaderData = {
   name: 'MARCIN PARDA',
   title: 'Senior Frontend Developer with Python',
   phone: '+48 576 259 548',
   email: 'marcin98parda@gmail.com',
-  linkedin: 'www.linkedin.com/in/marcinparda/',
+  linkedin: {
+    url: 'www.linkedin.com/in/marcinparda/',
+    text: 'linkedin.com/in/marcinparda',
+  },
   location: 'Warsaw, Poland',
 };
 
@@ -162,7 +165,7 @@ const coursesData = [
 export function CV() {
   return (
     <div className="max-w-4xl mx-auto p-8 print:p-2 print:max-w-none bg-white print:bg-white print:m-0">
-      <Header {...headerData} />
+      <Header headerData={headerData} />
       <Summary summary={summaryData} />
       <Skills skills={skillsData} />
       <KeyAchievements achievements={achievementsData} />

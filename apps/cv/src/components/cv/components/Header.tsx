@@ -1,26 +1,24 @@
 import { TypographyH1 } from '@cockpit-app/shared-react-ui';
 import { Phone, Mail, Linkedin, MapPin } from 'lucide-react';
 
-export interface HeaderProps {
+export interface HeaderData {
   name: string;
   title: string;
   phone: string;
   email: string;
-  linkedin: string;
+  linkedin: {
+    url: string;
+    text?: string;
+  };
   location: string;
 }
 
-/**
- * Header section for CV
- */
-export function Header({
-  name,
-  title,
-  phone,
-  email,
-  linkedin,
-  location,
-}: HeaderProps) {
+export interface HeaderProps {
+  headerData: HeaderData;
+}
+
+export function Header({ headerData }: HeaderProps) {
+  const { name, title, phone, email, linkedin, location } = headerData;
   return (
     <div className="mb-4">
       <TypographyH1>{name}</TypographyH1>
@@ -36,7 +34,14 @@ export function Header({
         </div>
         <div className="flex items-center gap-1">
           <Linkedin className="w-4 h-4" />
-          <span>{linkedin}</span>
+          <a
+            href={`https://${linkedin.url}`}
+            className="text-blue-600 underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {linkedin.text || linkedin.url}
+          </a>
         </div>
         <div className="flex items-center gap-1">
           <MapPin className="w-4 h-4" />
