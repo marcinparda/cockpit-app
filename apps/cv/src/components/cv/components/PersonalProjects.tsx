@@ -13,12 +13,9 @@ export interface PersonalProjectsProps {
   projects: PersonalProject[];
 }
 
-/**
- * Personal Projects section for CV
- */
 export function PersonalProjects({ projects }: PersonalProjectsProps) {
   return (
-    <section className="mb-4">
+    <section className="mb-8">
       <SectionTitle>PERSONAL PROJECTS</SectionTitle>
       {projects.map((project, idx) => (
         <div className="mb-4" key={idx}>

@@ -28,6 +28,7 @@ const summaryData = [
 const skillsData = [
   'React',
   'Typescript',
+  'Node.js',
   'Nx',
   'AI agents / MCP',
   'Vitest / Cypress / Jest',
@@ -145,7 +146,7 @@ const personalProjectsData = [
     code: 'Cockpit Backend & Cockpit Frontend',
     date: '03/2023 - Present',
     description: [
-      // 'Cockpit project consists of several apps that help boost my productivity and overall quality of life, such as managing my budget and assisting with newsletters.',
+      'Cockpit project consists of several apps that help boost my productivity and overall quality of life, such as managing my budget and assisting with newsletters.',
       'FastAPI backend for frontend applications. Using Postgres, SQLAlchemy, Pydantic.',
       'NX monorepo for my frontend applications. Using React, Angular, Vue, OpenAPI types generation, tailwindcss, vitest.',
       'Docker & Raspberry Pi Deployment',
