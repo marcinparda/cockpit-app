@@ -5,9 +5,6 @@ import {
 } from '@cockpit-app/shared-react-ui';
 import { Phone, Mail, Linkedin, MapPin, Diamond } from 'lucide-react';
 
-/**
- * CV component that displays Marcin Parda's professional resume
- */
 export function CV() {
   const skills = [
     'React',
@@ -55,9 +52,7 @@ export function CV() {
     <div className="max-w-4xl mx-auto p-8 print:p-2 print:max-w-none bg-white print:bg-white print:m-0">
       {/* Header */}
       <div className="mb-4 print:mb-4">
-        <TypographyH1 className="text-4xl print:text-3xl font-bold mb-2 print:mb-1">
-          MARCIN PARDA
-        </TypographyH1>
+        <TypographyH1>MARCIN PARDA</TypographyH1>
         <h2 className="text-xl text-gray-600 mb-4">
           Senior Frontend Developer with Python
         </h2>
@@ -88,7 +83,7 @@ export function CV() {
           SUMMARY
         </h3>
         <div>
-          <TypographySmall className="text-sm leading-relaxed">
+          <TypographySmall>
             Specialist with over 5 years of experience, including over 1.5 years
             as a senior developer. Acting as a code mentor and technical
             recruiter. Regular frontend and seasoned speaker at IT meetings and
@@ -97,7 +92,7 @@ export function CV() {
           </TypographySmall>
         </div>
         <div>
-          <TypographySmall className="text-xs italic mt-2">
+          <TypographySmall>
             (CV has more than one page, please scroll)
           </TypographySmall>
         </div>
@@ -130,9 +125,7 @@ export function CV() {
                 <h4 className="font-semibold text-sm mb-2">
                   {achievement.title}
                 </h4>
-                <TypographySmall className="text-xs leading-relaxed text-gray-700">
-                  {achievement.description}
-                </TypographySmall>
+                <TypographySmall>{achievement.description}</TypographySmall>
               </div>
             </div>
           ))}
@@ -155,9 +148,7 @@ export function CV() {
             </div>
           </div>
           <div className="font-semibold text-sm mb-2">EY GDS</div>
-          <TypographySmall className="text-xs mb-2">
-            Consulting company, BIG4
-          </TypographySmall>
+          <TypographySmall>Consulting company, BIG4</TypographySmall>
 
           <ul className="text-xs space-y-1 ml-4 list-disc">
             <li>
@@ -229,9 +220,7 @@ export function CV() {
           <div className="font-semibold text-sm mb-2">
             STX Next (continuation of work at Ermlab Software)
           </div>
-          <TypographySmall className="text-xs mb-2">
-            AI Python software house
-          </TypographySmall>
+          <TypographySmall>AI Python software house</TypographySmall>
 
           <ul className="text-xs space-y-1 ml-4 list-disc">
             <li>
@@ -272,9 +261,7 @@ export function CV() {
             </div>
           </div>
           <div className="font-semibold text-sm mb-2">Ermlab Software</div>
-          <TypographySmall className="text-xs mb-2">
-            AI Python software house
-          </TypographySmall>
+          <TypographySmall>AI Python software house</TypographySmall>
 
           <ul className="text-xs space-y-1 ml-4 list-disc">
             <li>

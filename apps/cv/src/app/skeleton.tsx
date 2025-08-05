@@ -2,16 +2,15 @@ import { Skeleton } from '@cockpit-app/shared-react-ui';
 
 export const AppSkeleton = () => {
   return (
-    <div>
-      <Skeleton className="h-14 w-full" />
-      <div className="flex flex-col gap-4 mt-4 pl-4">
-        <Skeleton className="h-10 w-44" />
-        <Skeleton className="h-6 w-96" />
-        <div className="flex gap-6">
-          <Skeleton className="h-44 w-96 rounded" />
-          <Skeleton className="h-44 w-96 rounded" />
-        </div>
-      </div>
+    <div className="max-w-4xl mx-auto p-8 print:p-2 print:max-w-none bg-white print:bg-white print:m-0">
+      <Skeleton className="h-14 w-sm" />
+      <Skeleton className="h-6 w-md mt-2" />
+      <Skeleton className="h-6 w-full mt-4" />
+      <Skeleton className="h-44 w-full mt-4" />
+      <Skeleton className="h-24 w-full mt-4" />
+      <Skeleton className="h-96 w-full mt-4" />
+      <Skeleton className="h-96 w-full mt-4" />
+      <Skeleton className="h-96 w-full mt-4" />
     </div>
   );
 };
