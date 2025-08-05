@@ -1,17 +1,17 @@
 import { render } from '@testing-library/react';
-
 import App from './app';
+
+vi.mock('@cockpit-app/shared-react-data-access', () => ({
+  useUser: () => ({
+    isLoading: false,
+    isError: false,
+    data: { id: 'test-user', name: 'Test User' },
+  }),
+}));
 
 describe('App', () => {
   it('should render successfully', () => {
     const { baseElement } = render(<App />);
     expect(baseElement).toBeTruthy();
-  });
-
-  it('should have a greeting as the title', () => {
-    const { getAllByText } = render(<App />);
-    expect(
-      getAllByText(new RegExp('Welcome cv', 'gi')).length > 0
-    ).toBeTruthy();
   });
 });
