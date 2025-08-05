@@ -23,8 +23,7 @@ export function Experience({ experience }: ExperienceProps) {
           <div className="flex justify-between items-start mb-2">
             <h4 className="font-bold text-base">{item.title}</h4>
             <div className="text-right text-sm text-gray-600">
-              <div>{item.date}</div>
-              <div>{item.location}</div>
+              {`${item.date}; ${item.location}`}
             </div>
           </div>
           <div className="font-semibold text-sm mb-2">{item.company}</div>

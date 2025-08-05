@@ -1,14 +1,9 @@
 import { SectionTitle } from './SectionTitle';
 
-
-
 export interface CoursesProps {
   courses: string[];
 }
 
-/**
- * Courses section for CV
- */
 export function Courses({ courses }: CoursesProps) {
   return (
     <section className="mb-4">

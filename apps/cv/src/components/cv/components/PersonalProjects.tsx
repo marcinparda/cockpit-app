@@ -6,7 +6,6 @@ export interface PersonalProject {
   liveUrl: string;
   code: string;
   date: string;
-  location: string;
   description: string[];
 }
 
@@ -26,8 +25,7 @@ export function PersonalProjects({ projects }: PersonalProjectsProps) {
           <div className="flex justify-between items-start mb-2">
             <h4 className="font-bold text-base">{project.name}</h4>
             <div className="text-right text-sm text-gray-600">
-              <div>{project.date}</div>
-              <div>{project.location}</div>
+              {project.date}
             </div>
           </div>
           <div className="mb-2">
