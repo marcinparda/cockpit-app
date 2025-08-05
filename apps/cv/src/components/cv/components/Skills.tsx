@@ -1,4 +1,5 @@
 import { Badge } from '@cockpit-app/shared-react-ui';
+import { SectionTitle } from './SectionTitle';
 
 export interface SkillsProps {
   skills: string[];
@@ -10,9 +11,7 @@ export interface SkillsProps {
 export function Skills({ skills }: SkillsProps) {
   return (
     <section className="mb-4">
-      <h3 className="text-lg font-bold mb-3 print:mb-2 pb-1 border-b-2 border-black">
-        SKILLS
-      </h3>
+      <SectionTitle>SKILLS</SectionTitle>
       <div className="flex flex-wrap gap-2">
         {skills.map((skill, index) => (
           <Badge key={index} variant="secondary" className="text-xs">

@@ -1,9 +1,9 @@
+import { SectionTitle } from './SectionTitle';
+
 export function Education() {
   return (
     <section className="mb-4">
-      <h3 className="text-lg font-bold mb-3 pb-1 border-b-2 border-black">
-        EDUCATION
-      </h3>
+      <SectionTitle>EDUCATION</SectionTitle>
       <div className="mb-4">
         <h4 className="font-bold text-base">
           Bachelor of Science in Computer Science

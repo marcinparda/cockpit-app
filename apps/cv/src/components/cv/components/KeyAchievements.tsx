@@ -1,5 +1,6 @@
 import { Diamond } from 'lucide-react';
 import { TypographySmall } from '@cockpit-app/shared-react-ui';
+import { SectionTitle } from './SectionTitle';
 
 export interface Achievement {
   title: string;
@@ -10,15 +11,10 @@ export interface KeyAchievementsProps {
   achievements: Achievement[];
 }
 
-/**
- * Key Achievements section for CV
- */
 export function KeyAchievements({ achievements }: KeyAchievementsProps) {
   return (
     <section className="mb-4">
-      <h3 className="text-lg font-bold mb-3 print:mb-2 pb-1 border-b-2 border-black">
-        KEY ACHIEVEMENTS
-      </h3>
+      <SectionTitle>KEY ACHIEVEMENTS</SectionTitle>
       <div className="grid grid-cols-1 print:grid-cols-2 md:grid-cols-2 gap-4">
         {achievements.map((achievement, index) => (
           <div key={index} className="flex gap-3 print:break-inside-avoid">

@@ -1,11 +1,10 @@
 import { TypographySmall } from '@cockpit-app/shared-react-ui';
+import { SectionTitle } from './SectionTitle';
 
 export function Summary() {
   return (
     <section className="mb-4">
-      <h3 className="text-lg font-bold pb-1 border-b-2 border-black mb-3 print:mb-2">
-        SUMMARY
-      </h3>
+      <SectionTitle>SUMMARY</SectionTitle>
       <div>
         <TypographySmall>
           Specialist with over 5 years of experience, including over 1.5 years

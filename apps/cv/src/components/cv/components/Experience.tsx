@@ -1,11 +1,10 @@
 import { TypographySmall } from '@cockpit-app/shared-react-ui';
+import { SectionTitle } from './SectionTitle';
 
 export function Experience() {
   return (
     <section className="mb-4">
-      <h3 className="text-lg font-bold mb-3 pb-1 border-b-2 border-black">
-        EXPERIENCE
-      </h3>
+      <SectionTitle>EXPERIENCE</SectionTitle>
       {/* Senior Developer */}
       <div className="mb-6">
         <div className="flex justify-between items-start mb-2">
