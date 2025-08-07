@@ -124,13 +124,13 @@ export interface paths {
         };
         /**
          * Get Todo Items
-         * @description Retrieve all todo items.
+         * @description Retrieve todo items from projects the user has access to.
          */
         get: operations["get_todo_items_api_v1_todo_items_get"];
         put?: never;
         /**
          * Create Todo Item
-         * @description Create new todo item.
+         * @description Create new todo item in a project the user has access to.
          */
         post: operations["create_todo_item_api_v1_todo_items_post"];
         delete?: never;
@@ -148,18 +148,18 @@ export interface paths {
         };
         /**
          * Get Todo Item
-         * @description Get todo item by ID.
+         * @description Get todo item by ID if the user has access to its project.
          */
         get: operations["get_todo_item_api_v1_todo_items__item_id__get"];
         /**
          * Update Todo Item
-         * @description Update a todo item.
+         * @description Update a todo item if the user has access to its project.
          */
         put: operations["update_todo_item_api_v1_todo_items__item_id__put"];
         post?: never;
         /**
          * Delete Todo Item
-         * @description Delete a todo item.
+         * @description Delete a todo item if the user has access to its project.
          */
         delete: operations["delete_todo_item_api_v1_todo_items__item_id__delete"];
         options?: never;
@@ -174,10 +174,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List Todo Projects */
+        /**
+         * List Todo Projects
+         * @description List all todo projects the user owns or collaborates on.
+         */
         get: operations["list_todo_projects_api_v1_todo_projects_get"];
         put?: never;
-        /** Create Todo Project */
+        /**
+         * Create Todo Project
+         * @description Create a new todo project owned by the current user.
+         */
         post: operations["create_todo_project_api_v1_todo_projects_post"];
         delete?: never;
         options?: never;
@@ -192,13 +198,66 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Todo Project */
+        /**
+         * Get Todo Project
+         * @description Get a specific todo project if the user has access.
+         */
         get: operations["get_todo_project_api_v1_todo_projects__todo_project_id__get"];
-        /** Update Todo Project */
+        /**
+         * Update Todo Project
+         * @description Update a todo project if the user has access and it's not a General project.
+         */
         put: operations["update_todo_project_api_v1_todo_projects__todo_project_id__put"];
         post?: never;
-        /** Delete Todo Project */
+        /**
+         * Delete Todo Project
+         * @description Delete a todo project if the user is the owner and it's not a General project.
+         */
         delete: operations["delete_todo_project_api_v1_todo_projects__todo_project_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/todo/projects/{todo_project_id}/collaborators": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Collaborators
+         * @description List all collaborators for a todo project.
+         */
+        get: operations["list_collaborators_api_v1_todo_projects__todo_project_id__collaborators_get"];
+        put?: never;
+        /**
+         * Add Collaborator
+         * @description Add a collaborator to a todo project.
+         */
+        post: operations["add_collaborator_api_v1_todo_projects__todo_project_id__collaborators_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/todo/projects/{todo_project_id}/collaborators/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove Collaborator
+         * @description Remove a collaborator from a todo project.
+         */
+        delete: operations["remove_collaborator_api_v1_todo_projects__todo_project_id__collaborators__user_id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -956,6 +1015,30 @@ export interface components {
             /** Message */
             message: string;
         };
+        /** SimpleTodoProject */
+        SimpleTodoProject: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Owner Id */
+            owner_id: string;
+            /**
+             * Is General
+             * @default false
+             */
+            is_general: boolean;
+        };
         /** TodoItem */
         TodoItem: {
             /** Name */
@@ -965,7 +1048,7 @@ export interface components {
             /** Shops */
             shops?: string | null;
             /** Project Id */
-            project_id?: number | null;
+            project_id: number;
             /** Id */
             id: number;
             /** Is Closed */
@@ -982,7 +1065,7 @@ export interface components {
             updated_at: string;
             /** Completed At */
             completed_at?: string | null;
-            project?: components["schemas"]["TodoProject"] | null;
+            project?: components["schemas"]["SimpleTodoProject"] | null;
         };
         /** TodoItemCreate */
         TodoItemCreate: {
@@ -993,7 +1076,7 @@ export interface components {
             /** Shops */
             shops?: string | null;
             /** Project Id */
-            project_id?: number | null;
+            project_id: number;
         };
         /** TodoItemUpdate */
         TodoItemUpdate: {
@@ -1026,6 +1109,38 @@ export interface components {
              * Format: date-time
              */
             updated_at: string;
+            /**
+             * Owner Id
+             * Format: uuid
+             */
+            owner_id: string;
+            /** Is General */
+            is_general: boolean;
+            /** Collaborators */
+            collaborators?: components["schemas"]["TodoProjectCollaboratorResponse"][];
+        };
+        /** TodoProjectCollaboratorCreate */
+        TodoProjectCollaboratorCreate: {
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /** TodoProjectCollaboratorResponse */
+        TodoProjectCollaboratorResponse: {
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+            /** Project Id */
+            project_id: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /** TodoProjectCreate */
         TodoProjectCreate: {
@@ -2105,6 +2220,114 @@ export interface operations {
             };
             path: {
                 todo_project_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_collaborators_api_v1_todo_projects__todo_project_id__collaborators_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                todo_project_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoProjectCollaboratorResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_collaborator_api_v1_todo_projects__todo_project_id__collaborators_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                todo_project_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TodoProjectCollaboratorCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoProjectCollaboratorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_collaborator_api_v1_todo_projects__todo_project_id__collaborators__user_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                todo_project_id: number;
+                user_id: string;
             };
             cookie?: {
                 access_token?: string | null;
