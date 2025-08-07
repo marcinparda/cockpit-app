@@ -12,23 +12,23 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import { Menubar } from '@cockpit-app/shared-vue-ui';
-import LogoutButton from './LogoutButton.vue';
+  import { RouterLink } from 'vue-router';
+  import { Menubar } from '@cockpit-app/shared-vue-ui';
+  import LogoutButton from './LogoutButton.vue';
 
-type MenuItem = {
-  label: string;
-  to: string;
-};
+  type MenuItem = {
+    label: string;
+    to: string;
+  };
 
-const items: MenuItem[] = [
-  {
-    label: 'List',
-    to: '/list',
-  },
-  {
-    label: 'Projects',
-    to: '/projects',
-  },
-];
+  const items: MenuItem[] = [
+    {
+      label: 'List',
+      to: '/list',
+    },
+    {
+      label: 'Projects',
+      to: '/projects',
+    },
+  ];
 </script>

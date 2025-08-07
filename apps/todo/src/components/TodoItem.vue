@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import { cn } from '@cockpit-app/shared-react-ui';
-import { Button, InputText, Checkbox } from '@cockpit-app/shared-vue-ui';
-import type { TodoItem as TodoItemType } from '@cockpit-app/api-types';
-import { computed } from 'vue';
+  import { cn } from '@cockpit-app/shared-react-ui';
+  import { Button, InputText, Checkbox } from '@cockpit-app/shared-vue-ui';
+  import type { TodoItem as TodoItemType } from '@cockpit-app/api-types';
+  import { computed } from 'vue';
 
-const props = defineProps<{
-  item: TodoItemType;
-  editingItemId: number | null;
-  editingItemNewTitle: string;
-}>();
+  const props = defineProps<{
+    item: TodoItemType;
+    editingItemId: number | null;
+    editingItemNewTitle: string;
+  }>();
 
-const emit = defineEmits<{
-  (e: 'start-editing', item: TodoItemType): void;
-  (e: 'save-edited-item'): void;
-  (e: 'toggle-todo-item', item: TodoItemType, value: boolean): void;
-  (e: 'delete-todo-item', id: number): void;
-  (e: 'update:editingItemNewTitle', value: string): void;
-  (e: 'cancel-edited-item'): void;
-}>();
+  const emit = defineEmits<{
+    (e: 'start-editing', item: TodoItemType): void;
+    (e: 'save-edited-item'): void;
+    (e: 'toggle-todo-item', item: TodoItemType, value: boolean): void;
+    (e: 'delete-todo-item', id: number): void;
+    (e: 'update:editingItemNewTitle', value: string): void;
+    (e: 'cancel-edited-item'): void;
+  }>();
 
-const isEditing = computed(() => props.editingItemId === props.item.id);
+  const isEditing = computed(() => props.editingItemId === props.item.id);
 
-function handleEditNameInput(val: string | undefined) {
-  emit('update:editingItemNewTitle', val ?? '');
-}
+  function handleEditNameInput(val: string | undefined) {
+    emit('update:editingItemNewTitle', val ?? '');
+  }
 </script>
 
 <template>

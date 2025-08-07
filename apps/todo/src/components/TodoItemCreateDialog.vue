@@ -1,73 +1,78 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { InputText, Button, Dialog, Select } from '@cockpit-app/shared-vue-ui';
-import type { TodoProject } from '../types/TodoProject';
+  import { ref, watch } from 'vue';
+  import {
+    InputText,
+    Button,
+    Dialog,
+    Select,
+  } from '@cockpit-app/shared-vue-ui';
+  import type { TodoProject } from '../types/TodoProject';
 
-/**
- * Props for TodoItemCreateDialog
- */
-interface TodoItemCreateDialogProps {
-  modelValue: boolean;
-  loading: boolean;
-  allProjects: TodoProject[];
-  projectParam: string | null;
-}
-
-const props = defineProps<TodoItemCreateDialogProps>();
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void;
-  (e: 'submit', payload: { name: string; project: TodoProject | null }): void;
-  (e: 'cancel'): void;
-}>();
-
-const addForm = ref<{ name: string; project: TodoProject | null }>({
-  name: '',
-  project: null,
-});
-
-watch(
-  () => [addForm.value.name, addForm.value.project],
-  () => {}
-);
-
-function handleDialogHide() {
-  addForm.value = { name: '', project: null };
-  emit('update:modelValue', false);
-  emit('cancel');
-}
-
-function handleSubmit() {
-  if (!addForm.value.name.trim()) return;
-  emit('submit', { ...addForm.value });
-}
-
-function preselectProject(
-  projects: TodoProject[],
-  projectParam: string | null
-) {
-  if (projectParam !== null) {
-    return projects.find((p) => p.name === projectParam) || null;
+  /**
+   * Props for TodoItemCreateDialog
+   */
+  interface TodoItemCreateDialogProps {
+    modelValue: boolean;
+    loading: boolean;
+    allProjects: TodoProject[];
+    projectParam: string | null;
   }
-  return null;
-}
 
-watch(
-  [() => props.modelValue, () => props.allProjects, () => props.projectParam],
-  ([visible, projects, projectParam]: [
-    boolean,
-    TodoProject[],
-    string | null
-  ]) => {
-    if (visible) {
-      addForm.value = {
-        name: '',
-        project: preselectProject(projects, projectParam),
-      };
+  const props = defineProps<TodoItemCreateDialogProps>();
+
+  const emit = defineEmits<{
+    (e: 'update:modelValue', value: boolean): void;
+    (e: 'submit', payload: { name: string; project: TodoProject | null }): void;
+    (e: 'cancel'): void;
+  }>();
+
+  const addForm = ref<{ name: string; project: TodoProject | null }>({
+    name: '',
+    project: null,
+  });
+
+  watch(
+    () => [addForm.value.name, addForm.value.project],
+    () => {}
+  );
+
+  function handleDialogHide() {
+    addForm.value = { name: '', project: null };
+    emit('update:modelValue', false);
+    emit('cancel');
+  }
+
+  function handleSubmit() {
+    if (!addForm.value.name.trim()) return;
+    emit('submit', { ...addForm.value });
+  }
+
+  function preselectProject(
+    projects: TodoProject[],
+    projectParam: string | null
+  ) {
+    if (projectParam !== null) {
+      return projects.find((p) => p.name === projectParam) || null;
     }
-  },
-  { immediate: true }
-);
+    return null;
+  }
+
+  watch(
+    [() => props.modelValue, () => props.allProjects, () => props.projectParam],
+    ([visible, projects, projectParam]: [
+      boolean,
+      TodoProject[],
+      string | null
+    ]) => {
+      if (visible) {
+        addForm.value = {
+          name: '',
+          project: preselectProject(projects, projectParam),
+        };
+      }
+    },
+    { immediate: true }
+  );
 </script>
 
 <template>

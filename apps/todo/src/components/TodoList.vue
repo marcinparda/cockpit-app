@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import type { TodoItem as TodoItemType } from '@cockpit-app/api-types';
-import TodoItem from './TodoItem.vue';
-import { Divider } from '@cockpit-app/shared-vue-ui';
+  import type { TodoItem as TodoItemType } from '@cockpit-app/api-types';
+  import TodoItem from './TodoItem.vue';
+  import { Divider } from '@cockpit-app/shared-vue-ui';
 
-const props = defineProps<{
-  items: TodoItemType[];
-  editingItemId: number | null;
-  editingItemNewTitle: string;
-  startEditing: (item: TodoItemType) => void;
-  cancelEditedItem: () => void;
-  saveEditedItem: () => void;
-  toggleTodoItem: (id: number, value: boolean) => void;
-  deleteTodoItem: (id: number) => void;
-}>();
+  const props = defineProps<{
+    items: TodoItemType[];
+    editingItemId: number | null;
+    editingItemNewTitle: string;
+    startEditing: (item: TodoItemType) => void;
+    cancelEditedItem: () => void;
+    saveEditedItem: () => void;
+    toggleTodoItem: (id: number, value: boolean) => void;
+    deleteTodoItem: (id: number) => void;
+  }>();
 
-const emit = defineEmits(['update:editingItemNewTitle']);
+  const emit = defineEmits(['update:editingItemNewTitle']);
 
-const handleInput = (val: string) => {
-  emit('update:editingItemNewTitle', val);
-};
+  const handleInput = (val: string) => {
+    emit('update:editingItemNewTitle', val);
+  };
 </script>
 
 <template>

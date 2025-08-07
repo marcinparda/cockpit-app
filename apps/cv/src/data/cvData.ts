@@ -1,4 +1,4 @@
-import { HeaderData } from "../components/cv/components/Header";
+import { HeaderData } from '../components/cv/components/Header';
 
 export const headerData: HeaderData = {
   name: 'MARCIN PARDA',

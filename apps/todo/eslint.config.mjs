@@ -10,8 +10,13 @@ export default [
   {
     files: ['**/*.vue'],
     languageOptions: {
+      parser: vue.parser,
       parserOptions: {
         parser: (await import('@typescript-eslint/parser')).default,
+        extraFileExtensions: ['.vue'],
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
     },
   },

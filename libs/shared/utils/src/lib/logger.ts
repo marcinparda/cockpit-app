@@ -1,4 +1,4 @@
-import { environments } from "./environments/environments";
+import { environments } from './environments/environments';
 
 export const logger = {
   debug: (message: string, ...args: unknown[]) => {

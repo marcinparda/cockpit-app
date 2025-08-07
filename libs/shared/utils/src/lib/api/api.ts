@@ -1,10 +1,11 @@
-import {
-  SimpleRefreshResponse,
-} from '@cockpit-app/api-types';
+import { SimpleRefreshResponse } from '@cockpit-app/api-types';
 import { AUTHENTICATION_ENDPOINTS } from './endpoints';
 import { baseApi } from './baseApi';
-import { LogoutResponse, logoutResponseSchema, simpleRefreshResponseSchema } from './schemas';
-
+import {
+  LogoutResponse,
+  logoutResponseSchema,
+  simpleRefreshResponseSchema,
+} from './schemas';
 
 export async function refreshAccessToken() {
   return await baseApi.postRequest<SimpleRefreshResponse, object>(

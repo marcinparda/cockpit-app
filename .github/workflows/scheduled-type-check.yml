@@ -17,7 +17,6 @@ jobs:
     name: Scheduled Type Drift Check
     uses: ./.github/workflows/validate-types.yml
 
-
   create-pr-on-drift:
     name: Create PR on Type Drift
     needs: [scheduled-type-check]

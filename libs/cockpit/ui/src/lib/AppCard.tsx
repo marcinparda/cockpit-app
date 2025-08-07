@@ -16,12 +16,7 @@ interface AppCardProps {
   >;
 }
 
-export function AppCard({
-  title,
-  description,
-  url,
-  Icon,
-}: AppCardProps) {
+export function AppCard({ title, description, url, Icon }: AppCardProps) {
   return (
     <a href={url} className="cursor-pointer">
       <Card className="w-[350px] transition-all bg-background hover:bg-muted">

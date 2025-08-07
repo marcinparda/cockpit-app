@@ -23,7 +23,12 @@ interface TopNavBarProps {
   rightContent?: ReactNode;
 }
 
-export function TopNavBar({ navLinks, rightContent, BrandIcon, brandName }: TopNavBarProps) {
+export function TopNavBar({
+  navLinks,
+  rightContent,
+  BrandIcon,
+  brandName,
+}: TopNavBarProps) {
   return (
     <nav className="flex items-center px-4 h-14 bg-muted/80 dark:bg-muted text-foreground border-b border-border backdrop-blur">
       <div className="flex items-center mr-8">
