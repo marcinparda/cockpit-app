@@ -8,3 +8,4 @@ export { default as Menu } from 'primevue/menu';
 export { default as Card } from 'primevue/card';
 export { default as Menubar } from 'primevue/menubar';
 export { default as Select } from 'primevue/select';
+export * from 'primevue';
