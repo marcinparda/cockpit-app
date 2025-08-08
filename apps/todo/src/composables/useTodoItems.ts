@@ -123,6 +123,7 @@ setInterval(() => {
 export function useItems() {
   return {
     todoItems,
+    fetchTodoItems,
     addTodoItem,
     toggleTodoItem,
     deleteTodoItem,

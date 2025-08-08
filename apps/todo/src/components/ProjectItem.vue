@@ -3,13 +3,17 @@
   import { ref } from 'vue';
   import { TodoProject } from '@cockpit-app/api-types';
   import { useProjects } from '../composables/useProjects';
+  import { useItems } from '../composables/useTodoItems';
 
   const props = defineProps<{
     project: TodoProject;
+    shared?: boolean;
   }>();
 
   const { name, id } = props.project;
+  const { shared } = props;
   const { deleteProject, updateProject } = useProjects();
+  const { fetchTodoItems } = useItems();
 
   const isEditing = ref(false);
   const newProjectName = ref('');
@@ -36,11 +40,12 @@
 
   async function handleDeleteButtonClick() {
     await deleteProject(id);
+    fetchTodoItems();
   }
 </script>
 
 <template>
-  <div v-if="isEditing" class="flex items-center gap-2 p-2">
+  <div v-if="isEditing" class="flex items-center gap-2 p-2 min-h-14">
     <InputText
       v-model="newProjectName"
       class="flex-1"
@@ -55,7 +60,7 @@
   </div>
   <div
     v-else
-    class="flex items-center gap-2 cursor-pointer hover:bg-neutral-800 rounded p-2"
+    class="flex items-center gap-2 cursor-pointer hover:bg-neutral-800 rounded p-2 min-h-14"
     @click="handleStartEditing"
   >
     <label>
@@ -64,6 +69,7 @@
       </span>
     </label>
     <Button
+      v-if="!shared"
       class="ml-auto"
       severity="danger"
       @click="handleDeleteButtonClick"

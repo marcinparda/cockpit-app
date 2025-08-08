@@ -6,7 +6,7 @@
 
   const newProjectName = ref('');
 
-  const { projects, addProject } = useProjects();
+  const { myProjects, sharedProjects, addProject } = useProjects();
 
   async function handleAddProject() {
     if (newProjectName.value.trim()) {
@@ -29,10 +29,22 @@
         <Button @click="handleAddProject">Add Project</Button>
       </div>
 
-      <template v-for="(project, idx) in projects" :key="project.id">
-        <ProjectItem :project="project" />
-        <Divider v-if="idx < projects.length - 1" class="my-2" />
-      </template>
+      <div v-if="myProjects.length" class="pb-6">
+        <div class="text-lg font-semibold pb-2">My projects</div>
+        <Divider class="py-2" />
+        <template v-for="(project, idx) in myProjects" :key="project.id">
+          <ProjectItem :project="project" />
+          <Divider v-if="idx < myProjects.length - 1" class="py-2" />
+        </template>
+      </div>
+      <div v-if="sharedProjects.length > 0">
+        <div class="text-lg font-semibold pb-2">Shared projects</div>
+        <Divider class="py-2" />
+        <template v-for="(project, idx) in sharedProjects" :key="project.id">
+          <ProjectItem :project="project" :shared="true" />
+          <Divider v-if="idx < sharedProjects.length - 1" class="py-2" />
+        </template>
+      </div>
     </div>
   </div>
 </template>

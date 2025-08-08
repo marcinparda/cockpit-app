@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type {
   TodoProject,
   TodoProjectCreate,
@@ -7,6 +7,7 @@ import type {
 import { todoProjectsService } from '../services/todoProjectsService';
 import { logger } from '@cockpit-app/shared-utils';
 import { useRoute } from 'vue-router';
+import { useCurrentUser } from '../composables/useCurrentUser';
 
 const projects = ref<TodoProject[]>([]);
 const isLoading = ref(false);
@@ -70,6 +71,24 @@ export function useProjects() {
   const selectProject = (project: TodoProject | null) => {
     selectedProject.value = project;
   };
+  const { currentUser } = useCurrentUser();
+
+  const myProjects = computed(() => {
+    const currentUserId = currentUser.value?.user_id;
+    if (!currentUserId) return [];
+    return projects.value.filter(
+      (project) => project.owner_id === currentUserId
+    );
+  });
+
+  const sharedProjects = computed(() => {
+    const currentUserId = currentUser.value?.user_id;
+    if (!currentUserId) return [];
+    return projects.value.filter(
+      (project) => project.owner_id !== currentUserId
+    );
+  });
+
   watch(
     [() => router.query['project'], () => projects.value],
     ([newProjectId, projects]) => {
@@ -84,6 +103,8 @@ export function useProjects() {
   );
   return {
     projects,
+    myProjects,
+    sharedProjects,
     isLoading,
     selectedProject,
     selectProject,
