@@ -4,7 +4,7 @@ import type {
   TodoProjectCreate,
   TodoProjectUpdate,
 } from '@cockpit-app/api-types';
-import { environments } from '@cockpit-app/shared-utils';
+import { environments, logger } from '@cockpit-app/shared-utils';
 import httpClient from './http.service';
 
 const API_URL = `${environments.apiUrl}/api/v1/todo/projects`;
@@ -15,7 +15,7 @@ export const todoProjectsService = {
       const response = await httpClient.get(`${API_URL}`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching todo projects:', error);
+      logger.error('Error fetching todo projects:', error);
       throw error;
     }
   },
@@ -25,7 +25,7 @@ export const todoProjectsService = {
       const response = await httpClient.get(`${API_URL}/${id}`);
       return response.data;
     } catch (error) {
-      console.error(`Error fetching todo project with id ${id}:`, error);
+      logger.error(`Error fetching todo project with id ${id}:`, error);
       throw error;
     }
   },
@@ -35,7 +35,7 @@ export const todoProjectsService = {
       const response = await httpClient.post(`${API_URL}`, item);
       return response.data;
     } catch (error) {
-      console.error('Error adding todo project:', error);
+      logger.error('Error adding todo project:', error);
       throw error;
     }
   },
@@ -48,7 +48,7 @@ export const todoProjectsService = {
       const response = await httpClient.put(`${API_URL}/${id}`, updates);
       return response.data;
     } catch (error) {
-      console.error('Error updating todo project:', error);
+      logger.error('Error updating todo project:', error);
       throw error;
     }
   },
@@ -57,7 +57,7 @@ export const todoProjectsService = {
     try {
       await httpClient.delete(`${API_URL}/${id}`);
     } catch (error) {
-      console.error('Error deleting todo project:', error);
+      logger.error('Error deleting todo project:', error);
       throw error;
     }
   },
@@ -71,7 +71,7 @@ export const todoProjectsService = {
       );
       return response.data;
     } catch (error) {
-      console.error(
+      logger.error(
         `Error fetching collaborators for project ${projectId}:`,
         error
       );
