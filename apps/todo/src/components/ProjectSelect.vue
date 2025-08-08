@@ -5,17 +5,16 @@
   import { todoProjectsService } from '../services/todoProjectsService';
   import type { TodoProject } from '../types/TodoProject';
   import { isMeaningfulString } from '@cockpit-app/shared-utils';
+  import { ALL_PROJECT_CODE, ALL_PROJECT_NAME } from '../utils/consts';
 
   const projects = ref<TodoProject[]>([]);
   const selectedProject = ref<string | null>(null);
   const route = useRoute();
   const router = useRouter();
 
-  const ALL_PROJECT_CODE = 'All';
-
   const fetchProjects = async () => {
     try {
-      const result = await todoProjectsService.getTodoProjects();
+      const result = await todoProjectsService.getAllTodoProjects();
       projects.value = result;
     } catch (e) {
       projects.value = [];
@@ -49,7 +48,7 @@
   });
 
   const projectOptions = computed(() => [
-    { name: 'All', code: ALL_PROJECT_CODE },
+    { name: ALL_PROJECT_NAME, code: ALL_PROJECT_CODE },
     ...projects.value.map((p) => ({ name: p.name, code: p.name })),
   ]);
 </script>

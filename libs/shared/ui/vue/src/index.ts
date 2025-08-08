@@ -8,3 +8,7 @@ export { default as Menu } from 'primevue/menu';
 export { default as Card } from 'primevue/card';
 export { default as Menubar } from 'primevue/menubar';
 export { default as Select } from 'primevue/select';
+export { default as Avatar } from 'primevue/avatar';
+export { default as AvatarGroup } from 'primevue/avatargroup';
+export { default as Tooltip } from 'primevue/tooltip';
+export { default as Skeleton } from 'primevue/skeleton';

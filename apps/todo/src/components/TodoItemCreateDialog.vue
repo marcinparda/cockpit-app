@@ -1,75 +1,94 @@
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import {
     InputText,
     Button,
     Dialog,
     Select,
   } from '@cockpit-app/shared-vue-ui';
-  import type { TodoProject } from '../types/TodoProject';
+  import { isMeaningfulString } from '@cockpit-app/shared-utils';
+  import { useRoute } from 'vue-router';
+  import { useItems } from '../composables/useTodoItems';
+  import { useProjects } from '../composables/useProjects';
+  import { TodoProject } from '@cockpit-app/api-types';
 
-  /**
-   * Props for TodoItemCreateDialog
-   */
   interface TodoItemCreateDialogProps {
     modelValue: boolean;
-    loading: boolean;
-    allProjects: TodoProject[];
-    projectParam: string | null;
   }
-
   const props = defineProps<TodoItemCreateDialogProps>();
-
   const emit = defineEmits<{
     (e: 'update:modelValue', value: boolean): void;
-    (e: 'submit', payload: { name: string; project: TodoProject | null }): void;
-    (e: 'cancel'): void;
   }>();
 
-  const addForm = ref<{ name: string; project: TodoProject | null }>({
+  const route = useRoute();
+  const { addTodoItem } = useItems();
+  const { todoProjects, isLoading: isProjectsLoading } = useProjects();
+  const isLoading = ref(false);
+  const addTodoItemFormValues = ref<{
+    name: string;
+    project: TodoProject | null;
+  }>({
     name: '',
     project: null,
   });
-
-  watch(
-    () => [addForm.value.name, addForm.value.project],
-    () => {}
-  );
-
-  function handleDialogHide() {
-    addForm.value = { name: '', project: null };
-    emit('update:modelValue', false);
-    emit('cancel');
-  }
-
-  function handleSubmit() {
-    if (!addForm.value.name.trim()) return;
-    emit('submit', { ...addForm.value });
-  }
-
-  function preselectProject(
-    projects: TodoProject[],
-    projectParam: string | null
-  ) {
-    if (projectParam !== null) {
-      return projects.find((p) => p.name === projectParam) || null;
+  const projectId = computed(() => {
+    const projectParam = route.query['project'];
+    return isMeaningfulString(projectParam) ? Number(projectParam) : null;
+  });
+  const isCreateButtonLoading = computed(() => {
+    return isLoading.value || isProjectsLoading.value;
+  });
+  const isCreateButtonDisabled = computed(() => {
+    return (
+      !addTodoItemFormValues.value.name.trim() ||
+      addTodoItemFormValues.value.project === null
+    );
+  });
+  const createButtonTooltipText = computed(() => {
+    if (isCreateButtonDisabled.value) {
+      return 'Please enter a name and select a project';
     }
-    return null;
+    return '';
+  });
+
+  function handleCloseButtonClick() {
+    addTodoItemFormValues.value = { name: '', project: null };
+    emit('update:modelValue', false);
+  }
+
+  async function handleCreateButtonClick() {
+    if (!isMeaningfulString(addTodoItemFormValues.value.name)) return;
+    if (!addTodoItemFormValues.value.project) return;
+    isLoading.value = true;
+    try {
+      await addTodoItem(
+        addTodoItemFormValues.value.name,
+        addTodoItemFormValues.value.project.id
+      );
+      addTodoItemFormValues.value.name = '';
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  async function handleCreateAndCloseButtonClick() {
+    await handleCreateButtonClick();
+    handleCloseButtonClick();
+  }
+
+  function setProjectFromRoute() {
+    const project = todoProjects.value.find((p) => p.id === projectId.value);
+    if (project) {
+      addTodoItemFormValues.value.project = project;
+    } else {
+      addTodoItemFormValues.value.project = null;
+    }
   }
 
   watch(
-    [() => props.modelValue, () => props.allProjects, () => props.projectParam],
-    ([visible, projects, projectParam]: [
-      boolean,
-      TodoProject[],
-      string | null
-    ]) => {
-      if (visible) {
-        addForm.value = {
-          name: '',
-          project: preselectProject(projects, projectParam),
-        };
-      }
+    () => props.modelValue,
+    (_visible) => {
+      setProjectFromRoute();
     },
     { immediate: true }
   );
@@ -81,15 +100,15 @@
     header="Add New Todo Item"
     :modal="true"
     :closable="false"
-    @hide="handleDialogHide"
+    @hide="handleCloseButtonClick"
   >
-    <form @submit.prevent="handleSubmit">
+    <form @submit.prevent="handleCreateButtonClick">
       <div class="flex flex-col gap-4">
         <div>
           <label for="item-name" class="block mb-1">Item Name</label>
           <InputText
             id="item-name"
-            v-model="addForm.name"
+            v-model="addTodoItemFormValues.name"
             class="w-full"
             required
           />
@@ -98,18 +117,35 @@
           <label for="project-select" class="block mb-1">Project</label>
           <Select
             id="project-select"
-            v-model="addForm.project"
-            :options="allProjects"
+            v-model="addTodoItemFormValues.project"
+            :options="todoProjects"
             option-label="name"
             placeholder="Select a project"
             class="w-full"
           />
         </div>
         <div class="flex gap-2 justify-end">
-          <Button type="button" severity="secondary" @click="handleDialogHide"
-            >Cancel</Button
+          <Button
+            type="button"
+            severity="secondary"
+            @click="handleCloseButtonClick"
+            >Close</Button
           >
-          <Button type="submit" :loading="loading">Create</Button>
+          <Button
+            v-tooltip="createButtonTooltipText"
+            :loading="isCreateButtonLoading"
+            :disabled="isCreateButtonDisabled"
+            severity="secondary"
+            @click="handleCreateAndCloseButtonClick"
+            >Create & close</Button
+          >
+          <Button
+            v-tooltip="createButtonTooltipText"
+            type="submit"
+            :loading="isCreateButtonLoading"
+            :disabled="isCreateButtonDisabled"
+            >Create</Button
+          >
         </div>
       </div>
     </form>

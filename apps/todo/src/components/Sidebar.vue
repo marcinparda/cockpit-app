@@ -9,25 +9,26 @@
   import { ref, onMounted } from 'vue';
   import { useRouter } from 'vue-router';
   import { todoProjectsService } from '../services/todoProjectsService';
+  import { ALL_PROJECT_NAME } from '../utils/consts';
 
   const router = useRouter();
   const items = ref<any[]>([]);
 
   const fetchProjects = async () => {
     try {
-      const projects = await todoProjectsService.getTodoProjects();
+      const projects = await todoProjectsService.getAllTodoProjects();
       items.value = [
         {
-          label: 'Projects',
+          label: 'My projects',
           items: [
             {
-              label: 'All',
+              label: ALL_PROJECT_NAME,
               command: () => router.push({ path: '/list' }),
             },
-            ...projects.map((p: any) => ({
+            ...projects.map((p) => ({
               label: p.name,
               command: () =>
-                router.push({ path: '/list', query: { project: p.name } }),
+                router.push({ path: '/list', query: { project: p.id } }),
             })),
           ],
         },
@@ -35,10 +36,10 @@
     } catch (e) {
       items.value = [
         {
-          label: 'Projects',
+          label: 'My projects',
           items: [
             {
-              label: 'All',
+              label: ALL_PROJECT_NAME,
               command: () => router.push({ path: '/list' }),
             },
           ],

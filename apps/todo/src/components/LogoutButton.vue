@@ -12,5 +12,11 @@
 </script>
 
 <template>
-  <Button label="Logout" class="p-button-text" @click="performLogout" />
+  <Button
+    label="Logout"
+    variant="text"
+    severity="danger"
+    class="p-button-text"
+    @click="performLogout"
+  />
 </template>

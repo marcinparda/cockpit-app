@@ -9,7 +9,7 @@
   const newProjectName = ref('');
 
   const fetchProjects = async () => {
-    projects.value = await todoProjectsService.getTodoProjects();
+    projects.value = await todoProjectsService.getAllTodoProjects();
   };
 
   const handleAddProject = async () => {

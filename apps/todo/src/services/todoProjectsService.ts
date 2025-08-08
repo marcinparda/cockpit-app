@@ -1,5 +1,6 @@
 import type {
   TodoProject,
+  TodoProjectCollaboratorResponse,
   TodoProjectCreate,
   TodoProjectUpdate,
 } from '@cockpit-app/api-types';
@@ -9,7 +10,7 @@ import httpClient from './http.service';
 const API_URL = `${environments.apiUrl}/api/v1/todo/projects`;
 
 export const todoProjectsService = {
-  async getTodoProjects(): Promise<TodoProject[]> {
+  async getAllTodoProjects(): Promise<TodoProject[]> {
     try {
       const response = await httpClient.get(`${API_URL}`);
       return response.data;
@@ -19,7 +20,7 @@ export const todoProjectsService = {
     }
   },
 
-  async getTodoProject(id: number): Promise<TodoProject> {
+  async getTodoProjectById(id: number): Promise<TodoProject> {
     try {
       const response = await httpClient.get(`${API_URL}/${id}`);
       return response.data;
@@ -57,6 +58,23 @@ export const todoProjectsService = {
       await httpClient.delete(`${API_URL}/${id}`);
     } catch (error) {
       console.error('Error deleting todo project:', error);
+      throw error;
+    }
+  },
+
+  async getTodoProjectCollaborators(
+    projectId: number
+  ): Promise<TodoProjectCollaboratorResponse[]> {
+    try {
+      const response = await httpClient.get(
+        `${API_URL}/${projectId}/collaborators`
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        `Error fetching collaborators for project ${projectId}:`,
+        error
+      );
       throw error;
     }
   },

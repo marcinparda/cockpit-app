@@ -1,33 +1,59 @@
 <script setup lang="ts">
   import { cn } from '@cockpit-app/shared-react-ui';
   import { Button, InputText, Checkbox } from '@cockpit-app/shared-vue-ui';
-  import type { TodoItem as TodoItemType } from '@cockpit-app/api-types';
-  import { computed } from 'vue';
+  import type { TodoItem } from '@cockpit-app/api-types';
+  import { ref } from 'vue';
+  import { useItems } from '../composables/useTodoItems';
 
   const props = defineProps<{
-    item: TodoItemType;
-    editingItemId: number | null;
-    editingItemNewTitle: string;
+    item: TodoItem;
   }>();
+  const { toggleTodoItem, deleteTodoItem, updateTodoItemTitle } = useItems();
 
-  const emit = defineEmits<{
-    (e: 'start-editing', item: TodoItemType): void;
-    (e: 'save-edited-item'): void;
-    (e: 'toggle-todo-item', item: TodoItemType, value: boolean): void;
-    (e: 'delete-todo-item', id: number): void;
-    (e: 'update:editingItemNewTitle', value: string): void;
-    (e: 'cancel-edited-item'): void;
-  }>();
-
-  const isEditing = computed(() => props.editingItemId === props.item.id);
+  const isEditing = ref(false);
+  const editingItemNewTitle = ref('');
 
   function handleEditNameInput(val: string | undefined) {
-    emit('update:editingItemNewTitle', val ?? '');
+    editingItemNewTitle.value = val ?? '';
+  }
+
+  function startEditing() {
+    if (props.item) {
+      editingItemNewTitle.value = props.item.name;
+      isEditing.value = true;
+    }
+  }
+
+  function cancelEditing() {
+    isEditing.value = false;
+  }
+
+  async function handleSaveTodoItem() {
+    if (!editingItemNewTitle.value.trim()) {
+      cancelEditing();
+      return;
+    }
+
+    try {
+      await updateTodoItemTitle(props.item.id, editingItemNewTitle.value);
+      editingItemNewTitle.value = '';
+      isEditing.value = false;
+    } catch (error) {
+      console.error('Failed to save todo item:', error);
+    }
+  }
+
+  async function handleCheckboxChange(val: boolean) {
+    await toggleTodoItem(props.item.id, val);
+  }
+
+  async function handleDeleteButtonClick() {
+    await deleteTodoItem(props.item.id);
   }
 </script>
 
 <template>
-  <li>
+  <li v-if="item">
     <div v-if="isEditing" class="flex items-center gap-2 p-2">
       <InputText
         class="flex-1"
@@ -35,27 +61,23 @@
         type="text"
         placeholder="Enter new item title"
         @update:model-value="handleEditNameInput"
-        @keyup.enter="emit('save-edited-item')"
+        @keyup.enter="handleSaveTodoItem"
       />
-      <Button @click="emit('save-edited-item')" @click.stop>Save</Button>
-      <Button
-        severity="secondary"
-        @click="emit('cancel-edited-item')"
-        @click.stop
-      >
+      <Button @click="handleSaveTodoItem" @click.stop>Save</Button>
+      <Button severity="secondary" @click="cancelEditing" @click.stop>
         Cancel
       </Button>
     </div>
     <div
-      v-else
+      v-if="!isEditing"
       class="flex items-center gap-2 cursor-pointer hover:bg-neutral-800 rounded p-2"
-      @click="emit('start-editing', item)"
+      @click="startEditing"
     >
       <Checkbox
         :model-value="item.is_closed"
         binary
         size="large"
-        @update:model-value="(val) => emit('toggle-todo-item', item, val)"
+        @update:model-value="handleCheckboxChange"
         @click.stop
       />
       <label>
@@ -68,7 +90,7 @@
       <Button
         class="ml-auto"
         severity="danger"
-        @click="emit('delete-todo-item', item.id)"
+        @click="handleDeleteButtonClick"
         @click.stop
       >
         Delete
