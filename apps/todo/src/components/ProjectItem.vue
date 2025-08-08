@@ -1,21 +1,22 @@
 <script setup lang="ts">
   import { Button, InputText } from '@cockpit-app/shared-vue-ui';
-  import { ref, defineEmits } from 'vue';
-  import { todoProjectsService } from '../services/todoProjectsService';
+  import { ref } from 'vue';
+  import { TodoProject } from '@cockpit-app/api-types';
+  import { useProjects } from '../composables/useProjects';
 
   const props = defineProps<{
-    id: number;
-    name: string;
+    project: TodoProject;
   }>();
 
-  const emit = defineEmits(['update', 'delete', 'refresh']);
+  const { name, id } = props.project;
+  const { deleteProject, updateProject } = useProjects();
 
   const isEditing = ref(false);
   const newProjectName = ref('');
 
   function handleStartEditing() {
     isEditing.value = true;
-    newProjectName.value = props.name;
+    newProjectName.value = name;
   }
 
   function handleCancelEdit() {
@@ -25,20 +26,16 @@
 
   async function handleSaveNewProjectName() {
     if (newProjectName.value.trim()) {
-      emit('update', { id: props.id, name: newProjectName.value });
-      await todoProjectsService.updateTodoProject(props.id, {
+      await updateProject(id, {
         name: newProjectName.value,
       });
       newProjectName.value = '';
       isEditing.value = false;
-      emit('refresh');
     }
   }
 
-  async function handleDeleteProject() {
-    emit('delete', props.id);
-    await todoProjectsService.deleteTodoProject(props.id);
-    emit('refresh');
+  async function handleDeleteButtonClick() {
+    await deleteProject(id);
   }
 </script>
 
@@ -69,7 +66,7 @@
     <Button
       class="ml-auto"
       severity="danger"
-      @click="handleDeleteProject"
+      @click="handleDeleteButtonClick"
       @click.stop
     >
       Delete

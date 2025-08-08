@@ -13,7 +13,6 @@
   import { useCurrentUser } from '../composables/useCurrentUser';
 
   const { selectedProject } = useProjects();
-
   const { currentUser } = useCurrentUser();
   const collaborators = ref<TodoProjectCollaboratorResponse[]>([]);
   const isLoading = ref(false);

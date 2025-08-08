@@ -1,38 +1,19 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
-  import { todoProjectsService } from '../services/todoProjectsService';
-  import type { TodoProject } from '../types/TodoProject';
+  import { ref } from 'vue';
   import { InputText, Button, Divider } from '@cockpit-app/shared-vue-ui';
   import ProjectItem from '../components/ProjectItem.vue';
+  import { useProjects } from '../composables/useProjects';
 
-  const projects = ref<TodoProject[]>([]);
   const newProjectName = ref('');
 
-  const fetchProjects = async () => {
-    projects.value = await todoProjectsService.getAllTodoProjects();
-  };
+  const { projects, addProject } = useProjects();
 
-  const handleAddProject = async () => {
-    if (!newProjectName.value.trim()) return;
-    await todoProjectsService.addTodoProject({ name: newProjectName.value });
-    newProjectName.value = '';
-    fetchProjects();
-  };
-
-  const handleProjectUpdate = (updated: { id: number; name: string }) => {
-    // Optimistic update
-    const idx = projects.value.findIndex((p) => p.id === updated.id);
-    if (idx !== -1) {
-      projects.value[idx] = { ...projects.value[idx], name: updated.name };
+  async function handleAddProject() {
+    if (newProjectName.value.trim()) {
+      await addProject(newProjectName.value);
+      newProjectName.value = '';
     }
-  };
-
-  const handleProjectDelete = (id: number) => {
-    // Optimistic removal
-    projects.value = projects.value.filter((p) => p.id !== id);
-  };
-
-  onMounted(fetchProjects);
+  }
 </script>
 
 <template>
@@ -49,13 +30,7 @@
       </div>
 
       <template v-for="(project, idx) in projects" :key="project.id">
-        <ProjectItem
-          :id="project.id"
-          :name="project.name"
-          @update="handleProjectUpdate"
-          @delete="handleProjectDelete"
-          @refresh="fetchProjects"
-        />
+        <ProjectItem :project="project" />
         <Divider v-if="idx < projects.length - 1" class="my-2" />
       </template>
     </div>
