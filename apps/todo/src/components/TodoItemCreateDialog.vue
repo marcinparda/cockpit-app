@@ -22,7 +22,11 @@
 
   const route = useRoute();
   const { addTodoItem } = useItems();
-  const { todoProjects, isLoading: isProjectsLoading } = useProjects();
+  const {
+    projects,
+    isLoading: isProjectsLoading,
+    selectedProject,
+  } = useProjects();
   const isLoading = ref(false);
   const addTodoItemFormValues = ref<{
     name: string;
@@ -76,19 +80,13 @@
     handleCloseButtonClick();
   }
 
-  function setProjectFromRoute() {
-    const project = todoProjects.value.find((p) => p.id === projectId.value);
-    if (project) {
-      addTodoItemFormValues.value.project = project;
-    } else {
-      addTodoItemFormValues.value.project = null;
-    }
-  }
-
   watch(
     () => props.modelValue,
     (_visible) => {
-      setProjectFromRoute();
+      addTodoItemFormValues.value = {
+        name: '',
+        project: selectedProject.value,
+      };
     },
     { immediate: true }
   );
@@ -118,7 +116,7 @@
           <Select
             id="project-select"
             v-model="addTodoItemFormValues.project"
-            :options="todoProjects"
+            :options="projects"
             option-label="name"
             placeholder="Select a project"
             class="w-full"

@@ -3,9 +3,9 @@
   import { Select } from '@cockpit-app/shared-vue-ui';
   import { useRoute, useRouter } from 'vue-router';
   import { todoProjectsService } from '../services/todoProjectsService';
-  import type { TodoProject } from '../types/TodoProject';
   import { isMeaningfulString } from '@cockpit-app/shared-utils';
   import { ALL_PROJECT_CODE, ALL_PROJECT_NAME } from '../utils/consts';
+  import { TodoProject } from '@cockpit-app/api-types';
 
   const projects = ref<TodoProject[]>([]);
   const selectedProject = ref<string | null>(null);
