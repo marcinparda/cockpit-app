@@ -6,7 +6,6 @@
         v-tooltip="tooltipText"
         :label="getAvatarLabelFromEmail(currentUser.email)"
         shape="circle"
-        style="background-color: var(--p-avatar-background)"
       />
     </template>
     <template #item="{ item }">

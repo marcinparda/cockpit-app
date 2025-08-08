@@ -3,7 +3,7 @@
   import { useItems } from '../composables/useTodoItems';
   import TodoItem from './TodoItem.vue';
   import { Divider } from '@cockpit-app/shared-vue-ui';
-  import { computed, watch } from 'vue';
+  import { computed } from 'vue';
 
   const route = useRoute();
   const { todoItems } = useItems();

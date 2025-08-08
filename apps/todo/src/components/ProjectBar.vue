@@ -7,14 +7,12 @@
     Skeleton,
   } from '@cockpit-app/shared-vue-ui';
   import { getAvatarLabelFromEmail } from '../utils/utils';
-  import { TodoProjectCollaboratorResponse } from '@cockpit-app/api-types';
   import { ALL_PROJECT_NAME } from '../utils/consts';
   import { useProjects } from '../composables/useProjects';
   import { useCurrentUser } from '../composables/useCurrentUser';
 
   const { selectedProject } = useProjects();
   const { currentUser } = useCurrentUser();
-  const collaborators = ref<TodoProjectCollaboratorResponse[]>([]);
   const isLoading = ref(false);
 
   const projectNameText = computed(() => {
@@ -55,14 +53,17 @@
           <span class="text-sm">{{ projectOwnershipText }}</span>
         </div>
       </div>
-      <div v-if="!!selectedProject" class="flex items-center gap-2">
+      <div
+        v-if="selectedProject?.collaborators"
+        class="flex items-center gap-2"
+      >
         <AvatarGroup>
           <Avatar
-            v-for="collaborator in collaborators"
-            :key="collaborator.user_id"
-            v-tooltip="getCollaboratorAvatarTooltip(collaborator.user_id)"
-            :image="collaborator.user_id"
-            :label="getAvatarLabelFromEmail(collaborator.user_id)"
+            v-for="collaborator in selectedProject.collaborators"
+            :key="collaborator"
+            v-tooltip="getCollaboratorAvatarTooltip(collaborator)"
+            :image="collaborator"
+            :label="getAvatarLabelFromEmail(collaborator)"
             shape="circle"
           />
         </AvatarGroup>
