@@ -41,3 +41,7 @@ export type UserWithRole = ApiTypes['UserWithRole'];
 export type ValidationError = ApiTypes['ValidationError'];
 export type TodoProjectCollaboratorResponse =
   ApiTypes['TodoProjectCollaboratorResponse'];
+export type TodoProjectCollaboratorCreate =
+  ApiTypes['TodoProjectCollaboratorCreate'];
+export type SimpleTodoProject = ApiTypes['SimpleTodoProject'];
+export type SimpleUserResponse = ApiTypes['SimpleUserResponse'];

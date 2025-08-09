@@ -24,7 +24,7 @@
   import { Menubar } from '@cockpit-app/shared-vue-ui';
   import LogoutButton from './LogoutButton.vue';
   import { Avatar } from '@cockpit-app/shared-vue-ui';
-  import { userService } from '../services/userService';
+  import { currnetUserService } from '../services/currnetUserService';
   import { ref, onMounted } from 'vue';
   import { getAvatarLabelFromEmail } from '../utils/utils';
   import type { UserInfoResponse } from '@cockpit-app/api-types';
@@ -47,7 +47,7 @@
     },
   ];
   onMounted(async function () {
-    currentUser.value = await userService.getCurrentUserInfo();
+    currentUser.value = await currnetUserService.getCurrentUserInfo();
     if (!currentUser.value) {
       tooltipText.value = 'Fetched user info failed';
       return;
