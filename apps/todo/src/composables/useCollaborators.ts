@@ -14,7 +14,7 @@ export function useCollaborators() {
 
   const isCurrentUserOwner = computed(() => {
     if (!selectedProject.value || !currentUser.value) return false;
-    return selectedProject.value.owner_id === currentUser.value.user_id;
+    return selectedProject.value.owner.id === currentUser.value.user_id;
   });
 
   async function fetchCollaborators() {

@@ -41,7 +41,7 @@
         <div class="text-lg font-semibold pb-2">Shared projects</div>
         <Divider class="py-2" />
         <template v-for="(project, idx) in sharedProjects" :key="project.id">
-          <ProjectItem :project="project" :shared="true" />
+          <ProjectItem :project="project" :read-only="true" />
           <Divider v-if="idx < sharedProjects.length - 1" class="py-2" />
         </template>
       </div>

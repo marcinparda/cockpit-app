@@ -34,7 +34,7 @@
     return Boolean(collaborators.value.length);
   });
 
-  function getCollaboratorAvatarTooltip(email: string) {
+  function getAvatarTooltip(email: string) {
     if (email === currentUser.value?.email) {
       return `(You) ${email}`;
     }
@@ -72,17 +72,30 @@
           @click="handleShareClick"
           >Share</Button
         >
-        <div v-if="areThereAnyCollaborators" class="flex items-center gap-2">
-          <span class="text-sm">Collaborators:</span>
-          <AvatarGroup>
-            <Avatar
-              v-for="collaborator in collaborators"
-              :key="collaborator.id"
-              v-tooltip="getCollaboratorAvatarTooltip(collaborator.email)"
-              :label="getAvatarLabelFromEmail(collaborator.email)"
-              shape="circle"
-            />
-          </AvatarGroup>
+        <div v-if="selectedProject" class="flex items-center gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-sm">Owner:</span>
+            <AvatarGroup>
+              <Avatar
+                v-tooltip="getAvatarTooltip(selectedProject.owner.email)"
+                :label="getAvatarLabelFromEmail(selectedProject.owner.email)"
+                shape="circle"
+                size="#footer"
+              />
+            </AvatarGroup>
+          </div>
+          <div v-if="areThereAnyCollaborators" class="flex items-center gap-2">
+            <span class="text-sm">Collaborators:</span>
+            <AvatarGroup>
+              <Avatar
+                v-for="collaborator in collaborators"
+                :key="collaborator.id"
+                v-tooltip="getAvatarTooltip(collaborator.email)"
+                :label="getAvatarLabelFromEmail(collaborator.email)"
+                shape="circle"
+              />
+            </AvatarGroup>
+          </div>
         </div>
       </div>
     </div>

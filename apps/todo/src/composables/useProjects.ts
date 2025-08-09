@@ -79,7 +79,7 @@ export function useProjects() {
     const currentUserId = currentUser.value?.user_id;
     if (!currentUserId) return [];
     return projects.value.filter(
-      (project) => project.owner_id === currentUserId
+      (project) => project.owner.id === currentUserId
     );
   });
 
@@ -87,7 +87,7 @@ export function useProjects() {
     const currentUserId = currentUser.value?.user_id;
     if (!currentUserId) return [];
     return projects.value.filter(
-      (project) => project.owner_id !== currentUserId
+      (project) => project.owner.id !== currentUserId
     );
   });
 

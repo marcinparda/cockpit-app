@@ -4,14 +4,15 @@
   import { TodoProject } from '@cockpit-app/api-types';
   import { useProjects } from '../composables/useProjects';
   import { useTodoItems } from '../composables/useTodoItems';
+  import { cn } from '@cockpit-app/shared-react-ui';
 
   const props = defineProps<{
     project: TodoProject;
-    shared?: boolean;
+    readOnly?: boolean;
   }>();
 
   const { name, id } = props.project;
-  const { shared } = props;
+  const { readOnly } = props;
   const { deleteProject, updateProject } = useProjects();
   const { fetchTodoItems } = useTodoItems();
 
@@ -19,6 +20,7 @@
   const newProjectName = ref('');
 
   function handleStartEditing() {
+    if (readOnly) return;
     isEditing.value = true;
     newProjectName.value = name;
   }
@@ -60,16 +62,21 @@
   </div>
   <div
     v-else
-    class="flex items-center gap-2 cursor-pointer hover:bg-neutral-800 rounded p-2 min-h-14"
+    :class="
+      cn(
+        'flex items-center gap-2 rounded p-2 min-h-14',
+        readOnly ? '' : 'cursor-pointer hover:bg-neutral-800'
+      )
+    "
     @click="handleStartEditing"
   >
     <label>
-      <span class="cursor-pointer">
-        {{ name }}
+      <span :class="cn('', readOnly ? '' : 'cursor-pointer')">
+        {{ name }} {{ readOnly && `(${project.owner.email})` }}
       </span>
     </label>
     <Button
-      v-if="!shared"
+      v-if="!readOnly"
       class="ml-auto"
       severity="danger"
       @click="handleDeleteButtonClick"
