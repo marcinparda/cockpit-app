@@ -3,7 +3,7 @@
   import { ref } from 'vue';
   import { TodoProject } from '@cockpit-app/api-types';
   import { useProjects } from '../composables/useProjects';
-  import { useItems } from '../composables/useTodoItems';
+  import { useTodoItems } from '../composables/useTodoItems';
 
   const props = defineProps<{
     project: TodoProject;
@@ -13,7 +13,7 @@
   const { name, id } = props.project;
   const { shared } = props;
   const { deleteProject, updateProject } = useProjects();
-  const { fetchTodoItems } = useItems();
+  const { fetchTodoItems } = useTodoItems();
 
   const isEditing = ref(false);
   const newProjectName = ref('');

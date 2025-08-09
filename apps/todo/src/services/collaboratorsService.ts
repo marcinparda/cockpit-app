@@ -8,7 +8,7 @@ import httpClient from './http.service';
 const API_URL = `${environments.apiUrl}/api/v1/todo/projects`;
 
 export const collaboratorsService = {
-  async getTodoProjectCollaborators(
+  async getCollaborators(
     projectId: number
   ): Promise<TodoProjectCollaboratorResponse[]> {
     try {
@@ -25,7 +25,7 @@ export const collaboratorsService = {
     }
   },
 
-  async addTodoProjectCollaborators(
+  async addCollaborators(
     projectId: number,
     collaboratorIds: string[]
   ): Promise<TodoProjectCollaboratorResponse[]> {
@@ -47,10 +47,7 @@ export const collaboratorsService = {
     }
   },
 
-  async removeTodoProjectCollaborator(
-    projectId: number,
-    userId: string
-  ): Promise<void> {
+  async removeCollaborator(projectId: number, userId: string): Promise<void> {
     try {
       await httpClient.delete(
         `${API_URL}/${projectId}/collaborators/${userId}`

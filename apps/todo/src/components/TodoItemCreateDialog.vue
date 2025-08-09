@@ -8,7 +8,7 @@
   } from '@cockpit-app/shared-vue-ui';
   import { isMeaningfulString } from '@cockpit-app/shared-utils';
   import { useRoute } from 'vue-router';
-  import { useItems } from '../composables/useTodoItems';
+  import { useTodoItems } from '../composables/useTodoItems';
   import { useProjects } from '../composables/useProjects';
   import { TodoProject } from '@cockpit-app/api-types';
 
@@ -21,7 +21,7 @@
   }>();
 
   const route = useRoute();
-  const { addTodoItem } = useItems();
+  const { addTodoItem } = useTodoItems();
   const {
     projects,
     isLoading: isProjectsLoading,

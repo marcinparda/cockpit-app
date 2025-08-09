@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, ref } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import {
     Divider,
     AvatarGroup,
@@ -13,10 +13,13 @@
   import { useCurrentUser } from '../composables/useCurrentUser';
   import { useCollaborators } from '../composables/useCollaborators';
   import ManageCollaboratorsDialog from './ManageCollaboratorsDialog.vue';
+  import { useRoute } from 'vue-router';
 
+  const route = useRoute();
   const { selectedProject } = useProjects();
   const { currentUser } = useCurrentUser();
-  const { isCurrentUserOwner, collaborators } = useCollaborators();
+  const { isCurrentUserOwner, collaborators, fetchCollaborators } =
+    useCollaborators();
   const isLoading = ref(false);
   const showManageCollaboratorsDialog = ref(false);
 
@@ -41,6 +44,15 @@
   function handleShareClick() {
     showManageCollaboratorsDialog.value = true;
   }
+
+  watch(
+    () => route.query['project'],
+    (newProject) => {
+      if (newProject) {
+        fetchCollaborators();
+      }
+    }
+  );
 </script>
 
 <template>
@@ -67,7 +79,6 @@
               v-for="collaborator in collaborators"
               :key="collaborator.id"
               v-tooltip="getCollaboratorAvatarTooltip(collaborator.email)"
-              :image="collaborator"
               :label="getAvatarLabelFromEmail(collaborator.email)"
               shape="circle"
             />

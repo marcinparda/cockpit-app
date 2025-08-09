@@ -1,12 +1,16 @@
 <script setup lang="ts">
   import { useRoute } from 'vue-router';
-  import { useItems } from '../composables/useTodoItems';
+  import { useTodoItems } from '../composables/useTodoItems';
   import TodoItem from './TodoItem.vue';
   import { Divider } from '@cockpit-app/shared-vue-ui';
-  import { computed } from 'vue';
+  import { computed, onMounted } from 'vue';
 
   const route = useRoute();
-  const { todoItems } = useItems();
+  const { todoItems, startPolling } = useTodoItems();
+
+  onMounted(() => {
+    startPolling();
+  });
 
   const projectTodoItems = computed(() => {
     const projectId = route.query['project']

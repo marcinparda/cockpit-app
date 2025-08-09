@@ -1,4 +1,4 @@
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, onMounted } from 'vue';
 import type {
   TodoProject,
   TodoProjectCreate,
@@ -18,7 +18,7 @@ async function fetchProjects() {
     isLoading.value = true;
     projects.value = await todoProjectsService.getAllTodoProjects();
   } catch (error) {
-    logger.error('Failed to load todo items:', error);
+    logger.error('Failed to load projects:', error);
   } finally {
     isLoading.value = false;
   }
@@ -64,14 +64,16 @@ async function updateProject(
   }
 }
 
-fetchProjects();
-
 export function useProjects() {
   const router = useRoute();
   const selectProject = (project: TodoProject | null) => {
     selectedProject.value = project;
   };
   const { currentUser } = useCurrentUser();
+
+  onMounted(() => {
+    fetchProjects();
+  });
 
   const myProjects = computed(() => {
     const currentUserId = currentUser.value?.user_id;
@@ -111,5 +113,6 @@ export function useProjects() {
     addProject,
     deleteProject,
     updateProject,
+    fetchProjects,
   };
 }

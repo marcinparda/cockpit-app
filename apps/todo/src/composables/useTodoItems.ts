@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, onMounted, onScopeDispose } from 'vue';
 import type {
   TodoItem,
   TodoItemCreate,
@@ -9,6 +9,10 @@ import { logger } from '@cockpit-app/shared-utils';
 
 const todoItems = ref<TodoItem[]>([]);
 const isLoading = ref(false);
+
+// single shared poller across all consumers of this composable
+let pollerId: ReturnType<typeof setInterval> | null = null;
+let pollerConsumers = 0;
 
 function areTodoItemsEqual(a: TodoItem[], b: TodoItem[]): boolean {
   if (a.length !== b.length) return false;
@@ -112,15 +116,34 @@ const updateTodoItemTitle = async (todoItemId: number, newTitle: string) => {
   }
 };
 
-fetchTodoItems();
-
-setInterval(() => {
-  if (!isLoading.value) {
+export function useTodoItems() {
+  // Fetch items when the composable is used within a component lifecycle
+  onMounted(() => {
     fetchTodoItems();
-  }
-}, 10000);
+  });
 
-export function useItems() {
+  function startPolling(intervalMs = 10000) {
+    pollerConsumers += 1;
+    if (pollerId) return;
+    pollerId = setInterval(() => {
+      if (!isLoading.value) {
+        fetchTodoItems();
+      }
+    }, intervalMs);
+  }
+
+  function stopPolling() {
+    pollerConsumers = Math.max(0, pollerConsumers - 1);
+    if (pollerConsumers === 0 && pollerId) {
+      clearInterval(pollerId);
+      pollerId = null;
+    }
+  }
+
+  onScopeDispose(() => {
+    stopPolling();
+  });
+
   return {
     todoItems,
     fetchTodoItems,
@@ -128,5 +151,7 @@ export function useItems() {
     toggleTodoItem,
     deleteTodoItem,
     updateTodoItemTitle,
+    startPolling,
+    stopPolling,
   };
 }
