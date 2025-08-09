@@ -20,14 +20,14 @@
       <Sidebar />
     </div>
     <div class="flex flex-1 flex-col items-center">
-      <div class="w-full">
-        <ProjectBar />
-      </div>
       <div class="w-full pb-4 md:hidden">
         <ProjectSelect />
       </div>
       <div class="w-full pb-5 md:hidden">
         <Divider />
+      </div>
+      <div class="w-full">
+        <ProjectBar />
       </div>
       <div class="w-full max-w-2xl">
         <div class="gap-2">

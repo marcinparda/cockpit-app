@@ -4,11 +4,9 @@
     Divider,
     AvatarGroup,
     Avatar,
-    Skeleton,
     Button,
   } from '@cockpit-app/shared-vue-ui';
   import { getAvatarLabelFromEmail } from '../utils/utils';
-  import { ALL_PROJECT_NAME } from '../utils/consts';
   import { useProjects } from '../composables/useProjects';
   import { useCurrentUser } from '../composables/useCurrentUser';
   import { useCollaborators } from '../composables/useCollaborators';
@@ -21,15 +19,7 @@
   const { currentUser } = useCurrentUser();
   const { isCurrentUserOwner, collaborators, fetchCollaborators } =
     useCollaborators();
-  const isLoading = ref(false);
   const showManageCollaboratorsDialog = ref(false);
-
-  const projectNameText = computed(() => {
-    if (selectedProject.value === null) {
-      return ALL_PROJECT_NAME;
-    }
-    return selectedProject.value.name;
-  });
 
   const areThereAnyCollaborators = computed(() => {
     return Boolean(collaborators.value.length);
@@ -57,10 +47,7 @@
 </script>
 
 <template>
-  <div v-if="isLoading" class="pb-8">
-    <Skeleton class="py-10" />
-  </div>
-  <div v-if="!isLoading" class="pb-4 md:pb-8">
+  <div v-if="Boolean(selectedProject)" class="pb-4 md:pb-8">
     <div class="flex h-20 items-center justify-between pb-6 md:px-6 md:py-4">
       <div class="hidden md:block">
         <ProjectSelect />
