@@ -5,16 +5,19 @@ This directory contains the validation script for checking if API types are up t
 ## Usage
 
 ### Validate Types
+
 ```bash
 npm run validate:types
 ```
 
 This script will:
+
 - Fetch the latest OpenAPI specification from `https://api.parda.me/openapi.json`
 - Compare it with the local cached version using SHA-256 hashing
 - Exit with status 0 if types are up to date, 1 if they need updating
 
 ### Update Types (if needed)
+
 ```bash
 npm run update:types
 ```

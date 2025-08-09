@@ -1,30 +1,31 @@
 import type {
   TodoProject,
+  TodoProjectCollaboratorResponse,
   TodoProjectCreate,
   TodoProjectUpdate,
 } from '@cockpit-app/api-types';
-import { environments } from '@cockpit-app/shared-utils';
+import { environments, logger } from '@cockpit-app/shared-utils';
 import httpClient from './http.service';
 
 const API_URL = `${environments.apiUrl}/api/v1/todo/projects`;
 
 export const todoProjectsService = {
-  async getTodoProjects(): Promise<TodoProject[]> {
+  async getAllTodoProjects(): Promise<TodoProject[]> {
     try {
       const response = await httpClient.get(`${API_URL}`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching todo projects:', error);
+      logger.error('Error fetching todo projects:', error);
       throw error;
     }
   },
 
-  async getTodoProject(id: number): Promise<TodoProject> {
+  async getTodoProjectById(id: number): Promise<TodoProject> {
     try {
       const response = await httpClient.get(`${API_URL}/${id}`);
       return response.data;
     } catch (error) {
-      console.error(`Error fetching todo project with id ${id}:`, error);
+      logger.error(`Error fetching todo project with id ${id}:`, error);
       throw error;
     }
   },
@@ -34,7 +35,7 @@ export const todoProjectsService = {
       const response = await httpClient.post(`${API_URL}`, item);
       return response.data;
     } catch (error) {
-      console.error('Error adding todo project:', error);
+      logger.error('Error adding todo project:', error);
       throw error;
     }
   },
@@ -47,7 +48,7 @@ export const todoProjectsService = {
       const response = await httpClient.put(`${API_URL}/${id}`, updates);
       return response.data;
     } catch (error) {
-      console.error('Error updating todo project:', error);
+      logger.error('Error updating todo project:', error);
       throw error;
     }
   },
@@ -56,7 +57,24 @@ export const todoProjectsService = {
     try {
       await httpClient.delete(`${API_URL}/${id}`);
     } catch (error) {
-      console.error('Error deleting todo project:', error);
+      logger.error('Error deleting todo project:', error);
+      throw error;
+    }
+  },
+
+  async getTodoProjectCollaborators(
+    projectId: number
+  ): Promise<TodoProjectCollaboratorResponse[]> {
+    try {
+      const response = await httpClient.get(
+        `${API_URL}/${projectId}/collaborators`
+      );
+      return response.data;
+    } catch (error) {
+      logger.error(
+        `Error fetching collaborators for project ${projectId}:`,
+        error
+      );
       throw error;
     }
   },

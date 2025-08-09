@@ -1,10 +1,12 @@
-import { primeVuePlugin } from '@cockpit-app/shared-vue-ui';
+import { primeVuePlugin, Tooltip } from '@cockpit-app/shared-vue-ui';
 import router from './router';
 import { createApp } from 'vue';
 import App from './app/App.vue';
 import './styles.css';
+import 'primeicons/primeicons.css';
 
 const app = createApp(App);
 app.use(router);
 app.use(primeVuePlugin);
+app.directive('tooltip', Tooltip);
 app.mount('#root');

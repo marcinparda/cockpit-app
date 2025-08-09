@@ -7,7 +7,7 @@
     "build": "nx build",
     "watch": "nx build --watch --configuration development",
     "test": "nx test",
-    "generate:types": "openapi-typescript ./libs/shared/types/api-types/src/openapi.json -o ./libs/shared/types/api-types/src/lib/openapi-types.d.ts",
+    "generate:types": "openapi-typescript ./libs/shared/types/api-types/src/openapi.json -o ./libs/shared/types/api-types/src/lib/openapi-types.ts",
     "fetch-openapi": "curl -o ./libs/shared/types/api-types/src/openapi.json https://api.parda.me/openapi.json",
     "update:types": "npm run fetch-openapi && npm run generate:types",
     "validate:types": "tsx ./libs/shared/types/api-types/src/validateTypes.ts"
@@ -32,6 +32,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.525.0",
+    "primeicons": "^7.0.0",
     "primevue": "^4.3.5",
     "react": "19.0.0",
     "react-dom": "19.0.0",
