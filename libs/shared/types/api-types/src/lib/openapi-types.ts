@@ -529,7 +529,7 @@ export interface paths {
         };
         /**
          * List Users
-         * @description List all users with their roles (admin only).
+         * @description List all users with their roles.
          */
         get: operations["list_users_api_v1_users_get"];
         put?: never;
@@ -1038,6 +1038,22 @@ export interface components {
              * @default false
              */
             is_general: boolean;
+        };
+        /**
+         * SimpleUserResponse
+         * @description Schema for user ID and email.
+         */
+        SimpleUserResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
         };
         /** TodoItem */
         TodoItem: {
@@ -2762,7 +2778,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserWithRole"][];
+                    "application/json": components["schemas"]["SimpleUserResponse"][];
                 };
             };
             /** @description Validation Error */
