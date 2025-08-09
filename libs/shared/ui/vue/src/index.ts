@@ -13,3 +13,6 @@ export { default as AvatarGroup } from 'primevue/avatargroup';
 export { default as Tooltip } from 'primevue/tooltip';
 export { default as Skeleton } from 'primevue/skeleton';
 export { default as MultiSelect } from 'primevue/multiselect';
+
+// Types
+export type { SelectChangeEvent } from 'primevue/select';

@@ -1,4 +1,4 @@
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import type { TodoProjectCollaboratorResponse } from '@cockpit-app/api-types';
 import { collaboratorsService } from '../services/collaboratorsService';
 import { logger } from '@cockpit-app/shared-utils';

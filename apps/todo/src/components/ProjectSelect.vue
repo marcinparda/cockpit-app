@@ -1,56 +1,33 @@
 <script setup lang="ts">
-  import { ref, onMounted, watch, computed } from 'vue';
-  import { Select } from '@cockpit-app/shared-vue-ui';
-  import { useRoute, useRouter } from 'vue-router';
-  import { todoProjectsService } from '../services/todoProjectsService';
-  import { isMeaningfulString } from '@cockpit-app/shared-utils';
+  import { computed } from 'vue';
+  import { Select, SelectChangeEvent } from '@cockpit-app/shared-vue-ui';
+  import { useRouter } from 'vue-router';
   import { ALL_PROJECT_CODE, ALL_PROJECT_NAME } from '../utils/consts';
-  import { TodoProject } from '@cockpit-app/api-types';
+  import { useProjects } from '../composables/useProjects';
 
-  const projects = ref<TodoProject[]>([]);
-  const selectedProject = ref<string | null>(null);
-  const route = useRoute();
   const router = useRouter();
-
-  const fetchProjects = async () => {
-    try {
-      const result = await todoProjectsService.getAllTodoProjects();
-      projects.value = result;
-    } catch (e) {
-      projects.value = [];
-    }
-  };
-
-  onMounted(() => {
-    fetchProjects();
-    // Set initial selected project from route
-    const projectParam = route.query['project'];
-    const selected = isMeaningfulString(projectParam) ? projectParam : null;
-    selectedProject.value = selected;
-  });
-
-  watch(
-    () => route.query['project'],
-    (val) => {
-      const selected = isMeaningfulString(val) ? val : null;
-      selectedProject.value = selected;
-    }
-  );
-
-  watch(selectedProject, (val) => {
-    if (val) {
-      if (val === ALL_PROJECT_CODE) {
-        router.push({ path: '/list', query: { project: undefined } });
-      } else {
-        router.push({ path: '/list', query: { project: val } });
-      }
-    }
-  });
+  const { projects, selectedProject } = useProjects();
 
   const projectOptions = computed(() => [
     { name: ALL_PROJECT_NAME, code: ALL_PROJECT_CODE },
-    ...projects.value.map((p) => ({ name: p.name, code: p.name })),
+    ...projects.value.map((p) => ({ name: p.name, code: p.id })),
   ]);
+
+  const selectedProjectId = computed(() => {
+    if (!selectedProject.value) {
+      return ALL_PROJECT_CODE;
+    }
+    return selectedProject.value.id;
+  });
+
+  function handleSelectProjectChange(event: SelectChangeEvent) {
+    const selectedCode = event.value;
+    if (selectedCode === ALL_PROJECT_CODE) {
+      router.push({ path: '/list', query: { project: undefined } });
+      return;
+    }
+    router.push({ path: '/list', query: { project: selectedCode } });
+  }
 </script>
 
 <template>
@@ -59,12 +36,13 @@
   >
   <Select
     id="project-select"
-    v-model="selectedProject"
+    v-model="selectedProjectId"
     :options="projectOptions"
     option-label="name"
     option-value="code"
     placeholder="Select a project"
     class="w-full md:w-56"
     label="Project"
+    @change="handleSelectProjectChange"
   />
 </template>
