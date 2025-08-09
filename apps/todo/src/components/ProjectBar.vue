@@ -45,10 +45,10 @@
 
 <template>
   <div v-if="isLoading" class="pb-8">
-    <Skeleton class="px-6 py-10" />
+    <Skeleton class="py-10" />
   </div>
   <div v-if="!isLoading" class="pb-8">
-    <div class="px-6 py-4 flex items-center justify-between">
+    <div class="px-6 py-4 flex items-center justify-between h-20">
       <div class="flex items-center gap-2">
         <i class="pi pi-folder"></i>
         <span>{{ projectNameText }}</span>
