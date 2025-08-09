@@ -72,7 +72,7 @@
   >
     <label>
       <span :class="cn('', readOnly ? '' : 'cursor-pointer')">
-        {{ name }} {{ readOnly && `(${project.owner.email})` }}
+        {{ name }} {{ readOnly ? `(${project.owner.email})` : '' }}
       </span>
     </label>
     <Button
