@@ -92,10 +92,10 @@ async function validateTypes(): Promise<void> {
 
     if (!localContent) {
       console.log(
-        '❌ Local OpenAPI file not found. Types need to be generated.'
+        '❌ Local OpenAPI file not found. Types need to be generated.',
       );
       console.log(
-        '💡 Run "npm run update:types" to fetch and generate the latest types.'
+        '💡 Run "npm run update:types" to fetch and generate the latest types.',
       );
       process.exit(1);
     }
@@ -116,10 +116,10 @@ async function validateTypes(): Promise<void> {
       process.exit(0);
     } else {
       console.log(
-        '❌ Types are outdated! Remote OpenAPI specification has changed.'
+        '❌ Types are outdated! Remote OpenAPI specification has changed.',
       );
       console.log(
-        '💡 Run "npm run update:types" to fetch and generate the latest types.'
+        '💡 Run "npm run update:types" to fetch and generate the latest types.',
       );
       process.exit(1);
     }

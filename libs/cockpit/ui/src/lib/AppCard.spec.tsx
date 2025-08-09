@@ -20,7 +20,7 @@ describe('AppCard', () => {
         description="This is a test app."
         url="/test-url"
         Icon={DummyIcon}
-      />
+      />,
     );
 
     expect(screen.getByText('Test App')).toBeInTheDocument();
@@ -35,7 +35,7 @@ describe('AppCard', () => {
         description="This is a test app."
         url="/test-url"
         Icon={DummyIcon}
-      />
+      />,
     );
     const link = screen.getByRole('link');
     expect(link).toHaveAttribute('href', '/test-url');

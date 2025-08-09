@@ -8,7 +8,7 @@ export function Courses({ courses }: CoursesProps) {
   return (
     <section className="mb-4">
       <SectionTitle>COURSES</SectionTitle>
-      <ul className="text-sm space-y-1">
+      <ul className="space-y-1 text-sm">
         {courses.map((course, idx) => (
           <li key={idx}>• {course}</li>
         ))}

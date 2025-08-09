@@ -19,8 +19,8 @@ export function PersonalProjects({ projects }: PersonalProjectsProps) {
       <SectionTitle>PERSONAL PROJECTS</SectionTitle>
       {projects.map((project, idx) => (
         <div className="mb-4" key={idx}>
-          <div className="flex justify-between items-start mb-2">
-            <h4 className="font-bold text-base">{project.name}</h4>
+          <div className="mb-2 flex items-start justify-between">
+            <h4 className="text-base font-bold">{project.name}</h4>
             <div className="text-right text-sm text-gray-600">
               {project.date}
             </div>
@@ -38,7 +38,7 @@ export function PersonalProjects({ projects }: PersonalProjectsProps) {
             <span className="text-sm">Code - </span>
             <span className="text-sm text-blue-600">{project.code}</span>
           </div>
-          <ul className="text-xs space-y-1 ml-4 list-disc">
+          <ul className="ml-4 list-disc space-y-1 text-xs">
             {project.description.map((desc, i) => (
               <li key={i}>{desc}</li>
             ))}

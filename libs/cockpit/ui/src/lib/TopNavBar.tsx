@@ -30,13 +30,13 @@ export function TopNavBar({
   brandName,
 }: TopNavBarProps) {
   return (
-    <nav className="flex items-center px-4 h-14 bg-muted/80 dark:bg-muted text-foreground border-b border-border backdrop-blur">
-      <div className="flex items-center mr-8">
-        {BrandIcon && <BrandIcon size={24} className="mr-2 text-primary" />}
-        <span className="font-bold text-lg">{brandName}</span>
+    <nav className="bg-muted/80 dark:bg-muted text-foreground border-border flex h-14 items-center border-b px-4 backdrop-blur">
+      <div className="mr-8 flex items-center">
+        {BrandIcon && <BrandIcon size={24} className="text-primary mr-2" />}
+        <span className="text-lg font-bold">{brandName}</span>
       </div>
 
-      <div className="flex space-x-6 flex-1">
+      <div className="flex flex-1 space-x-6">
         {navLinks.map(({ name, href, external }) =>
           external ? (
             <a
@@ -44,7 +44,7 @@ export function TopNavBar({
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-foreground no-underline hover:text-primary hover:underline transition-colors"
+              className="text-foreground hover:text-primary no-underline transition-colors hover:underline"
             >
               {name}
             </a>
@@ -52,11 +52,11 @@ export function TopNavBar({
             <a
               key={name}
               href={href}
-              className="text-foreground no-underline hover:text-primary hover:underline transition-colors"
+              className="text-foreground hover:text-primary no-underline transition-colors hover:underline"
             >
               {name}
             </a>
-          )
+          ),
         )}
       </div>
       {rightContent && (

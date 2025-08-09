@@ -14,6 +14,7 @@
   import { useCollaborators } from '../composables/useCollaborators';
   import ManageCollaboratorsDialog from './ManageCollaboratorsDialog.vue';
   import { useRoute } from 'vue-router';
+  import ProjectSelect from './ProjectSelect.vue';
 
   const route = useRoute();
   const { selectedProject } = useProjects();
@@ -51,7 +52,7 @@
       if (newProject) {
         fetchCollaborators();
       }
-    }
+    },
   );
 </script>
 
@@ -59,20 +60,16 @@
   <div v-if="isLoading" class="pb-8">
     <Skeleton class="py-10" />
   </div>
-  <div v-if="!isLoading" class="pb-8">
-    <div class="px-6 py-4 flex items-center justify-between h-20">
-      <div class="flex items-center gap-2">
-        <i class="pi pi-folder"></i>
-        <span>{{ projectNameText }}</span>
+  <div v-if="!isLoading" class="pb-4 md:pb-8">
+    <div class="flex h-20 items-center justify-between pb-6 md:px-6 md:py-4">
+      <div class="hidden md:block">
+        <ProjectSelect />
       </div>
-      <div class="flex items-center gap-2">
-        <Button
-          v-if="isCurrentUserOwner"
-          variant="text"
-          @click="handleShareClick"
-          >Share</Button
+      <div class="flex flex-1 items-center justify-between gap-2">
+        <div
+          v-if="selectedProject"
+          class="flex flex-col gap-2 md:flex-row md:items-center"
         >
-        <div v-if="selectedProject" class="flex items-center gap-2">
           <div class="flex items-center gap-2">
             <span class="text-sm">Owner:</span>
             <AvatarGroup>
@@ -97,6 +94,12 @@
             </AvatarGroup>
           </div>
         </div>
+        <Button
+          v-if="isCurrentUserOwner"
+          variant="text"
+          @click="handleShareClick"
+          >Share</Button
+        >
       </div>
     </div>
     <Divider />

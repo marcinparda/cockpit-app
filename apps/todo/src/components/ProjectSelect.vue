@@ -31,9 +31,7 @@
 </script>
 
 <template>
-  <label class="block mb-2 text-sm" html-for="project-select"
-    >Selected project</label
-  >
+  <label class="pr-2 text-sm md:text-base">Project:</label>
   <Select
     id="project-select"
     v-model="selectedProjectId"

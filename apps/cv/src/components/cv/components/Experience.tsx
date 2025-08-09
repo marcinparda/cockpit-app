@@ -20,15 +20,15 @@ export function Experience({ experience }: ExperienceProps) {
       <SectionTitle>EXPERIENCE</SectionTitle>
       {experience.map((item, idx) => (
         <div className="mb-6" key={idx}>
-          <div className="flex justify-between items-start mb-2">
-            <h4 className="font-bold text-base">{item.title}</h4>
+          <div className="mb-2 flex items-start justify-between">
+            <h4 className="text-base font-bold">{item.title}</h4>
             <div className="text-right text-sm text-gray-600">
               {`${item.date}; ${item.location}`}
             </div>
           </div>
-          <div className="font-semibold text-sm mb-2">{item.company}</div>
+          <div className="mb-2 text-sm font-semibold">{item.company}</div>
           {item.details && <TypographySmall>{item.details}</TypographySmall>}
-          <ul className="text-xs space-y-1 ml-4 list-disc">
+          <ul className="ml-4 list-disc space-y-1 text-xs">
             {item.description.map((desc, i) => (
               <li key={i}>{desc}</li>
             ))}

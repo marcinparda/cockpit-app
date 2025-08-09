@@ -22,18 +22,18 @@ export function Header({ headerData }: HeaderProps) {
   return (
     <div className="mb-4">
       <TypographyH1>{name}</TypographyH1>
-      <h2 className="text-xl text-gray-600 mb-4">{title}</h2>
+      <h2 className="mb-4 text-xl text-gray-600">{title}</h2>
       <div className="flex flex-wrap gap-4 text-sm text-gray-600">
         <div className="flex items-center gap-1">
-          <Phone className="w-4 h-4" />
+          <Phone className="h-4 w-4" />
           <span>{phone}</span>
         </div>
         <div className="flex items-center gap-1">
-          <Mail className="w-4 h-4" />
+          <Mail className="h-4 w-4" />
           <span>{email}</span>
         </div>
         <div className="flex items-center gap-1">
-          <Linkedin className="w-4 h-4" />
+          <Linkedin className="h-4 w-4" />
           <a
             href={`https://${linkedin.url}`}
             className="text-blue-600 underline"
@@ -44,7 +44,7 @@ export function Header({ headerData }: HeaderProps) {
           </a>
         </div>
         <div className="flex items-center gap-1">
-          <MapPin className="w-4 h-4" />
+          <MapPin className="h-4 w-4" />
           <span>{location}</span>
         </div>
       </div>

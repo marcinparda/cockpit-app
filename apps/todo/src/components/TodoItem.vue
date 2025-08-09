@@ -71,7 +71,7 @@
     </div>
     <div
       v-if="!isEditing"
-      class="flex items-center gap-2 cursor-pointer hover:bg-neutral-800 rounded p-2"
+      class="flex cursor-pointer items-center gap-2 rounded p-2 hover:bg-neutral-800"
       @click="startEditing"
     >
       <Checkbox

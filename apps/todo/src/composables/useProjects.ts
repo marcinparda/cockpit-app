@@ -48,12 +48,12 @@ async function deleteProject(projectId: number) {
 
 async function updateProject(
   projectId: TodoProject['id'],
-  updates: TodoProjectUpdate
+  updates: TodoProjectUpdate,
 ) {
   try {
     const updatedProject = await todoProjectsService.updateTodoProject(
       projectId,
-      updates
+      updates,
     );
     const index = projects.value.findIndex((p) => p.id === updatedProject.id);
     if (index !== -1) {
@@ -79,7 +79,7 @@ export function useProjects() {
     const currentUserId = currentUser.value?.user_id;
     if (!currentUserId) return [];
     return projects.value.filter(
-      (project) => project.owner.id === currentUserId
+      (project) => project.owner.id === currentUserId,
     );
   });
 
@@ -87,7 +87,7 @@ export function useProjects() {
     const currentUserId = currentUser.value?.user_id;
     if (!currentUserId) return [];
     return projects.value.filter(
-      (project) => project.owner.id !== currentUserId
+      (project) => project.owner.id !== currentUserId,
     );
   });
 
@@ -101,7 +101,7 @@ export function useProjects() {
         selectedProject.value = null;
       }
     },
-    { immediate: true }
+    { immediate: true },
   );
   return {
     projects,

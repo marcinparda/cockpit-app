@@ -10,7 +10,7 @@ import { environments } from '../environments/environments';
 async function getRequest<ResponseData>(
   endpoint: string,
   responseDataSchema: z.ZodType<ResponseData>,
-  withRedirect = true
+  withRedirect = true,
 ) {
   return fetcher({
     url: `${environments.apiUrl}${endpoint}`,
@@ -29,7 +29,7 @@ async function getRequest<ResponseData>(
 async function postRequest<ResponseData, RequestBody>(
   endpoint: string,
   responseDataSchema: z.ZodType<ResponseData>,
-  body: RequestBody
+  body: RequestBody,
 ) {
   return fetcher({
     url: `${environments.apiUrl}${endpoint}`,
@@ -51,7 +51,7 @@ async function postRequest<ResponseData, RequestBody>(
 async function putRequest<ResponseData, RequestBody>(
   endpoint: string,
   responseDataSchema: z.ZodType<ResponseData>,
-  body: RequestBody
+  body: RequestBody,
 ) {
   return fetcher({
     url: `${environments.apiUrl}${endpoint}`,
@@ -71,7 +71,7 @@ async function putRequest<ResponseData, RequestBody>(
  */
 async function deleteRequest<ResponseData>(
   endpoint: string,
-  responseDataSchema: z.ZodType<ResponseData>
+  responseDataSchema: z.ZodType<ResponseData>,
 ) {
   return fetcher({
     url: `${environments.apiUrl}${endpoint}`,

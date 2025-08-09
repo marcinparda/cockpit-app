@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <div className="text-xs text-gray-600 mt-8">
+    <div className="mt-8 text-xs text-gray-600">
       <p>
         I agree to the processing of personal data provided in this document for
         realizing the recruitment process pursuant to the Personal Data

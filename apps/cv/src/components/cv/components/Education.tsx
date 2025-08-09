@@ -19,9 +19,9 @@ export function Education({ education }: EducationProps) {
       <SectionTitle>EDUCATION</SectionTitle>
       {education.map((item, idx) => (
         <div className="mb-4" key={idx}>
-          <h4 className="font-bold text-base">{item.degree}</h4>
-          <div className="flex justify-between items-center">
-            <div className="font-semibold text-sm">{item.university}</div>
+          <h4 className="text-base font-bold">{item.degree}</h4>
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-semibold">{item.university}</div>
             <div className="text-sm text-gray-600">{item.years}</div>
           </div>
         </div>

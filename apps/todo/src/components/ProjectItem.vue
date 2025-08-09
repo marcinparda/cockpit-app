@@ -47,7 +47,7 @@
 </script>
 
 <template>
-  <div v-if="isEditing" class="flex items-center gap-2 p-2 min-h-14">
+  <div v-if="isEditing" class="flex min-h-14 items-center gap-2 p-2">
     <InputText
       v-model="newProjectName"
       class="flex-1"
@@ -64,8 +64,8 @@
     v-else
     :class="
       cn(
-        'flex items-center gap-2 rounded p-2 min-h-14',
-        readOnly ? '' : 'cursor-pointer hover:bg-neutral-800'
+        'flex min-h-14 items-center gap-2 rounded p-2',
+        readOnly ? '' : 'cursor-pointer hover:bg-neutral-800',
       )
     "
     @click="handleStartEditing"

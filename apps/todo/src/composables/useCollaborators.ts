@@ -26,7 +26,7 @@ export function useCollaborators() {
     try {
       isLoading.value = true;
       collaborators.value = await collaboratorsService.getCollaborators(
-        selectedProject.value.id
+        selectedProject.value.id,
       );
     } catch (err) {
       collaborators.value = [];
@@ -45,7 +45,7 @@ export function useCollaborators() {
       isLoading.value = true;
       const newCollaborators = await collaboratorsService.addCollaborators(
         selectedProject.value.id,
-        [userId]
+        [userId],
       );
       collaborators.value.push(...newCollaborators);
       return true;
@@ -66,7 +66,7 @@ export function useCollaborators() {
       isLoading.value = true;
       const newCollaborators = await collaboratorsService.addCollaborators(
         selectedProject.value.id,
-        usersIds
+        usersIds,
       );
       collaborators.value.push(...newCollaborators);
       return true;
@@ -87,10 +87,10 @@ export function useCollaborators() {
       isLoading.value = true;
       await collaboratorsService.removeCollaborator(
         selectedProject.value.id,
-        userId
+        userId,
       );
       collaborators.value = collaborators.value.filter(
-        (collaborator) => collaborator.id !== userId
+        (collaborator) => collaborator.id !== userId,
       );
       return true;
     } catch (err) {

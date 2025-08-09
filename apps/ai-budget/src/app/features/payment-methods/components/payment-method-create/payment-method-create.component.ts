@@ -20,7 +20,10 @@ export class PaymentMethodCreateComponent {
   isSaving = false;
   error: string | null = null;
 
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+  ) {}
 
   onSubmit(): void {
     this.isSaving = true;

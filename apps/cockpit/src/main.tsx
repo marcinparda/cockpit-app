@@ -6,7 +6,7 @@ import './styles.css';
 import { Providers } from './app/providers';
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById('root') as HTMLElement,
 );
 
 root.render(
@@ -14,5 +14,5 @@ root.render(
     <Providers>
       <App />
     </Providers>
-  </StrictMode>
+  </StrictMode>,
 );

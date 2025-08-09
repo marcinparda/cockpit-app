@@ -55,7 +55,7 @@ const addTodoItem = async (title: string, projectId: number) => {
   try {
     const createdItem = await todoItemsService.addTodoItem(newItem);
     todoItems.value = [...todoItems.value, createdItem].sort((a, b) =>
-      a.name.localeCompare(b.name)
+      a.name.localeCompare(b.name),
     );
   } catch (error) {
     console.error('Failed to add todo item:', error);
@@ -81,7 +81,7 @@ const toggleTodoItem = async (todoItemId: number, value: boolean) => {
                 is_closed: value,
                 completed_at: value ? new Date().toISOString() : null,
               }
-            : i
+            : i,
         )
         .sort((a, b) => a.name.localeCompare(b.name));
       todoItems.value = updatedItems;
@@ -108,7 +108,7 @@ const updateTodoItemTitle = async (todoItemId: number, newTitle: string) => {
     await todoItemsService.updateTodoItem(todoItemId, updateData);
     todoItems.value = todoItems.value
       .map((item) =>
-        item.id === todoItemId ? { ...item, name: newTitle } : item
+        item.id === todoItemId ? { ...item, name: newTitle } : item,
       )
       .sort((a, b) => a.name.localeCompare(b.name));
   } catch (error) {

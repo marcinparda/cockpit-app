@@ -42,14 +42,14 @@ export class ApiService {
   // Payment method endpoints
   getPaymentMethods(): Observable<PaymentMethod[]> {
     return this.http.get<PaymentMethod[]>(
-      `${this.apiUrl}/api/v1/payment_methods`
+      `${this.apiUrl}/api/v1/payment_methods`,
     );
   }
 
   createPaymentMethod(data: PaymentMethodCreate): Observable<PaymentMethod> {
     return this.http.post<PaymentMethod>(
       `${this.apiUrl}/api/v1/payment_methods`,
-      data
+      data,
     );
   }
 }

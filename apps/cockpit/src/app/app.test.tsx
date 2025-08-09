@@ -59,7 +59,7 @@ describe('App', () => {
     } as any);
     render(<App />);
     expect(screen.getByTestId('top-navbar')).toHaveTextContent(
-      'Apps,Dashboard'
+      'Apps,Dashboard',
     );
   });
 });

@@ -46,7 +46,7 @@
       >
         <option value="">Select Category</option>
         @for (category of categories; track category.id) {
-        <option [value]="category.id">{{ category.name }}</option>
+          <option [value]="category.id">{{ category.name }}</option>
         }
       </select>
       <div *ngIf="isLoadingCategories">Loading categories...</div>
@@ -77,7 +77,7 @@
       >
         <option value="">Select Payment Method</option>
         @for (method of paymentMethods; track method.id) {
-        <option [value]="method.id">{{ method.name }}</option>
+          <option [value]="method.id">{{ method.name }}</option>
         }
       </select>
       <div *ngIf="isLoadingPaymentMethods">Loading payment methods...</div>

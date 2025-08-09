@@ -22,7 +22,10 @@ export class CategoryCreateComponent implements OnInit {
   isSaving = false;
   error: string | null = null;
 
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.fetchCategories();

@@ -9,12 +9,15 @@ import { isPlatformBrowser } from '@angular/common';
 export class AuthService {
   private API_KEY_STORAGE_KEY = 'x-api-key';
   private apiKeySubject = new BehaviorSubject<string | null>(
-    this.getStoredApiKey()
+    this.getStoredApiKey(),
   );
   public apiKey$ = this.apiKeySubject.asObservable();
   private isBrowser: boolean;
 
-  constructor(private router: Router, @Inject(PLATFORM_ID) platformId: object) {
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) platformId: object,
+  ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 

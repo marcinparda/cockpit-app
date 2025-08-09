@@ -19,7 +19,7 @@ export function LoginForm({
       }
       return { error: 'Invalid email or password', success: false };
     },
-    { error: null, success: false }
+    { error: null, success: false },
   );
 
   const { pending } = useFormStatus();
@@ -63,10 +63,10 @@ export function LoginForm({
           {pending ? 'Logging in...' : 'Login'}
         </Button>
         {state.error && (
-          <div className="text-red-500 text-sm text-center">{state.error}</div>
+          <div className="text-center text-sm text-red-500">{state.error}</div>
         )}
         {state.success && (
-          <div className="text-green-600 text-sm text-center">
+          <div className="text-center text-sm text-green-600">
             Login successful!
           </div>
         )}

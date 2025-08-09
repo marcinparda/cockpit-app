@@ -16,7 +16,7 @@ describe('Button', () => {
     render(
       <Button variant="destructive" size="lg">
         Delete
-      </Button>
+      </Button>,
     );
     const btn = screen.getByRole('button');
     expect(btn.className).toContain('bg-destructive');
@@ -33,7 +33,7 @@ describe('Button', () => {
     render(
       <Button asChild>
         <a href="/">Link</a>
-      </Button>
+      </Button>,
     );
     expect(screen.getByRole('link')).toBeInTheDocument();
   });

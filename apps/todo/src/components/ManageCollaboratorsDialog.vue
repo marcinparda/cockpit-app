@@ -35,7 +35,7 @@
       return [];
     }
     const usersWithoutCurrentUser = users.value?.filter(
-      (user) => user.email !== currentUser.value?.email
+      (user) => user.email !== currentUser.value?.email,
     );
     if (collaborators.value.length === 0) {
       return usersWithoutCurrentUser;
@@ -43,8 +43,8 @@
     const usersWithoutCollaborators = usersWithoutCurrentUser?.filter(
       (user) =>
         !collaborators.value.some(
-          (collaborator) => collaborator.email === user.email
-        )
+          (collaborator) => collaborator.email === user.email,
+        ),
     );
     return usersWithoutCollaborators;
   });
@@ -80,7 +80,7 @@
       if (visible) {
         fetchCollaborators();
       }
-    }
+    },
   );
 </script>
 
@@ -118,7 +118,7 @@
       </div>
 
       <div class="mt-4">
-        <h4 class="text-md font-medium mb-2">Project collaborators</h4>
+        <h4 class="text-md mb-2 font-medium">Project collaborators</h4>
         <div v-if="isLoading" class="flex justify-center p-4">
           <i class="pi pi-spin pi-spinner text-2xl"></i>
         </div>

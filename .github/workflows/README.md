@@ -13,7 +13,6 @@ This repository uses several GitHub Actions workflows to automate validation, ty
 
 - **File:** `.github/workflows/deploy.yml`
 - **Purpose:** Handles CI/CD for all apps in the monorepo. On every push to `master`, it:
-
   - Validates API types (calls `validate-types.yml`)
   - Runs affected checks and builds (lint, build, test) only for changed projects
   - Builds and pushes Docker images for affected apps (ai-budget, todo, login, cockpit) to GHCR, only if their build output exists
@@ -81,7 +80,6 @@ This repository uses several GitHub Actions workflows to automate validation, ty
 To prepare deployment for a new app in this monorepo, follow these steps:
 
 1. **Create a Dockerfile for the app**
-
    - Place it in `apps/<app-name>/Dockerfile`.
    - Use the pattern:
      ```dockerfile
@@ -94,23 +92,19 @@ To prepare deployment for a new app in this monorepo, follow these steps:
    - Adjust as needed for your app's requirements.
 
 2. **Add a custom nginx config**
-
    - Place it in `apps/<app-name>/nginx/<app-name>.conf`.
    - Configure routing, static file serving, etc., as needed for your app.
 
 3. **Update GitHub Actions workflows**
-
    - In `.github/workflows/deploy.yml`:
      - Add a check for the app's build output (see other apps for the pattern).
      - Add a Docker build-and-push step for the app, conditional on the build output existing.
 
 4. **Update `deploy.sh`**
-
    - Add your app to the `apps` associative array with its desired port.
    - The script will automatically handle stopping, removing, pulling, and running the new app's container.
 
 5. **(Optional) Environment Variables**
-
    - Update in `deploy.yml` step `Replace dev environments with production URLs` if your app introduces new environment variables for shared lib.
 
 6. **(Optional) Update documentation**

@@ -53,7 +53,7 @@ export async function fetcher<ResponseData>({
     if (error instanceof z.ZodError) {
       throw new Error(
         '[ZOD ERROR] Fetch response data validation error: ' +
-          JSON.stringify(error.message, null, 2)
+          JSON.stringify(error.message, null, 2),
       );
     }
     throw error;

@@ -27,7 +27,7 @@ describe('schemas', () => {
 
   it('validates simpleRefreshResponseSchema', () => {
     expect(simpleRefreshResponseSchema.parse(simpleRefresh)).toEqual(
-      simpleRefresh
+      simpleRefresh,
     );
   });
 
@@ -41,7 +41,7 @@ describe('schemas', () => {
 
   it('validates passwordChangeResponseSchema', () => {
     expect(passwordChangeResponseSchema.parse(passwordChange)).toEqual(
-      passwordChange
+      passwordChange,
     );
   });
 

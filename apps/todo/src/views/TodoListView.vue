@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { Button } from '@cockpit-app/shared-vue-ui';
+  import { Button, Divider } from '@cockpit-app/shared-vue-ui';
   import { ref } from 'vue';
   import TodoList from '../components/TodoList.vue';
   import Sidebar from '../components/Sidebar.vue';
@@ -15,16 +15,19 @@
 </script>
 
 <template>
-  <div class="flex flex-col md:flex-row h-screen px-4 py-6 md:px-0 md:py-0">
+  <div class="flex h-screen flex-col px-4 py-6 md:flex-row md:px-0 md:py-0">
     <div class="hidden md:flex">
       <Sidebar />
     </div>
-    <div class="md:hidden">
-      <ProjectSelect />
-    </div>
-    <div class="flex flex-col flex-1 items-center">
+    <div class="flex flex-1 flex-col items-center">
       <div class="w-full">
         <ProjectBar />
+      </div>
+      <div class="w-full pb-4 md:hidden">
+        <ProjectSelect />
+      </div>
+      <div class="w-full pb-5 md:hidden">
+        <Divider />
       </div>
       <div class="w-full max-w-2xl">
         <div class="gap-2">

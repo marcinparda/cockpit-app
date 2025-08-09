@@ -11,7 +11,7 @@ export async function refreshAccessToken() {
   return await baseApi.postRequest<SimpleRefreshResponse, object>(
     AUTHENTICATION_ENDPOINTS.REFRESH,
     simpleRefreshResponseSchema,
-    {}
+    {},
   );
 }
 
@@ -19,6 +19,6 @@ export async function logout() {
   return await baseApi.postRequest<LogoutResponse, object>(
     AUTHENTICATION_ENDPOINTS.LOGOUT,
     logoutResponseSchema,
-    {}
+    {},
   );
 }

@@ -45,7 +45,7 @@
 
 <template>
   <div
-    class="collaborator-item flex items-center justify-between p-2 rounded-md"
+    class="collaborator-item flex items-center justify-between rounded-md p-2"
   >
     <div class="flex items-center gap-2">
       <Avatar :label="getAvatarLabelFromEmail(email)" shape="circle" />
@@ -64,7 +64,7 @@
         :disabled="isRemoving"
         @click="handleRemoveCollaborator"
       />
-      <div v-if="error" class="text-xs text-red-500 mt-1">{{ error }}</div>
+      <div v-if="error" class="mt-1 text-xs text-red-500">{{ error }}</div>
     </div>
   </div>
 </template>

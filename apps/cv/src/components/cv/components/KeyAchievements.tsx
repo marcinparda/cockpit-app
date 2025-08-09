@@ -19,8 +19,8 @@ export function KeyAchievements({ achievements }: KeyAchievementsProps) {
         {achievements.map((achievement, index) => (
           <div key={index} className="mb-2">
             <div className="flex items-center gap-2">
-              <Diamond className="w-5 h-5 mt-1 text-gray-600 flex-shrink-0" />
-              <h4 className="font-semibold text-sm">{achievement.title}</h4>
+              <Diamond className="mt-1 h-5 w-5 flex-shrink-0 text-gray-600" />
+              <h4 className="text-sm font-semibold">{achievement.title}</h4>
             </div>
             <TypographySmall>{achievement.description}</TypographySmall>
           </div>

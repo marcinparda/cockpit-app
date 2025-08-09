@@ -19,8 +19,8 @@
       <tr *ngFor="let method of paymentMethods">
         <td>{{ method.id }}</td>
         <td>{{ method.name }}</td>
-        <td>{{ method.created_at | date : 'medium' }}</td>
-        <td>{{ method.updated_at | date : 'medium' }}</td>
+        <td>{{ method.created_at | date: 'medium' }}</td>
+        <td>{{ method.updated_at | date: 'medium' }}</td>
       </tr>
     </tbody>
   </table>

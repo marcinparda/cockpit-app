@@ -42,7 +42,7 @@ export const todoProjectsService = {
 
   async updateTodoProject(
     id: number,
-    updates: TodoProjectUpdate
+    updates: TodoProjectUpdate,
   ): Promise<TodoProject> {
     try {
       const response = await httpClient.put(`${API_URL}/${id}`, updates);
@@ -63,17 +63,17 @@ export const todoProjectsService = {
   },
 
   async getTodoProjectCollaborators(
-    projectId: number
+    projectId: number,
   ): Promise<TodoProjectCollaboratorResponse[]> {
     try {
       const response = await httpClient.get(
-        `${API_URL}/${projectId}/collaborators`
+        `${API_URL}/${projectId}/collaborators`,
       );
       return response.data;
     } catch (error) {
       logger.error(
         `Error fetching collaborators for project ${projectId}:`,
-        error
+        error,
       );
       throw error;
     }

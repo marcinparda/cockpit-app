@@ -67,7 +67,7 @@
     try {
       await addTodoItem(
         addTodoItemFormValues.value.name,
-        addTodoItemFormValues.value.project.id
+        addTodoItemFormValues.value.project.id,
       );
       addTodoItemFormValues.value.name = '';
     } finally {
@@ -88,7 +88,7 @@
         project: selectedProject.value,
       };
     },
-    { immediate: true }
+    { immediate: true },
   );
 </script>
 
@@ -103,7 +103,7 @@
     <form @submit.prevent="handleCreateButtonClick">
       <div class="flex flex-col gap-4">
         <div>
-          <label for="item-name" class="block mb-1">Item Name</label>
+          <label for="item-name" class="mb-1 block">Item Name</label>
           <InputText
             id="item-name"
             v-model="addTodoItemFormValues.name"
@@ -112,7 +112,7 @@
           />
         </div>
         <div>
-          <label for="project-select" class="block mb-1">Project</label>
+          <label for="project-select" class="mb-1 block">Project</label>
           <Select
             id="project-select"
             v-model="addTodoItemFormValues.project"
@@ -122,7 +122,7 @@
             class="w-full"
           />
         </div>
-        <div class="flex gap-2 justify-end">
+        <div class="flex justify-end gap-2">
           <Button
             type="button"
             severity="secondary"

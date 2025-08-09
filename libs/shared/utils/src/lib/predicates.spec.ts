@@ -26,7 +26,7 @@ describe('predicates', () => {
       expect(
         isString(function test() {
           return 'test';
-        })
+        }),
       ).toBe(false);
       expect(isString(Symbol('test'))).toBe(false);
     });

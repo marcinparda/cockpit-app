@@ -37,7 +37,7 @@ export class ExpenseCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
   ) {
     this.expenseForm = this.fb.group({
       amount: ['', [Validators.required, Validators.min(0.01)]],

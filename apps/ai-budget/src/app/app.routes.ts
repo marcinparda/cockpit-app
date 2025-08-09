@@ -19,7 +19,7 @@ export const routes: Routes = [
     path: 'expenses',
     loadChildren: () =>
       import('./features/expenses/expenses.routes').then(
-        (m) => m.EXPENSES_ROUTES
+        (m) => m.EXPENSES_ROUTES,
       ),
     canActivate: [AuthGuard],
   },
@@ -27,7 +27,7 @@ export const routes: Routes = [
     path: 'categories',
     loadChildren: () =>
       import('./features/categories/categories.routes').then(
-        (m) => m.CATEGORIES_ROUTES
+        (m) => m.CATEGORIES_ROUTES,
       ),
     canActivate: [AuthGuard],
   },
@@ -35,7 +35,7 @@ export const routes: Routes = [
     path: 'payment-methods',
     loadChildren: () =>
       import('./features/payment-methods/payment-methods.routes').then(
-        (m) => m.PAYMENT_METHODS_ROUTES
+        (m) => m.PAYMENT_METHODS_ROUTES,
       ),
     canActivate: [AuthGuard],
   },
