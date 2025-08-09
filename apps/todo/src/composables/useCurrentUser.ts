@@ -1,6 +1,6 @@
 import { UserInfoResponse } from '@cockpit-app/api-types';
 import { currnetUserService } from '../services/currnetUserService';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const currentUser = ref<UserInfoResponse | null>(null);
 
@@ -14,10 +14,13 @@ async function fetchCurrentUser() {
   }
 }
 
-fetchCurrentUser();
-
 export function useCurrentUser() {
+  onMounted(() => {
+    fetchCurrentUser();
+  });
+
   return {
     currentUser,
+    fetchCurrentUser,
   };
 }

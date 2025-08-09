@@ -1125,15 +1125,11 @@ export interface components {
              * Format: date-time
              */
             updated_at: string;
-            /**
-             * Owner Id
-             * Format: uuid
-             */
-            owner_id: string;
             /** Is General */
             is_general: boolean;
             /** Collaborators */
             collaborators?: string[];
+            owner: components["schemas"]["TodoProjectOwner"];
         };
         /** TodoProjectCollaboratorCreate */
         TodoProjectCollaboratorCreate: {
@@ -1157,6 +1153,16 @@ export interface components {
         TodoProjectCreate: {
             /** Name */
             name: string;
+        };
+        /** TodoProjectOwner */
+        TodoProjectOwner: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Email */
+            email: string;
         };
         /** TodoProjectUpdate */
         TodoProjectUpdate: {

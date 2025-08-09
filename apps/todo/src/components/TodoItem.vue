@@ -3,12 +3,13 @@
   import { Button, InputText, Checkbox } from '@cockpit-app/shared-vue-ui';
   import type { TodoItem } from '@cockpit-app/api-types';
   import { ref } from 'vue';
-  import { useItems } from '../composables/useTodoItems';
+  import { useTodoItems } from '../composables/useTodoItems';
 
   const props = defineProps<{
     item: TodoItem;
   }>();
-  const { toggleTodoItem, deleteTodoItem, updateTodoItemTitle } = useItems();
+  const { toggleTodoItem, deleteTodoItem, updateTodoItemTitle } =
+    useTodoItems();
 
   const isEditing = ref(false);
   const editingItemNewTitle = ref('');

@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import type { TodoProjectCollaboratorResponse } from '@cockpit-app/api-types';
 import { collaboratorsService } from '../services/collaboratorsService';
 import { logger } from '@cockpit-app/shared-utils';
@@ -14,7 +14,7 @@ export function useCollaborators() {
 
   const isCurrentUserOwner = computed(() => {
     if (!selectedProject.value || !currentUser.value) return false;
-    return selectedProject.value.owner_id === currentUser.value.user_id;
+    return selectedProject.value.owner.id === currentUser.value.user_id;
   });
 
   async function fetchCollaborators() {
@@ -25,13 +25,12 @@ export function useCollaborators() {
 
     try {
       isLoading.value = true;
-      collaborators.value =
-        await collaboratorsService.getTodoProjectCollaborators(
-          selectedProject.value.id
-        );
+      collaborators.value = await collaboratorsService.getCollaborators(
+        selectedProject.value.id
+      );
     } catch (err) {
-      logger.error('Failed to fetch collaborators:', err);
       collaborators.value = [];
+      logger.error('Failed to fetch collaborators:', err);
     } finally {
       isLoading.value = false;
     }
@@ -44,11 +43,10 @@ export function useCollaborators() {
 
     try {
       isLoading.value = true;
-      const newCollaborators =
-        await collaboratorsService.addTodoProjectCollaborators(
-          selectedProject.value.id,
-          [userId]
-        );
+      const newCollaborators = await collaboratorsService.addCollaborators(
+        selectedProject.value.id,
+        [userId]
+      );
       collaborators.value.push(...newCollaborators);
       return true;
     } catch (err) {
@@ -66,11 +64,10 @@ export function useCollaborators() {
 
     try {
       isLoading.value = true;
-      const newCollaborators =
-        await collaboratorsService.addTodoProjectCollaborators(
-          selectedProject.value.id,
-          usersIds
-        );
+      const newCollaborators = await collaboratorsService.addCollaborators(
+        selectedProject.value.id,
+        usersIds
+      );
       collaborators.value.push(...newCollaborators);
       return true;
     } catch (err) {
@@ -88,7 +85,7 @@ export function useCollaborators() {
 
     try {
       isLoading.value = true;
-      await collaboratorsService.removeTodoProjectCollaborator(
+      await collaboratorsService.removeCollaborator(
         selectedProject.value.id,
         userId
       );

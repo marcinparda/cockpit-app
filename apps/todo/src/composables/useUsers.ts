@@ -1,5 +1,5 @@
 import { SimpleUserResponse } from '@cockpit-app/api-types';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { usersService } from '../services/usersService';
 import { logger } from '@cockpit-app/shared-utils';
 
@@ -15,10 +15,13 @@ async function fetchUsers() {
   }
 }
 
-fetchUsers();
-
 export function useUsers() {
+  onMounted(() => {
+    fetchUsers();
+  });
+
   return {
     users,
+    fetchUsers,
   };
 }
