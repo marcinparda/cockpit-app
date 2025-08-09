@@ -233,10 +233,10 @@ export interface paths {
         get: operations["list_collaborators_api_v1_todo_projects__todo_project_id__collaborators_get"];
         put?: never;
         /**
-         * Add Collaborator
-         * @description Add a collaborator to a todo project.
+         * Add Collaborators
+         * @description Add a list of collaborators to a todo project atomically.
          */
-        post: operations["add_collaborator_api_v1_todo_projects__todo_project_id__collaborators_post"];
+        post: operations["add_collaborators_api_v1_todo_projects__todo_project_id__collaborators_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1137,13 +1137,21 @@ export interface components {
         };
         /** TodoProjectCollaboratorCreate */
         TodoProjectCollaboratorCreate: {
-            /** Id */
+            /**
+             * Id
+             * Format: uuid
+             */
             id: string;
         };
         /** TodoProjectCollaboratorResponse */
         TodoProjectCollaboratorResponse: {
             /** Email */
             email: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
         };
         /** TodoProjectCreate */
         TodoProjectCreate: {
@@ -2283,7 +2291,7 @@ export interface operations {
             };
         };
     };
-    add_collaborator_api_v1_todo_projects__todo_project_id__collaborators_post: {
+    add_collaborators_api_v1_todo_projects__todo_project_id__collaborators_post: {
         parameters: {
             query?: never;
             header?: {
@@ -2298,7 +2306,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TodoProjectCollaboratorCreate"];
+                "application/json": components["schemas"]["TodoProjectCollaboratorCreate"][];
             };
         };
         responses: {
@@ -2308,7 +2316,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["TodoProjectCollaboratorResponse"];
+                    "application/json": components["schemas"]["TodoProjectCollaboratorResponse"][];
                 };
             };
             /** @description Validation Error */
