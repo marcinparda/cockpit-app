@@ -65,7 +65,9 @@
       <div class="hidden md:block">
         <ProjectSelect />
       </div>
-      <div class="flex flex-1 items-center justify-between gap-2">
+      <div
+        class="flex flex-1 items-center justify-between gap-2 md:justify-end"
+      >
         <div
           v-if="selectedProject"
           class="flex flex-col gap-2 md:flex-row md:items-center"
