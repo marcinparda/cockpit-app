@@ -4,7 +4,7 @@ import type {
   TodoItemCreate,
   TodoItemUpdate,
 } from '@cockpit-app/api-types';
-import { todoItemsService } from '../services/todoItemsService';
+import { todoItemsService } from '@cockpit-app/todo-data-access';
 import { logger } from '@cockpit-app/shared-utils';
 
 const todoItems = ref<TodoItem[]>([]);

@@ -1,3 +1,35 @@
+<script setup lang="ts">
+  import { RouterLink } from 'vue-router';
+  import { Menubar } from '@cockpit-app/shared-vue-ui';
+  import LogoutButton from './LogoutButton.vue';
+  import { Avatar } from '@cockpit-app/shared-vue-ui';
+  import { computed } from 'vue';
+  import { getAvatarLabelFromEmail } from '../utils/utils';
+  import { useCurrentUser } from '../composables/useCurrentUser';
+
+  type MenuItem = {
+    label: string;
+    to: string;
+  };
+
+  const { currentUser } = useCurrentUser();
+  const tooltipText = computed(() => {
+    return currentUser.value
+      ? `Logged in as: ${currentUser.value.email}`
+      : 'Fetching user info...';
+  });
+  const items: MenuItem[] = [
+    {
+      label: 'List',
+      to: '/list',
+    },
+    {
+      label: 'Projects',
+      to: '/projects',
+    },
+  ];
+</script>
+
 <template>
   <Menubar :model="items">
     <template #start>
@@ -18,40 +50,3 @@
     </template>
   </Menubar>
 </template>
-
-<script setup lang="ts">
-  import { RouterLink } from 'vue-router';
-  import { Menubar } from '@cockpit-app/shared-vue-ui';
-  import LogoutButton from './LogoutButton.vue';
-  import { Avatar } from '@cockpit-app/shared-vue-ui';
-  import { currnetUserService } from '../services/currnetUserService';
-  import { ref, onMounted } from 'vue';
-  import { getAvatarLabelFromEmail } from '../utils/utils';
-  import type { UserInfoResponse } from '@cockpit-app/api-types';
-
-  type MenuItem = {
-    label: string;
-    to: string;
-  };
-
-  const currentUser = ref<UserInfoResponse | null>(null);
-  const tooltipText = ref('Fetched user info...');
-  const items: MenuItem[] = [
-    {
-      label: 'List',
-      to: '/list',
-    },
-    {
-      label: 'Projects',
-      to: '/projects',
-    },
-  ];
-  onMounted(async function () {
-    currentUser.value = await currnetUserService.getCurrentUserInfo();
-    if (!currentUser.value) {
-      tooltipText.value = 'Fetched user info failed';
-      return;
-    }
-    tooltipText.value = `Logged in as: ${currentUser.value.email}`;
-  });
-</script>

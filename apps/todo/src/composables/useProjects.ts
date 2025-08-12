@@ -4,7 +4,7 @@ import type {
   TodoProjectCreate,
   TodoProjectUpdate,
 } from '@cockpit-app/api-types';
-import { todoProjectsService } from '../services/todoProjectsService';
+import { todoProjectsService } from '@cockpit-app/todo-data-access';
 import { logger } from '@cockpit-app/shared-utils';
 import { useRoute } from 'vue-router';
 import { useCurrentUser } from '../composables/useCurrentUser';

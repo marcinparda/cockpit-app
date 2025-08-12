@@ -1,0 +1,19 @@
+{
+  "name": "todo-data-access",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/todo/data-access/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/todo/data-access",
+        "main": "libs/todo/data-access/src/index.ts",
+        "tsConfig": "libs/todo/data-access/tsconfig.lib.json",
+        "assets": ["libs/todo/data-access/*.md"]
+      }
+    }
+  }
+}

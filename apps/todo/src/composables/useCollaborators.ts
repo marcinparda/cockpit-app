@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue';
 import type { TodoProjectCollaboratorResponse } from '@cockpit-app/api-types';
-import { collaboratorsService } from '../services/collaboratorsService';
+import { collaboratorsService } from '@cockpit-app/todo-data-access';
 import { logger } from '@cockpit-app/shared-utils';
 import { useProjects } from './useProjects';
 import { useCurrentUser } from './useCurrentUser';

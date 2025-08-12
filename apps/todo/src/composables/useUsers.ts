@@ -1,6 +1,6 @@
 import { SimpleUserResponse } from '@cockpit-app/api-types';
 import { ref, onMounted } from 'vue';
-import { usersService } from '../services/usersService';
+import { usersService } from '@cockpit-app/todo-data-access';
 import { logger } from '@cockpit-app/shared-utils';
 
 const users = ref<SimpleUserResponse[]>([]);
