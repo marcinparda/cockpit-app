@@ -1,20 +1,24 @@
 <script setup lang="ts">
   import { Button, InputText } from '@cockpit-app/shared-vue-ui';
-  import { ref } from 'vue';
+  import { computed, ComputedRef, ref } from 'vue';
   import { TodoProject } from '@cockpit-app/api-types';
   import { useProjects } from '../composables/useProjects';
   import { useTodoItems } from '../composables/useTodoItems';
   import { cn } from '@cockpit-app/shared-react-ui';
 
   const props = defineProps<{
-    project: TodoProject;
+    projectId: number;
     readOnly?: boolean;
   }>();
 
-  const { name, id } = props.project;
   const { readOnly } = props;
-  const { deleteProject, updateProject } = useProjects();
+  const { deleteProject, updateProject, projects } = useProjects();
   const { fetchTodoItems } = useTodoItems();
+  const project = computed(() =>
+    projects.value.find((p) => p.id === props.projectId),
+  ) as ComputedRef<TodoProject>;
+  const projectName = computed(() => project.value.name);
+  const projectOwnerEmail = computed(() => project.value.owner.email);
 
   const isEditing = ref(false);
   const newProjectName = ref('');
@@ -22,7 +26,7 @@
   function handleStartEditing() {
     if (readOnly) return;
     isEditing.value = true;
-    newProjectName.value = name;
+    newProjectName.value = projectName.value;
   }
 
   function handleCancelEdit() {
@@ -32,7 +36,7 @@
 
   async function handleSaveNewProjectName() {
     if (newProjectName.value.trim()) {
-      await updateProject(id, {
+      await updateProject(project.value.id, {
         name: newProjectName.value,
       });
       newProjectName.value = '';
@@ -41,7 +45,7 @@
   }
 
   async function handleDeleteButtonClick() {
-    await deleteProject(id);
+    await deleteProject(project.value.id);
     fetchTodoItems();
   }
 </script>
@@ -72,7 +76,7 @@
   >
     <label>
       <span :class="cn('', readOnly ? '' : 'cursor-pointer')">
-        {{ name }} {{ readOnly ? `(${project.owner.email})` : '' }}
+        {{ projectName }} {{ readOnly ? `(${projectOwnerEmail})` : '' }}
       </span>
     </label>
     <Button

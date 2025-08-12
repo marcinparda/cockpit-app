@@ -29,11 +29,11 @@
         <Button @click="handleAddProject">Add Project</Button>
       </div>
 
-      <div v-if="myProjects.length" class="pb-6">
+      <div v-if="myProjects.length > 0" class="pb-6">
         <div class="pb-2 text-lg font-semibold">My projects</div>
         <Divider class="py-2" />
         <template v-for="(project, idx) in myProjects" :key="project.id">
-          <ProjectItem :project="project" />
+          <ProjectItem :project-id="project.id" />
           <Divider v-if="idx < myProjects.length - 1" class="py-2" />
         </template>
       </div>
@@ -41,7 +41,7 @@
         <div class="pb-2 text-lg font-semibold">Shared projects</div>
         <Divider class="py-2" />
         <template v-for="(project, idx) in sharedProjects" :key="project.id">
-          <ProjectItem :project="project" :read-only="true" />
+          <ProjectItem :project-id="project.id" :read-only="true" />
           <Divider v-if="idx < sharedProjects.length - 1" class="py-2" />
         </template>
       </div>
