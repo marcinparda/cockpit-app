@@ -13,6 +13,7 @@
   import ManageCollaboratorsDialog from './ManageCollaboratorsDialog.vue';
   import { useRoute } from 'vue-router';
   import ProjectSelect from './ProjectSelect.vue';
+  import { cn } from '@cockpit-app/shared-react-ui';
 
   const route = useRoute();
   const { selectedProject } = useProjects();
@@ -45,9 +46,13 @@
     },
   );
 </script>
-
+cn('', readOnly ? '' : 'cursor-pointer')
 <template>
-  <div v-if="Boolean(selectedProject)" class="pb-4 md:pb-8">
+  <div
+    :class="
+      cn('pb-4 md:pb-8', !Boolean(selectedProject) ? 'hidden md:block' : '')
+    "
+  >
     <div class="flex h-20 items-center justify-between pb-6 md:px-6 md:py-4">
       <div class="hidden md:block">
         <ProjectSelect />
