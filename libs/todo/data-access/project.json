@@ -4,16 +4,6 @@
   "sourceRoot": "libs/todo/data-access/src",
   "projectType": "library",
   "tags": [],
-  "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/todo/data-access",
-        "main": "libs/todo/data-access/src/index.ts",
-        "tsConfig": "libs/todo/data-access/tsconfig.lib.json",
-        "assets": ["libs/todo/data-access/*.md"]
-      }
-    }
-  }
+  "// targets": "to see all targets run: nx show project data-access --web",
+  "targets": {}
 }

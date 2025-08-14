@@ -1,12 +1,11 @@
 {
-  "name": "@cockpit-app/todo-data-access",
+  "name": "todo-data-access",
   "version": "0.0.1",
   "private": true,
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "dependencies": {
-    "tslib": "^2.3.0",
     "@cockpit-app/api-types": "0.0.1",
     "@cockpit-app/shared-utils": "0.0.1",
     "axios": "1.11.0",
