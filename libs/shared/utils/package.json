@@ -8,6 +8,8 @@
   "dependencies": {
     "tslib": "^2.3.0",
     "zod": "^4.0.10",
-    "@cockpit-app/api-types": "0.0.1"
+    "@cockpit-app/api-types": "0.0.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.3.1"
   }
 }
