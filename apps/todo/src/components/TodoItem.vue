@@ -4,6 +4,7 @@
   import type { TodoItem } from '@cockpit-app/api-types';
   import { ref } from 'vue';
   import { useTodoItems } from '../composables/useTodoItems';
+  import { ALL_PROJECT_NAME } from '../utils/consts';
 
   const props = defineProps<{
     item: TodoItem;
@@ -81,11 +82,12 @@
         @update:model-value="handleCheckboxChange"
         @click.stop
       />
-      <label>
-        <span
-          :class="cn('cursor-pointer', item.is_closed ? 'line-through' : '')"
-        >
+      <label class="flex flex-1 cursor-pointer justify-between">
+        <span :class="cn(item.is_closed ? 'line-through' : '')">
           {{ item.name }}
+        </span>
+        <span class="pr-2 text-sm text-gray-500">
+          {{ item.project?.name || ALL_PROJECT_NAME }}
         </span>
       </label>
       <Button
