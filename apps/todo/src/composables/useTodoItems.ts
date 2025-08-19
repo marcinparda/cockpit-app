@@ -23,7 +23,8 @@ function areTodoItemsEqual(a: TodoItem[], b: TodoItem[]): boolean {
       item.name === other.name &&
       item.is_closed === other.is_closed &&
       item.completed_at === other.completed_at &&
-      item.project_id === other.project_id
+      item.project_id === other.project_id &&
+      item.project?.name === other.project?.name
     );
   });
 }
