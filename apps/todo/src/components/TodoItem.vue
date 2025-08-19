@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { cn } from '@cockpit-app/shared-react-ui';
+  import { cn } from '@cockpit-app/shared-utils';
   import { Button, InputText, Checkbox } from '@cockpit-app/shared-vue-ui';
   import type { TodoItem } from '@cockpit-app/api-types';
   import { ref } from 'vue';

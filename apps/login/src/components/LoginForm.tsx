@@ -1,4 +1,5 @@
-import { cn, Label, Input, Button } from '@cockpit-app/shared-react-ui';
+import { Label, Input, Button } from '@cockpit-app/shared-react-ui';
+import { cn } from '@cockpit-app/shared-utils';
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { login } from '@cockpit-app/common-shared-data-access';

@@ -1,4 +1,4 @@
-import { cn } from '../cn';
+import { cn } from '@cockpit-app/shared-utils';
 
 function Skeleton({ className, ...props }: React.ComponentProps<'div'>) {
   return (

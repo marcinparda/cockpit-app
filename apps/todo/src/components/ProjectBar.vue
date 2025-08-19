@@ -13,7 +13,7 @@
   import ManageCollaboratorsDialog from './ManageCollaboratorsDialog.vue';
   import { useRoute } from 'vue-router';
   import ProjectSelect from './ProjectSelect.vue';
-  import { cn } from '@cockpit-app/shared-react-ui';
+  import { cn } from '@cockpit-app/shared-utils';
 
   const route = useRoute();
   const { selectedProject } = useProjects();

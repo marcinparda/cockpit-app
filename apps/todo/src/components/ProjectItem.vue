@@ -4,7 +4,7 @@
   import { TodoProject } from '@cockpit-app/api-types';
   import { useProjects } from '../composables/useProjects';
   import { useTodoItems } from '../composables/useTodoItems';
-  import { cn } from '@cockpit-app/shared-react-ui';
+  import { cn } from '@cockpit-app/shared-utils';
 
   const props = defineProps<{
     projectId: number;
