@@ -25,6 +25,9 @@
   const areThereAnyCollaborators = computed(() => {
     return Boolean(collaborators.value.length);
   });
+  const isSelecteProjectGeneral = computed(() => {
+    return selectedProject.value?.is_general;
+  });
 
   function getAvatarTooltip(email: string) {
     if (email === currentUser.value?.email) {
@@ -46,11 +49,13 @@
     },
   );
 </script>
-cn('', readOnly ? '' : 'cursor-pointer')
 <template>
   <div
     :class="
-      cn('pb-4 md:pb-8', !Boolean(selectedProject) ? 'hidden md:block' : '')
+      cn(
+        'pb-4 md:pb-8',
+        selectedProject && !isSelecteProjectGeneral ? '' : 'hidden md:block',
+      )
     "
   >
     <div class="flex h-20 items-center justify-between pb-6 md:px-6 md:py-4">
@@ -58,12 +63,10 @@ cn('', readOnly ? '' : 'cursor-pointer')
         <ProjectSelect />
       </div>
       <div
+        v-if="selectedProject && !isSelecteProjectGeneral"
         class="flex flex-1 items-center justify-between gap-2 md:justify-end"
       >
-        <div
-          v-if="selectedProject"
-          class="flex flex-col gap-2 md:flex-row md:items-center"
-        >
+        <div class="flex flex-col gap-2 md:flex-row md:items-center">
           <div class="flex items-center gap-2">
             <span class="text-sm">Owner:</span>
             <AvatarGroup>

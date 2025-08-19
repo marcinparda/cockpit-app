@@ -33,7 +33,10 @@
         <div class="pb-2 text-lg font-semibold">My projects</div>
         <Divider class="py-2" />
         <template v-for="(project, idx) in myProjects" :key="project.id">
-          <ProjectItem :project-id="project.id" />
+          <ProjectItem
+            :project-id="project.id"
+            :read-only="project.is_general"
+          />
           <Divider v-if="idx < myProjects.length - 1" class="py-2" />
         </template>
       </div>

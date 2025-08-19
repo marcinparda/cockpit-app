@@ -5,6 +5,7 @@
   import { useProjects } from '../composables/useProjects';
   import { useTodoItems } from '../composables/useTodoItems';
   import { cn } from '@cockpit-app/shared-utils';
+  import { useCurrentUser } from '../composables/useCurrentUser';
 
   const props = defineProps<{
     projectId: number;
@@ -14,11 +15,15 @@
   const { readOnly } = props;
   const { deleteProject, updateProject, projects } = useProjects();
   const { fetchTodoItems } = useTodoItems();
+  const { currentUser } = useCurrentUser();
   const project = computed(() =>
     projects.value.find((p) => p.id === props.projectId),
   ) as ComputedRef<TodoProject>;
   const projectName = computed(() => project.value.name);
   const projectOwnerEmail = computed(() => project.value.owner.email);
+  const isCurrentUserOwner = computed(() => {
+    return currentUser.value?.email === project.value.owner.email;
+  });
 
   const isEditing = ref(false);
   const newProjectName = ref('');
@@ -76,7 +81,8 @@
   >
     <label>
       <span :class="cn('', readOnly ? '' : 'cursor-pointer')">
-        {{ projectName }} {{ readOnly ? `(${projectOwnerEmail})` : '' }}
+        {{ projectName }}
+        {{ readOnly && !isCurrentUserOwner ? `(${projectOwnerEmail})` : '' }}
       </span>
     </label>
     <Button
