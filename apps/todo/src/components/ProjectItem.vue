@@ -24,6 +24,15 @@
   const isCurrentUserOwner = computed(() => {
     return currentUser.value?.email === project.value.owner.email;
   });
+  const projectNameHelpText = computed(() => {
+    if (!isCurrentUserOwner.value) {
+      return `(Project owner: ${projectOwnerEmail.value})`;
+    }
+    if (project.value.is_general) {
+      return `(This is your default project. You cannot edit, share or delete it.)`;
+    }
+    return '';
+  });
 
   const isEditing = ref(false);
   const newProjectName = ref('');
@@ -82,7 +91,7 @@
     <label>
       <span :class="cn('', readOnly ? '' : 'cursor-pointer')">
         {{ projectName }}
-        {{ readOnly && !isCurrentUserOwner ? `(${projectOwnerEmail})` : '' }}
+        {{ projectNameHelpText }}
       </span>
     </label>
     <Button
