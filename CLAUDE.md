@@ -109,13 +109,47 @@ nx typecheck <project-name>
 ### Type Safety
 
 - Never manually edit `openapi-types.ts` - it's auto-generated
+- For API requests and responses, always import types from `@cockpit-app/api-types`
+- Don't use `any` type, prefer `unknown` or specific types
 
 ### Framework-Specific Patterns
 
-- **Vue Apps**: Use Pinia stores for state management, follow Vue 3 Composition API patterns
-- **React Apps**: Use React Query for server state, React Router for navigation
-- **Angular Apps**: Use Angular services for state management
-- **Shared Libraries**: Export utilities and types that can be consumed by both Vue and React apps
+#### React
+- Use functional components and React Hooks
+- Prefer arrow functions for component definitions
+- Use `function` for event handlers and functions in general instead of arrow functions
+- Always include TypeScript interfaces for component props
+- Use React Testing Library and Jest for testing
+
+#### Vue
+- Use the Composition API for new components
+- Prefer `<script setup lang="ts">` for TypeScript support
+- Use PrimeVue for UI components in vue-ui lib
+- In apps (like todo) use components from vue-ui lib
+- Use Vue Router for navigation
+- Write tests with Vue Test Utils and Vitest
+
+#### Angular
+- Use Angular CLI conventions for file and folder structure
+- Implement services for business logic and dependency injection
+- Use RxJS observables for asynchronous operations
+- Prefer OnPush change detection for performance
+- Write unit tests with Jasmine and Karma
+
+### Nx Workspace Conventions
+
+- Use proper imports from `@cockpit-app` libraries
+- Do not use relative imports in apps and libs
+- When generating new js/ts libraries/apps, use vite and vitest
+
+### Code Quality Guidelines
+
+- Always provide concise, well-commented code
+- Prefer modern ES6+ syntax for JavaScript/TypeScript
+- Use clear, descriptive variable and function names
+- Prefer Self-Explanatory Code Over Comments
+- Use Comments to Explain Why, Not What
+- Keep Comments Updated
 
 ### Build System
 
@@ -123,6 +157,14 @@ nx typecheck <project-name>
 - Nx handles dependency graph and build orchestration
 - TypeScript strict mode is enabled across all projects
 - ESLint with TypeScript configuration for code quality
+
+### Deployment
+
+- Use Docker for containerization
+- Use GitHub Actions for CI/CD pipelines
+- Each app should have its own Dockerfile
+- Use `docker compose` for multi-container setups
+- Docker setup is only for production, development uses `nx serve` commands
 
 ## API Integration Pattern
 

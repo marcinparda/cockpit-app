@@ -11,7 +11,7 @@
   - initial-notes.md - my for initial notes about the feature
   - development-plan.md - for development plan of the feature, this should be technical plan, based on business requirements
   - step-x.md - for each step of the feature development, where x is the number of the step
-- You can find openapi API documentation on page https://api.parda.me/openapi.json.
+- You can find live openapi API documentation on page https://api.parda.me/openapi.json.
 
 ## React
 
@@ -21,7 +21,6 @@
 - Use TypeScript for type safety.
 - Always include TypeScript interfaces for component props.
 - When writing tests, use React Testing Library and Jest.
--
 
 ## Angular
 
