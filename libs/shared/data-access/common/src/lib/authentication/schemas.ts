@@ -14,7 +14,7 @@ export type LogoutResponse = {
 export const currentUserSchema = z
   .object({
     user_id: z.string().describe('User Id'),
-    email: z.string().email().describe('Email'),
+    email: z.email().describe('Email'),
     is_active: z.boolean().describe('Is Active'),
     password_changed: z.boolean().describe('Password Changed'),
     created_at: z.string().describe('Created At'),

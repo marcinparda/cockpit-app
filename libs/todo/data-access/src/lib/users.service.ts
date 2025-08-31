@@ -1,17 +1,12 @@
-import { environments } from '@cockpit-app/shared-utils';
-import httpClient from './httpClient';
 import { SimpleUserResponse } from '@cockpit-app/api-types';
-
-const API_URL = `${environments.apiUrl}/api/v1/users`;
+import { baseApi, USER_MANAGEMENT_ENDPOINTS } from '@cockpit-app/common-shared-data-access';
+import { usersSchema } from './schemas';
 
 export const usersService = {
-  async getUsers(): Promise<SimpleUserResponse[]> {
-    try {
-      const response = await httpClient.get(`${API_URL}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching users:', error);
-      throw error;
-    }
+  async getUsers() {
+    return await baseApi.getRequest<SimpleUserResponse[]>(
+      USER_MANAGEMENT_ENDPOINTS.users(),
+      usersSchema,
+    );
   },
 };

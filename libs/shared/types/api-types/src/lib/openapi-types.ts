@@ -4,3266 +4,2845 @@
  */
 
 export interface paths {
-  '/api/v1/expenses': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/budget/expenses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Expenses */
+        get: operations["list_expenses_api_v1_budget_expenses_get"];
+        put?: never;
+        /** Create Expense Endpoint */
+        post: operations["create_expense_endpoint_api_v1_budget_expenses_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** List Expenses */
-    get: operations['list_expenses_api_v1_expenses_get'];
-    put?: never;
-    /** Create Expense */
-    post: operations['create_expense_api_v1_expenses_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/expenses/{expense_id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/budget/expenses/{expense_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Expense */
+        get: operations["get_expense_api_v1_budget_expenses__expense_id__get"];
+        /** Update Expense Endpoint */
+        put: operations["update_expense_endpoint_api_v1_budget_expenses__expense_id__put"];
+        post?: never;
+        /** Delete Expense Endpoint */
+        delete: operations["delete_expense_endpoint_api_v1_budget_expenses__expense_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Get Expense */
-    get: operations['get_expense_api_v1_expenses__expense_id__get'];
-    /** Update Expense */
-    put: operations['update_expense_api_v1_expenses__expense_id__put'];
-    post?: never;
-    /** Delete Expense */
-    delete: operations['delete_expense_api_v1_expenses__expense_id__delete'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/categories': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/budget/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Categories */
+        get: operations["list_categories_api_v1_budget_categories_get"];
+        put?: never;
+        /** Create Category Endpoint */
+        post: operations["create_category_endpoint_api_v1_budget_categories_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** List Categories */
-    get: operations['list_categories_api_v1_categories_get'];
-    put?: never;
-    /** Create Category */
-    post: operations['create_category_api_v1_categories_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/categories/{category_id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/budget/categories/{category_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Category */
+        get: operations["get_category_api_v1_budget_categories__category_id__get"];
+        /** Update Category Endpoint */
+        put: operations["update_category_endpoint_api_v1_budget_categories__category_id__put"];
+        post?: never;
+        /** Delete Category Endpoint */
+        delete: operations["delete_category_endpoint_api_v1_budget_categories__category_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Get Category */
-    get: operations['get_category_api_v1_categories__category_id__get'];
-    /** Update Category */
-    put: operations['update_category_api_v1_categories__category_id__put'];
-    post?: never;
-    /** Delete Category */
-    delete: operations['delete_category_api_v1_categories__category_id__delete'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/payment_methods': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/budget/payment-methods": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Payment Methods */
+        get: operations["list_payment_methods_api_v1_budget_payment_methods_get"];
+        put?: never;
+        /** Create Payment Method Endpoint */
+        post: operations["create_payment_method_endpoint_api_v1_budget_payment_methods_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** List Payment Methods */
-    get: operations['list_payment_methods_api_v1_payment_methods_get'];
-    put?: never;
-    /** Create Payment Method */
-    post: operations['create_payment_method_api_v1_payment_methods_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/payment_methods/{payment_method_id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/budget/payment-methods/{payment_method_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Payment Method */
+        get: operations["get_payment_method_api_v1_budget_payment_methods__payment_method_id__get"];
+        /** Update Payment Method Endpoint */
+        put: operations["update_payment_method_endpoint_api_v1_budget_payment_methods__payment_method_id__put"];
+        post?: never;
+        /** Delete Payment Method Endpoint */
+        delete: operations["delete_payment_method_endpoint_api_v1_budget_payment_methods__payment_method_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Get Payment Method */
-    get: operations['get_payment_method_api_v1_payment_methods__payment_method_id__get'];
-    /** Update Payment Method */
-    put: operations['update_payment_method_api_v1_payment_methods__payment_method_id__put'];
-    post?: never;
-    /** Delete Payment Method */
-    delete: operations['delete_payment_method_api_v1_payment_methods__payment_method_id__delete'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/todo/items': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/todos/projects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Todo Projects
+         * @description List all todo projects the user owns or collaborates on.
+         */
+        get: operations["list_todo_projects_api_v1_todos_projects_get"];
+        put?: never;
+        /**
+         * Create Todo Project
+         * @description Create a new todo project.
+         */
+        post: operations["create_todo_project_api_v1_todos_projects_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Get Todo Items
-     * @description Retrieve todo items from projects the user has access to.
-     */
-    get: operations['get_todo_items_api_v1_todo_items_get'];
-    put?: never;
-    /**
-     * Create Todo Item
-     * @description Create new todo item in a project the user has access to.
-     */
-    post: operations['create_todo_item_api_v1_todo_items_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/todo/items/{item_id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/todos/projects/{todo_project_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Todo Project
+         * @description Get a specific todo project if the user has access.
+         */
+        get: operations["get_todo_project_api_v1_todos_projects__todo_project_id__get"];
+        /**
+         * Update Todo Project
+         * @description Update a todo project if the user has access and it's not a General project.
+         */
+        put: operations["update_todo_project_api_v1_todos_projects__todo_project_id__put"];
+        post?: never;
+        /**
+         * Delete Todo Project
+         * @description Delete a todo project if the user is the owner and it's not a General project.
+         */
+        delete: operations["delete_todo_project_api_v1_todos_projects__todo_project_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Get Todo Item
-     * @description Get todo item by ID if the user has access to its project.
-     */
-    get: operations['get_todo_item_api_v1_todo_items__item_id__get'];
-    /**
-     * Update Todo Item
-     * @description Update a todo item if the user has access to its project.
-     */
-    put: operations['update_todo_item_api_v1_todo_items__item_id__put'];
-    post?: never;
-    /**
-     * Delete Todo Item
-     * @description Delete a todo item if the user has access to its project.
-     */
-    delete: operations['delete_todo_item_api_v1_todo_items__item_id__delete'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/todo/projects': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/todos/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Todo Items
+         * @description Retrieve todo items from projects the user has access to.
+         */
+        get: operations["get_todo_items_api_v1_todos_items_get"];
+        put?: never;
+        /**
+         * Create Todo Item
+         * @description Create a new todo item in a project.
+         */
+        post: operations["create_todo_item_api_v1_todos_items_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * List Todo Projects
-     * @description List all todo projects the user owns or collaborates on.
-     */
-    get: operations['list_todo_projects_api_v1_todo_projects_get'];
-    put?: never;
-    /**
-     * Create Todo Project
-     * @description Create a new todo project owned by the current user.
-     */
-    post: operations['create_todo_project_api_v1_todo_projects_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/todo/projects/{todo_project_id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/todos/items/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Todo Item
+         * @description Get todo item by ID if the user has access to its project.
+         */
+        get: operations["get_todo_item_api_v1_todos_items__item_id__get"];
+        /**
+         * Update Todo Item
+         * @description Update a todo item if the user has access to its project.
+         */
+        put: operations["update_todo_item_api_v1_todos_items__item_id__put"];
+        post?: never;
+        /**
+         * Delete Todo Item
+         * @description Delete a todo item if the user has access to its project.
+         */
+        delete: operations["delete_todo_item_api_v1_todos_items__item_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Get Todo Project
-     * @description Get a specific todo project if the user has access.
-     */
-    get: operations['get_todo_project_api_v1_todo_projects__todo_project_id__get'];
-    /**
-     * Update Todo Project
-     * @description Update a todo project if the user has access and it's not a General project.
-     */
-    put: operations['update_todo_project_api_v1_todo_projects__todo_project_id__put'];
-    post?: never;
-    /**
-     * Delete Todo Project
-     * @description Delete a todo project if the user is the owner and it's not a General project.
-     */
-    delete: operations['delete_todo_project_api_v1_todo_projects__todo_project_id__delete'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/todo/projects/{todo_project_id}/collaborators': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/todos/projects/{project_id}/collaborators": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Collaborators
+         * @description List all collaborators for a todo project.
+         */
+        get: operations["list_collaborators_api_v1_todos_projects__project_id__collaborators_get"];
+        put?: never;
+        /**
+         * Add Collaborators
+         * @description Add a list of collaborators to a todo project atomically.
+         */
+        post: operations["add_collaborators_api_v1_todos_projects__project_id__collaborators_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * List Collaborators
-     * @description List all collaborators for a todo project.
-     */
-    get: operations['list_collaborators_api_v1_todo_projects__todo_project_id__collaborators_get'];
-    put?: never;
-    /**
-     * Add Collaborators
-     * @description Add a list of collaborators to a todo project atomically.
-     */
-    post: operations['add_collaborators_api_v1_todo_projects__todo_project_id__collaborators_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/todo/projects/{todo_project_id}/collaborators/{user_id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/todos/projects/{project_id}/collaborators/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove Collaborator
+         * @description Remove a collaborator from a todo project.
+         */
+        delete: operations["remove_collaborator_api_v1_todos_projects__project_id__collaborators__user_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post?: never;
-    /**
-     * Remove Collaborator
-     * @description Remove a collaborator from a todo project.
-     */
-    delete: operations['remove_collaborator_api_v1_todo_projects__todo_project_id__collaborators__user_id__delete'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/shared/ocr': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Users
+         * @description List all users with their roles.
+         */
+        get: operations["list_users_api_v1_users_get"];
+        put?: never;
+        /**
+         * Create New User
+         * @description Create a new user account (admin only).
+         */
+        post: operations["create_new_user_api_v1_users_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * Extract Text From Image
-     * @description Extract text from an uploaded image using OCR (Optical Character Recognition).
-     *
-     *     This endpoint accepts image files in common formats (JPEG, PNG, TIFF, BMP, etc.)
-     *     and uses Tesseract OCR to extract text content from the image with support for
-     *     both Polish and English characters.
-     *
-     *     ⚠️ **Important Notes:**
-     *     - **Processing Time**: This endpoint performs intensive image processing and
-     *       may take several seconds to complete, especially for large images.
-     *     - **Quality Requirements**: Best results are achieved with clear, high-quality
-     *       images with good contrast and minimal blur. Poor quality images may result
-     *       in inaccurate text extraction.
-     *
-     *     The endpoint includes specialized preprocessing for receipt images including:
-     *     - Noise reduction and denoising
-     *     - Contrast enhancement using CLAHE
-     *     - Image sharpening
-     *     - Adaptive binarization for varying lighting conditions
-     *     - Morphological operations for text cleanup
-     *
-     *     The extracted text is automatically cleaned by removing extra whitespace
-     *     and empty lines for better readability.
-     */
-    post: operations['extract_text_from_image_api_v1_shared_ocr_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/me/permissions': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/users/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get User Details
+         * @description Get detailed user information including permissions (admin only).
+         */
+        get: operations["get_user_details_api_v1_users__user_id__get"];
+        /**
+         * Update User Info
+         * @description Update user information (admin only).
+         */
+        put: operations["update_user_info_api_v1_users__user_id__put"];
+        post?: never;
+        /**
+         * Delete User Account
+         * @description Delete user account (admin only).
+         */
+        delete: operations["delete_user_account_api_v1_users__user_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Get Current User Permission
-     * @description Get current user's permissions.
-     */
-    get: operations['get_current_user_permission_api_v1_auth_me_permissions_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/me/roles': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/users/{user_id}/role": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Change User Role
+         * @description Change user's role (admin only).
+         */
+        put: operations["change_user_role_api_v1_users__user_id__role_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Get Current User Roles
-     * @description Get current user's roles as a list of role names (strings).
-     */
-    get: operations['get_current_user_roles_api_v1_auth_me_roles_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/login': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/users/{user_id}/permissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get User Permissions Endpoint
+         * @description Get all permissions assigned to a user (admin only).
+         */
+        get: operations["get_user_permissions_endpoint_api_v1_users__user_id__permissions_get"];
+        put?: never;
+        /**
+         * Assign Permissions To User
+         * @description Assign permissions to user (admin only).
+         */
+        post: operations["assign_permissions_to_user_api_v1_users__user_id__permissions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * Login
-     * @description Authenticate user with email and password.
-     */
-    post: operations['login_api_v1_auth_login_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/change-password': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/users/{user_id}/permissions/{permission_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Revoke Permission From User
+         * @description Revoke specific permission from user (admin only).
+         */
+        delete: operations["revoke_permission_from_user_api_v1_users__user_id__permissions__permission_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * Change Password
-     * @description Change current user's password.
-     */
-    post: operations['change_password_api_v1_auth_change_password_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/me': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/authentication/sessions/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Login
+         * @description Authenticate user with email and password.
+         */
+        post: operations["login_api_v1_authentication_sessions_login_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Get Current User Info
-     * @description Get current authenticated user information.
-     */
-    get: operations['get_current_user_info_api_v1_auth_me_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/refresh': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/authentication/sessions/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Current User Info
+         * @description Get current authenticated user information.
+         */
+        get: operations["get_current_user_info_api_v1_authentication_sessions_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * Refresh Tokens
-     * @description Refresh access token using refresh token from cookie or request body.
-     */
-    post: operations['refresh_tokens_api_v1_auth_refresh_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/logout': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/authentication/sessions/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Logout */
+        post: operations["logout_api_v1_authentication_sessions_logout_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * Logout
-     * @description Logout the user by invalidating their tokens and clearing cookies.
-     */
-    post: operations['logout_api_v1_auth_logout_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/tokens/statistics': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/authentication/tokens/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Refresh Tokens
+         * @description Refresh access token using refresh token from cookie.
+         */
+        post: operations["refresh_tokens_api_v1_authentication_tokens_refresh_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Token Statistics
-     * @description Get current token statistics for monitoring (admin only).
-     *
-     *     Returns detailed statistics about:
-     *     - Active tokens
-     *     - Expired tokens
-     *     - Revoked tokens
-     *     - Total counts
-     */
-    get: operations['token_statistics_api_v1_auth_tokens_statistics_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/cleanup/manual': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/authentication/passwords/change": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Change Password
+         * @description Change current user's password.
+         */
+        post: operations["change_password_api_v1_authentication_passwords_change_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * Trigger Manual Cleanup
-     * @description Trigger a manual token cleanup operation (admin only).
-     *
-     *     This endpoint allows administrators to manually trigger
-     *     the cleanup process outside of the scheduled runs.
-     *
-     *     Note: This should be used sparingly and primarily for
-     *     maintenance or emergency cleanup scenarios.
-     */
-    post: operations['trigger_manual_cleanup_api_v1_auth_cleanup_manual_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/cleanup/dry-run': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/authorization/roles/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Current User Roles
+         * @description Get current user's roles as a list of role names (strings).
+         */
+        get: operations["get_current_user_roles_api_v1_authorization_roles_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * Dry Run Cleanup
-     * @description Perform a dry run of the token cleanup process (admin only).
-     *
-     *     This endpoint simulates the cleanup process without
-     *     actually deleting any tokens, providing information
-     *     about what would be cleaned up.
-     */
-    post: operations['dry_run_cleanup_api_v1_auth_cleanup_dry_run_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/users': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/authorization/roles/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List All Roles
+         * @description List all available user roles (admin only).
+         */
+        get: operations["list_all_roles_api_v1_authorization_roles__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * List Users
-     * @description List all users with their roles.
-     */
-    get: operations['list_users_api_v1_users_get'];
-    put?: never;
-    /**
-     * Create New User
-     * @description Create a new user account (admin only).
-     */
-    post: operations['create_new_user_api_v1_users_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/users/{user_id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/authorization/permissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get All Permissions
+         * @description Get all permissions (admin only).
+         */
+        get: operations["get_all_permissions_api_v1_authorization_permissions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Get User Details
-     * @description Get detailed user information including permissions (admin only).
-     */
-    get: operations['get_user_details_api_v1_users__user_id__get'];
-    /**
-     * Update User Info
-     * @description Update user information (admin only).
-     */
-    put: operations['update_user_info_api_v1_users__user_id__put'];
-    post?: never;
-    /**
-     * Delete User Account
-     * @description Delete user account (admin only).
-     */
-    delete: operations['delete_user_account_api_v1_users__user_id__delete'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/users/{user_id}/role': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/authorization/user-permissions/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Current User Permission
+         * @description Get current user's permissions.
+         */
+        get: operations["get_current_user_permission_api_v1_authorization_user_permissions_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    /**
-     * Change User Role
-     * @description Change user's role (admin only).
-     */
-    put: operations['change_user_role_api_v1_users__user_id__role_put'];
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/users/{user_id}/permissions': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Health Check
+         * @description Basic health check endpoint.
+         */
+        get: operations["health_check_health_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Get User Permissions Endpoint
-     * @description Get all permissions assigned to a user (admin only).
-     */
-    get: operations['get_user_permissions_endpoint_api_v1_users__user_id__permissions_get'];
-    put?: never;
-    /**
-     * Assign Permissions To User
-     * @description Assign permissions to user (admin only).
-     */
-    post: operations['assign_permissions_to_user_api_v1_users__user_id__permissions_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/users/{user_id}/permissions/{permission_id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/health/cleanup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Cleanup Health Check
+         * @description Get the health status of the token cleanup system.
+         *
+         *     Returns information about:
+         *     - Database connectivity
+         *     - Scheduler status
+         *     - Current token statistics
+         *     - System configuration
+         */
+        get: operations["cleanup_health_check_health_cleanup_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post?: never;
-    /**
-     * Revoke Permission From User
-     * @description Revoke specific permission from user (admin only).
-     */
-    delete: operations['revoke_permission_from_user_api_v1_users__user_id__permissions__permission_id__delete'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/users/{user_id}/reset-password': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read Root */
+        get: operations["read_root__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * Reset User Password Endpoint
-     * @description Reset user password (admin only).
-     */
-    post: operations['reset_user_password_endpoint_api_v1_users__user_id__reset_password_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/roles': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * List All Roles
-     * @description List all available user roles (admin only).
-     */
-    get: operations['list_all_roles_api_v1_roles_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/roles/{role_id}/permissions': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Get Role Default Permissions
-     * @description Get default permissions for a specific role (admin only).
-     */
-    get: operations['get_role_default_permissions_api_v1_roles__role_id__permissions_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/health': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Health Check */
-    get: operations['health_check_health_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/health/cleanup': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Cleanup Health Check
-     * @description Get the health status of the token cleanup system.
-     *
-     *     Returns information about:
-     *     - Database connectivity
-     *     - Scheduler status
-     *     - Current token statistics
-     *     - System configuration
-     */
-    get: operations['cleanup_health_check_health_cleanup_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Read Root */
-    get: operations['read_root__get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    /** Body_extract_text_from_image_api_v1_shared_ocr_post */
-    Body_extract_text_from_image_api_v1_shared_ocr_post: {
-      /**
-       * File
-       * Format: binary
-       */
-      file: string;
+    schemas: {
+        /**
+         * Action
+         * @description Complete action schema.
+         */
+        Action: {
+            /** Name */
+            name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+        };
+        /** Category */
+        Category: {
+            /** Name */
+            name: string;
+            /** Parent Id */
+            parent_id?: number | null;
+            /** Id */
+            id: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** CategoryCreate */
+        CategoryCreate: {
+            /** Name */
+            name: string;
+            /** Parent Id */
+            parent_id?: number | null;
+        };
+        /** CategoryUpdate */
+        CategoryUpdate: {
+            /** Name */
+            name: string;
+            /** Parent Id */
+            parent_id?: number | null;
+        };
+        /**
+         * CleanupHealthResponse
+         * @description Detailed health check response for cleanup system.
+         */
+        CleanupHealthResponse: {
+            /** Status */
+            status: string;
+            /** Timestamp */
+            timestamp: string;
+            /** Health Checks */
+            health_checks: {
+                [key: string]: unknown;
+            };
+            scheduler: components["schemas"]["SchedulerInfo"];
+            configuration: components["schemas"]["ConfigInfo"];
+        };
+        /**
+         * ConfigInfo
+         * @description System configuration information.
+         */
+        ConfigInfo: {
+            /** Cleanup Enabled */
+            cleanup_enabled: boolean;
+            /** Cleanup Schedule */
+            cleanup_schedule: string;
+            /** Retention Days */
+            retention_days: number;
+            /** Batch Size */
+            batch_size: number;
+        };
+        /** Expense */
+        Expense: {
+            /** Amount */
+            amount: number;
+            /** Category Id */
+            category_id: number;
+            /** Payment Method Id */
+            payment_method_id: number;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Description */
+            description?: string | null;
+            /** Id */
+            id: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** ExpenseCreate */
+        ExpenseCreate: {
+            /** Amount */
+            amount: number;
+            /** Category Id */
+            category_id: number;
+            /** Payment Method Id */
+            payment_method_id: number;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Description */
+            description?: string | null;
+        };
+        /** ExpenseUpdate */
+        ExpenseUpdate: {
+            /** Amount */
+            amount: number;
+            /** Category Id */
+            category_id: number;
+            /** Payment Method Id */
+            payment_method_id: number;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Description */
+            description?: string | null;
+        };
+        /**
+         * Feature
+         * @description Complete feature schema.
+         */
+        Feature: {
+            /** Name */
+            name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
+        };
+        /**
+         * HealthCheckResponse
+         * @description Basic health check response.
+         */
+        HealthCheckResponse: {
+            /** Status */
+            status: string;
+        };
+        /**
+         * JobInfo
+         * @description Information about a scheduled job.
+         */
+        JobInfo: {
+            /** Id */
+            id: string;
+            /** Name */
+            name: string;
+            /** Next Run Time */
+            next_run_time?: string | null;
+        };
+        /**
+         * LoginRequest
+         * @description Schema for login request.
+         */
+        LoginRequest: {
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /** Password */
+            password: string;
+        };
+        /**
+         * LoginResponse
+         * @description Response model for login endpoint.
+         */
+        LoginResponse: {
+            /** Message */
+            message: string;
+        };
+        /**
+         * PasswordChangeRequest
+         * @description Schema for password change request.
+         */
+        PasswordChangeRequest: {
+            /** Current Password */
+            current_password: string;
+            /** New Password */
+            new_password: string;
+        };
+        /**
+         * PasswordChangeResponse
+         * @description Response model for password change endpoint.
+         */
+        PasswordChangeResponse: {
+            /** Message */
+            message: string;
+        };
+        /** PaymentMethod */
+        PaymentMethod: {
+            /** Name */
+            name: string;
+            /** Id */
+            id: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** PaymentMethodCreate */
+        PaymentMethodCreate: {
+            /** Name */
+            name: string;
+        };
+        /** PaymentMethodUpdate */
+        PaymentMethodUpdate: {
+            /** Name */
+            name?: string | null;
+        };
+        /**
+         * Permission
+         * @description Complete permission schema.
+         */
+        Permission: {
+            /**
+             * Feature Id
+             * Format: uuid
+             */
+            feature_id: string;
+            /**
+             * Action Id
+             * Format: uuid
+             */
+            action_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            feature?: components["schemas"]["Feature"] | null;
+            action?: components["schemas"]["Action"] | null;
+        };
+        /**
+         * SchedulerInfo
+         * @description Information about the scheduler.
+         */
+        SchedulerInfo: {
+            /** Running */
+            running: boolean;
+            /** Jobs */
+            jobs: components["schemas"]["JobInfo"][];
+        };
+        /**
+         * SimpleRefreshResponse
+         * @description Simple response model for refresh endpoint.
+         */
+        SimpleRefreshResponse: {
+            /** Message */
+            message: string;
+        };
+        /** SimpleTodoProject */
+        SimpleTodoProject: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Owner Id */
+            owner_id: string;
+            /**
+             * Is General
+             * @default false
+             */
+            is_general: boolean;
+        };
+        /**
+         * SimpleUserResponse
+         * @description Schema for user ID and email.
+         */
+        SimpleUserResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+        };
+        /** TodoItem */
+        TodoItem: {
+            /** Name */
+            name: string;
+            /** Description */
+            description?: string | null;
+            /** Shops */
+            shops?: string | null;
+            /** Project Id */
+            project_id: number;
+            /** Id */
+            id: number;
+            /** Is Closed */
+            is_closed: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Completed At */
+            completed_at?: string | null;
+            project?: components["schemas"]["SimpleTodoProject"] | null;
+        };
+        /** TodoItemCreate */
+        TodoItemCreate: {
+            /** Name */
+            name: string;
+            /** Description */
+            description?: string | null;
+            /** Shops */
+            shops?: string | null;
+            /** Project Id */
+            project_id: number;
+        };
+        /** TodoItemUpdate */
+        TodoItemUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Is Closed */
+            is_closed?: boolean | null;
+            /** Shops */
+            shops?: string | null;
+            /** Completed At */
+            completed_at?: string | null;
+            /** Project Id */
+            project_id?: number | null;
+        };
+        /** TodoProject */
+        TodoProject: {
+            /** Name */
+            name: string;
+            /** Id */
+            id: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Is General */
+            is_general: boolean;
+            /** Collaborators */
+            collaborators?: string[];
+            owner: components["schemas"]["TodoProjectOwner"];
+        };
+        /** TodoProjectCollaboratorCreate */
+        TodoProjectCollaboratorCreate: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+        };
+        /** TodoProjectCollaboratorResponse */
+        TodoProjectCollaboratorResponse: {
+            /** Email */
+            email: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+        };
+        /** TodoProjectCreate */
+        TodoProjectCreate: {
+            /** Name */
+            name: string;
+        };
+        /** TodoProjectOwner */
+        TodoProjectOwner: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Email */
+            email: string;
+        };
+        /** TodoProjectUpdate */
+        TodoProjectUpdate: {
+            /** Name */
+            name: string;
+        };
+        /**
+         * User
+         * @description Public user schema without sensitive data.
+         */
+        User: {
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Role Id
+             * Format: uuid
+             */
+            role_id: string;
+            /** Password Changed */
+            password_changed: boolean;
+            /** Created By */
+            created_by?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
+         * UserCreate
+         * @description Schema for creating a new user.
+         */
+        UserCreate: {
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean | null;
+            /** Password */
+            password?: string | null;
+            /**
+             * Role Id
+             * Format: uuid
+             */
+            role_id: string;
+        };
+        /**
+         * UserInfoResponse
+         * @description Response model for user information endpoint.
+         */
+        UserInfoResponse: {
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+            /** Email */
+            email: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Password Changed */
+            password_changed: boolean;
+            /** Created At */
+            created_at: string;
+        };
+        /**
+         * UserPermissionAssign
+         * @description Schema for assigning permissions to user.
+         */
+        UserPermissionAssign: {
+            /** Permission Ids */
+            permission_ids: string[];
+        };
+        /**
+         * UserPermissionAssignResponse
+         * @description Response model for permission assignment endpoint.
+         */
+        UserPermissionAssignResponse: {
+            /** Message */
+            message: string;
+            /** Assigned Permissions */
+            assigned_permissions: number;
+        };
+        /**
+         * UserUpdate
+         * @description Schema for updating a user.
+         */
+        UserUpdate: {
+            /** Email */
+            email?: string | null;
+            /** Is Active */
+            is_active?: boolean | null;
+            /** Role Id */
+            role_id?: string | null;
+        };
+        /**
+         * UserWithRole
+         * @description User schema with role information.
+         */
+        UserWithRole: {
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Role Id
+             * Format: uuid
+             */
+            role_id: string;
+            /** Password Changed */
+            password_changed: boolean;
+            /** Created By */
+            created_by?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            role: components["schemas"]["src__services__authorization__roles__models__UserRole"];
+        };
+        /** ValidationError */
+        ValidationError: {
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
+        };
+        /** UserRole */
+        src__services__authorization__roles__models__UserRole: Record<string, never>;
+        /**
+         * UserRole
+         * @description Complete user role schema.
+         */
+        src__services__authorization__roles__schemas__UserRole: {
+            /** Name */
+            name: string;
+            /** Description */
+            description?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+        };
     };
-    /** Category */
-    Category: {
-      /** Name */
-      name: string;
-      /** Parent Id */
-      parent_id?: number | null;
-      /** Id */
-      id: number;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-    };
-    /** CategoryCreate */
-    CategoryCreate: {
-      /** Name */
-      name: string;
-      /** Parent Id */
-      parent_id?: number | null;
-    };
-    /** CategoryUpdate */
-    CategoryUpdate: {
-      /** Name */
-      name: string;
-      /** Parent Id */
-      parent_id?: number | null;
-    };
-    /** Expense */
-    Expense: {
-      /** Amount */
-      amount: number;
-      /** Category Id */
-      category_id: number;
-      /** Payment Method Id */
-      payment_method_id: number;
-      /**
-       * Date
-       * Format: date
-       */
-      date: string;
-      /** Description */
-      description?: string | null;
-      /** Id */
-      id: number;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-    };
-    /** ExpenseCreate */
-    ExpenseCreate: {
-      /** Amount */
-      amount: number;
-      /** Category Id */
-      category_id: number;
-      /** Payment Method Id */
-      payment_method_id: number;
-      /**
-       * Date
-       * Format: date
-       */
-      date: string;
-      /** Description */
-      description?: string | null;
-    };
-    /** ExpenseUpdate */
-    ExpenseUpdate: {
-      /** Amount */
-      amount: number;
-      /** Category Id */
-      category_id: number;
-      /** Payment Method Id */
-      payment_method_id: number;
-      /**
-       * Date
-       * Format: date
-       */
-      date: string;
-      /** Description */
-      description?: string | null;
-    };
-    /** HTTPValidationError */
-    HTTPValidationError: {
-      /** Detail */
-      detail?: components['schemas']['ValidationError'][];
-    };
-    /**
-     * LoginRequest
-     * @description Schema for login request.
-     */
-    LoginRequest: {
-      /**
-       * Email
-       * Format: email
-       */
-      email: string;
-      /** Password */
-      password: string;
-    };
-    /**
-     * LoginResponse
-     * @description Response model for login endpoint.
-     */
-    LoginResponse: {
-      /** Message */
-      message: string;
-    };
-    /**
-     * OCRResponse
-     * @description Response model for OCR text extraction.
-     */
-    OCRResponse: {
-      /**
-       * Success
-       * @description Indicates whether the OCR operation was successful
-       */
-      success: boolean;
-      /**
-       * Extracted Text
-       * @description The text extracted from the image, cleaned and formatted
-       */
-      extracted_text: string;
-      /**
-       * Filename
-       * @description The original filename of the uploaded image
-       */
-      filename: string | null;
-      /**
-       * Content Type
-       * @description The MIME type of the uploaded image file
-       */
-      content_type: string;
-    };
-    /**
-     * PasswordChangeRequest
-     * @description Schema for password change request.
-     */
-    PasswordChangeRequest: {
-      /** Current Password */
-      current_password: string;
-      /** New Password */
-      new_password: string;
-    };
-    /**
-     * PasswordChangeResponse
-     * @description Response model for password change endpoint.
-     */
-    PasswordChangeResponse: {
-      /** Message */
-      message: string;
-    };
-    /**
-     * PasswordResetRequest
-     * @description Schema for password reset request.
-     */
-    PasswordResetRequest: {
-      /** New Password */
-      new_password?: string | null;
-    };
-    /**
-     * PasswordResetResponse
-     * @description Schema for password reset response.
-     */
-    PasswordResetResponse: {
-      /** Message */
-      message: string;
-      /** New Password */
-      new_password: string;
-    };
-    /** PaymentMethod */
-    PaymentMethod: {
-      /** Name */
-      name: string;
-      /** Id */
-      id: number;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-    };
-    /** PaymentMethodCreate */
-    PaymentMethodCreate: {
-      /** Name */
-      name: string;
-    };
-    /** PaymentMethodUpdate */
-    PaymentMethodUpdate: {
-      /** Name */
-      name?: string | null;
-    };
-    /**
-     * Permission
-     * @description Permission schema for API responses.
-     */
-    Permission: {
-      /**
-       * Feature Id
-       * Format: uuid
-       */
-      feature_id: string;
-      /**
-       * Action Id
-       * Format: uuid
-       */
-      action_id: string;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-    };
-    /**
-     * SimpleRefreshResponse
-     * @description Simple response model for refresh endpoint.
-     */
-    SimpleRefreshResponse: {
-      /** Message */
-      message: string;
-    };
-    /** SimpleTodoProject */
-    SimpleTodoProject: {
-      /** Id */
-      id: number;
-      /** Name */
-      name: string;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-      /** Owner Id */
-      owner_id: string;
-      /**
-       * Is General
-       * @default false
-       */
-      is_general: boolean;
-    };
-    /**
-     * SimpleUserResponse
-     * @description Schema for user ID and email.
-     */
-    SimpleUserResponse: {
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /**
-       * Email
-       * Format: email
-       */
-      email: string;
-    };
-    /** TodoItem */
-    TodoItem: {
-      /** Name */
-      name: string;
-      /** Description */
-      description?: string | null;
-      /** Shops */
-      shops?: string | null;
-      /** Project Id */
-      project_id: number;
-      /** Id */
-      id: number;
-      /** Is Closed */
-      is_closed: boolean;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-      /** Completed At */
-      completed_at?: string | null;
-      project?: components['schemas']['SimpleTodoProject'] | null;
-    };
-    /** TodoItemCreate */
-    TodoItemCreate: {
-      /** Name */
-      name: string;
-      /** Description */
-      description?: string | null;
-      /** Shops */
-      shops?: string | null;
-      /** Project Id */
-      project_id: number;
-    };
-    /** TodoItemUpdate */
-    TodoItemUpdate: {
-      /** Name */
-      name?: string | null;
-      /** Description */
-      description?: string | null;
-      /** Is Closed */
-      is_closed?: boolean | null;
-      /** Shops */
-      shops?: string | null;
-      /** Completed At */
-      completed_at?: string | null;
-      /** Project Id */
-      project_id?: number | null;
-    };
-    /** TodoProject */
-    TodoProject: {
-      /** Name */
-      name: string;
-      /** Id */
-      id: number;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-      /** Is General */
-      is_general: boolean;
-      /** Collaborators */
-      collaborators?: string[];
-      owner: components['schemas']['TodoProjectOwner'];
-    };
-    /** TodoProjectCollaboratorCreate */
-    TodoProjectCollaboratorCreate: {
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-    };
-    /** TodoProjectCollaboratorResponse */
-    TodoProjectCollaboratorResponse: {
-      /** Email */
-      email: string;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-    };
-    /** TodoProjectCreate */
-    TodoProjectCreate: {
-      /** Name */
-      name: string;
-    };
-    /** TodoProjectOwner */
-    TodoProjectOwner: {
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /** Email */
-      email: string;
-    };
-    /** TodoProjectUpdate */
-    TodoProjectUpdate: {
-      /** Name */
-      name: string;
-    };
-    /**
-     * UserCreate
-     * @description Schema for creating a new user.
-     */
-    UserCreate: {
-      /**
-       * Email
-       * Format: email
-       */
-      email: string;
-      /**
-       * Is Active
-       * @default true
-       */
-      is_active: boolean | null;
-      /** Password */
-      password?: string | null;
-      /**
-       * Role Id
-       * Format: uuid
-       */
-      role_id: string;
-    };
-    /**
-     * UserInfoResponse
-     * @description Response model for user information endpoint.
-     */
-    UserInfoResponse: {
-      /**
-       * User Id
-       * Format: uuid
-       */
-      user_id: string;
-      /** Email */
-      email: string;
-      /** Is Active */
-      is_active: boolean;
-      /** Password Changed */
-      password_changed: boolean;
-      /** Created At */
-      created_at: string;
-    };
-    /**
-     * UserPermissionAssign
-     * @description Schema for assigning permissions to user.
-     */
-    UserPermissionAssign: {
-      /** Permission Ids */
-      permission_ids: string[];
-    };
-    /**
-     * UserPermissionAssignResponse
-     * @description Response model for permission assignment endpoint.
-     */
-    UserPermissionAssignResponse: {
-      /** Message */
-      message: string;
-      /** Assigned Permissions */
-      assigned_permissions: number;
-    };
-    /**
-     * UserRole
-     * @description Schema for user role response.
-     */
-    UserRole: {
-      /** Name */
-      name: string;
-      /** Description */
-      description?: string | null;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-    };
-    /**
-     * UserUpdate
-     * @description Schema for updating a user.
-     */
-    UserUpdate: {
-      /** Email */
-      email?: string | null;
-      /** Is Active */
-      is_active?: boolean | null;
-      /** Role Id */
-      role_id?: string | null;
-    };
-    /**
-     * UserWithPermissions
-     * @description User schema with permissions information.
-     */
-    UserWithPermissions: {
-      /**
-       * Email
-       * Format: email
-       */
-      email: string;
-      /**
-       * Is Active
-       * @default true
-       */
-      is_active: boolean | null;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /**
-       * Role Id
-       * Format: uuid
-       */
-      role_id: string;
-      /** Password Changed */
-      password_changed: boolean;
-      /** Created By */
-      created_by?: string | null;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-      role: components['schemas']['UserRole'];
-      /** Permissions */
-      permissions: components['schemas']['Permission'][];
-    };
-    /**
-     * UserWithRole
-     * @description User schema with role information.
-     */
-    UserWithRole: {
-      /**
-       * Email
-       * Format: email
-       */
-      email: string;
-      /**
-       * Is Active
-       * @default true
-       */
-      is_active: boolean | null;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /**
-       * Role Id
-       * Format: uuid
-       */
-      role_id: string;
-      /** Password Changed */
-      password_changed: boolean;
-      /** Created By */
-      created_by?: string | null;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-      role: components['schemas']['UserRole'];
-    };
-    /** ValidationError */
-    ValidationError: {
-      /** Location */
-      loc: (string | number)[];
-      /** Message */
-      msg: string;
-      /** Error Type */
-      type: string;
-    };
-  };
-  responses: never;
-  parameters: never;
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  list_expenses_api_v1_expenses_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['Expense'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  create_expense_api_v1_expenses_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ExpenseCreate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['Expense'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_expense_api_v1_expenses__expense_id__get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        expense_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['Expense'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  update_expense_api_v1_expenses__expense_id__put: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        expense_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['ExpenseUpdate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['Expense'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  delete_expense_api_v1_expenses__expense_id__delete: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        expense_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  list_categories_api_v1_categories_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['Category'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  create_category_api_v1_categories_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['CategoryCreate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['Category'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_category_api_v1_categories__category_id__get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        category_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['Category'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  update_category_api_v1_categories__category_id__put: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        category_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['CategoryUpdate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['Category'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  delete_category_api_v1_categories__category_id__delete: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        category_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  list_payment_methods_api_v1_payment_methods_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['PaymentMethod'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  create_payment_method_api_v1_payment_methods_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['PaymentMethodCreate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['PaymentMethod'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_payment_method_api_v1_payment_methods__payment_method_id__get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        payment_method_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['PaymentMethod'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  update_payment_method_api_v1_payment_methods__payment_method_id__put: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        payment_method_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['PaymentMethodUpdate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['PaymentMethod'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  delete_payment_method_api_v1_payment_methods__payment_method_id__delete: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        payment_method_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_todo_items_api_v1_todo_items_get: {
-    parameters: {
-      query?: {
-        skip?: number;
-        limit?: number;
-        /** @description Field to sort by: id, name, created_at, updated_at, is_closed, completed_at */
-        sort_by?: string;
-        /** @description Sort order: asc or desc */
-        order?: string;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['TodoItem'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  create_todo_item_api_v1_todo_items_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['TodoItemCreate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['TodoItem'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_todo_item_api_v1_todo_items__item_id__get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        item_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['TodoItem'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  update_todo_item_api_v1_todo_items__item_id__put: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        item_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['TodoItemUpdate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['TodoItem'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  delete_todo_item_api_v1_todo_items__item_id__delete: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        item_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['TodoItem'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  list_todo_projects_api_v1_todo_projects_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['TodoProject'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  create_todo_project_api_v1_todo_projects_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['TodoProjectCreate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['TodoProject'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_todo_project_api_v1_todo_projects__todo_project_id__get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        todo_project_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['TodoProject'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  update_todo_project_api_v1_todo_projects__todo_project_id__put: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        todo_project_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['TodoProjectUpdate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['TodoProject'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  delete_todo_project_api_v1_todo_projects__todo_project_id__delete: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        todo_project_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  list_collaborators_api_v1_todo_projects__todo_project_id__collaborators_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        todo_project_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['TodoProjectCollaboratorResponse'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  add_collaborators_api_v1_todo_projects__todo_project_id__collaborators_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        todo_project_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['TodoProjectCollaboratorCreate'][];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['TodoProjectCollaboratorResponse'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  remove_collaborator_api_v1_todo_projects__todo_project_id__collaborators__user_id__delete: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        user_id: string;
-        todo_project_id: number;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  extract_text_from_image_api_v1_shared_ocr_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'multipart/form-data': components['schemas']['Body_extract_text_from_image_api_v1_shared_ocr_post'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['OCRResponse'];
-        };
-      };
-      /** @description Bad Request - Invalid file format */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          /** @example {
-           *       "detail": "File must be an image (JPEG, PNG, TIFF, BMP, etc.)"
-           *     } */
-          'application/json': unknown;
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-      /** @description Internal Server Error - Image processing failed */
-      500: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          /** @example {
-           *       "detail": "Error processing image: [specific error message]"
-           *     } */
-          'application/json': unknown;
-        };
-      };
-    };
-  };
-  get_current_user_permission_api_v1_auth_me_permissions_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['Permission'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_current_user_roles_api_v1_auth_me_roles_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': string[];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  login_api_v1_auth_login_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['LoginRequest'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['LoginResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  change_password_api_v1_auth_change_password_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['PasswordChangeRequest'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['PasswordChangeResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_current_user_info_api_v1_auth_me_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['UserInfoResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  refresh_tokens_api_v1_auth_refresh_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: {
-        refresh_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['SimpleRefreshResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  logout_api_v1_auth_logout_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-        refresh_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  token_statistics_api_v1_auth_tokens_statistics_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': {
-            [key: string]: unknown;
-          };
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  trigger_manual_cleanup_api_v1_auth_cleanup_manual_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': {
-            [key: string]: unknown;
-          };
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  dry_run_cleanup_api_v1_auth_cleanup_dry_run_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': {
-            [key: string]: unknown;
-          };
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  list_users_api_v1_users_get: {
-    parameters: {
-      query?: {
-        /** @description Number of users to skip */
-        skip?: number;
-        /** @description Maximum number of users to return */
-        limit?: number;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['SimpleUserResponse'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  create_new_user_api_v1_users_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['UserCreate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['UserWithRole'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_user_details_api_v1_users__user_id__get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        user_id: string;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['UserWithPermissions'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  update_user_info_api_v1_users__user_id__put: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        user_id: string;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['UserUpdate'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['UserWithRole'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  delete_user_account_api_v1_users__user_id__delete: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        user_id: string;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  change_user_role_api_v1_users__user_id__role_put: {
-    parameters: {
-      query: {
-        role_id: string;
-      };
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        user_id: string;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['UserWithRole'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_user_permissions_endpoint_api_v1_users__user_id__permissions_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        user_id: string;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['Permission'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  assign_permissions_to_user_api_v1_users__user_id__permissions_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        user_id: string;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['UserPermissionAssign'];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['UserPermissionAssignResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  revoke_permission_from_user_api_v1_users__user_id__permissions__permission_id__delete: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        user_id: string;
-        permission_id: string;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  reset_user_password_endpoint_api_v1_users__user_id__reset_password_post: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        user_id: string;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: {
-      content: {
-        'application/json':
-          | components['schemas']['PasswordResetRequest']
-          | null;
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['PasswordResetResponse'];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  list_all_roles_api_v1_roles_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path?: never;
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['UserRole'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  get_role_default_permissions_api_v1_roles__role_id__permissions_get: {
-    parameters: {
-      query?: never;
-      header?: {
-        authorization?: string | null;
-      };
-      path: {
-        role_id: string;
-      };
-      cookie?: {
-        access_token?: string | null;
-      };
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['Permission'][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
-    };
-  };
-  health_check_health_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-    };
-  };
-  cleanup_health_check_health_cleanup_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': {
-            [key: string]: unknown;
-          };
-        };
-      };
-    };
-  };
-  read_root__get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': unknown;
-        };
-      };
-    };
-  };
+    list_expenses_api_v1_budget_expenses_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Expense"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_expense_endpoint_api_v1_budget_expenses_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExpenseCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Expense"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_expense_api_v1_budget_expenses__expense_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                expense_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Expense"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_expense_endpoint_api_v1_budget_expenses__expense_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                expense_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExpenseUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Expense"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_expense_endpoint_api_v1_budget_expenses__expense_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                expense_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_categories_api_v1_budget_categories_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_category_endpoint_api_v1_budget_categories_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CategoryCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_category_api_v1_budget_categories__category_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                category_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_category_endpoint_api_v1_budget_categories__category_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                category_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CategoryUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_category_endpoint_api_v1_budget_categories__category_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                category_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_payment_methods_api_v1_budget_payment_methods_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentMethod"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_payment_method_endpoint_api_v1_budget_payment_methods_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PaymentMethodCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentMethod"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_payment_method_api_v1_budget_payment_methods__payment_method_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                payment_method_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentMethod"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_payment_method_endpoint_api_v1_budget_payment_methods__payment_method_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                payment_method_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PaymentMethodUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentMethod"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_payment_method_endpoint_api_v1_budget_payment_methods__payment_method_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                payment_method_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_todo_projects_api_v1_todos_projects_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoProject"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_todo_project_api_v1_todos_projects_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TodoProjectCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoProject"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_todo_project_api_v1_todos_projects__todo_project_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                todo_project_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoProject"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_todo_project_api_v1_todos_projects__todo_project_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                todo_project_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TodoProjectUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoProject"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_todo_project_api_v1_todos_projects__todo_project_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                todo_project_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_todo_items_api_v1_todos_items_get: {
+        parameters: {
+            query?: {
+                skip?: number;
+                limit?: number;
+                /** @description Field to sort by: id, name, created_at, updated_at, is_closed, completed_at */
+                sort_by?: string;
+                /** @description Sort order: asc or desc */
+                order?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoItem"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_todo_item_api_v1_todos_items_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TodoItemCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoItem"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_todo_item_api_v1_todos_items__item_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoItem"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_todo_item_api_v1_todos_items__item_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TodoItemUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoItem"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_todo_item_api_v1_todos_items__item_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_collaborators_api_v1_todos_projects__project_id__collaborators_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoProjectCollaboratorResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_collaborators_api_v1_todos_projects__project_id__collaborators_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TodoProjectCollaboratorCreate"][];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TodoProjectCollaboratorResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_collaborator_api_v1_todos_projects__project_id__collaborators__user_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+                project_id: number;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_users_api_v1_users_get: {
+        parameters: {
+            query?: {
+                /** @description Number of users to skip */
+                skip?: number;
+                /** @description Maximum number of users to return */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SimpleUserResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_new_user_api_v1_users_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_user_details_api_v1_users__user_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_user_info_api_v1_users__user_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_user_account_api_v1_users__user_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    change_user_role_api_v1_users__user_id__role_put: {
+        parameters: {
+            query: {
+                role_id: string;
+            };
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserWithRole"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_user_permissions_endpoint_api_v1_users__user_id__permissions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Permission"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_permissions_to_user_api_v1_users__user_id__permissions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserPermissionAssign"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPermissionAssignResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revoke_permission_from_user_api_v1_users__user_id__permissions__permission_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+                permission_id: string;
+            };
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    login_api_v1_authentication_sessions_login_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoginResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_current_user_info_api_v1_authentication_sessions_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserInfoResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    logout_api_v1_authentication_sessions_logout_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+                refresh_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    refresh_tokens_api_v1_authentication_tokens_refresh_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                refresh_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SimpleRefreshResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    change_password_api_v1_authentication_passwords_change_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PasswordChangeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PasswordChangeResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_current_user_roles_api_v1_authorization_roles_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["src__services__authorization__roles__schemas__UserRole"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_all_roles_api_v1_authorization_roles__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["src__services__authorization__roles__schemas__UserRole"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_all_permissions_api_v1_authorization_permissions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Permission"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_current_user_permission_api_v1_authorization_user_permissions_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Permission"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    health_check_health_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HealthCheckResponse"];
+                };
+            };
+        };
+    };
+    cleanup_health_check_health_cleanup_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CleanupHealthResponse"];
+                };
+            };
+        };
+    };
+    read_root__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
 }

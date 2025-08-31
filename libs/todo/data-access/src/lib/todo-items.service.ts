@@ -3,16 +3,17 @@ import type {
   TodoItemCreate,
   TodoItemUpdate,
 } from '@cockpit-app/api-types';
-import httpClient from './httpClient';
+import { baseApi } from '@cockpit-app/common-shared-data-access';
 import { TODO_ENDPOINTS } from './endpoints';
+import { todoItemSchema, todoItemsSchema } from './schemas';
 
 export const todoItemsService = {
   async getTodoItems(skip = 0, limit = 100): Promise<TodoItem[]> {
     try {
-      const response = await httpClient.get(
+      return await baseApi.getRequest(
         `${TODO_ENDPOINTS.items()}?skip=${skip}&limit=${limit}`,
+        todoItemsSchema,
       );
-      return response.data;
     } catch (error) {
       console.error('Error fetching todo items:', error);
       throw error;
@@ -21,8 +22,10 @@ export const todoItemsService = {
 
   async getTodoItem(id: number): Promise<TodoItem> {
     try {
-      const response = await httpClient.get(TODO_ENDPOINTS.itemById(id));
-      return response.data;
+      return await baseApi.getRequest(
+        TODO_ENDPOINTS.itemById(id),
+        todoItemSchema,
+      );
     } catch (error) {
       console.error(`Error fetching todo item with id ${id}:`, error);
       throw error;
@@ -31,8 +34,11 @@ export const todoItemsService = {
 
   async addTodoItem(item: TodoItemCreate): Promise<TodoItem> {
     try {
-      const response = await httpClient.post(TODO_ENDPOINTS.items(), item);
-      return response.data;
+      return await baseApi.postRequest(
+        TODO_ENDPOINTS.items(),
+        todoItemSchema,
+        item,
+      );
     } catch (error) {
       console.error('Error adding todo item:', error);
       throw error;
@@ -41,8 +47,11 @@ export const todoItemsService = {
 
   async updateTodoItem(id: number, updates: TodoItemUpdate): Promise<TodoItem> {
     try {
-      const response = await httpClient.put(TODO_ENDPOINTS.itemById(id), updates);
-      return response.data;
+      return await baseApi.putRequest(
+        TODO_ENDPOINTS.itemById(id),
+        todoItemSchema,
+        updates,
+      );
     } catch (error) {
       console.error('Error updating todo item:', error);
       throw error;
@@ -51,8 +60,10 @@ export const todoItemsService = {
 
   async deleteTodoItem(id: number): Promise<TodoItem> {
     try {
-      const response = await httpClient.delete(TODO_ENDPOINTS.itemById(id));
-      return response.data;
+      return await baseApi.deleteRequest(
+        TODO_ENDPOINTS.itemById(id),
+        todoItemSchema,
+      );
     } catch (error) {
       console.error('Error deleting todo item:', error);
       throw error;

@@ -3,18 +3,19 @@ import type {
   TodoProjectCollaboratorResponse,
 } from '@cockpit-app/api-types';
 import { logger } from '@cockpit-app/shared-utils';
-import httpClient from './httpClient';
+import { baseApi } from '@cockpit-app/common-shared-data-access';
 import { TODO_ENDPOINTS } from './endpoints';
+import { todoProjectCollaboratorsSchema, voidResponseSchema } from './schemas';
 
 export const collaboratorsService = {
   async getCollaborators(
     projectId: number,
   ): Promise<TodoProjectCollaboratorResponse[]> {
     try {
-      const response = await httpClient.get(
+      return await baseApi.getRequest(
         TODO_ENDPOINTS.projectCollaborators(projectId),
+        todoProjectCollaboratorsSchema,
       );
-      return response.data;
     } catch (error) {
       logger.error(
         `Error fetching collaborators for project ${projectId}:`,
@@ -32,11 +33,11 @@ export const collaboratorsService = {
       const payload: TodoProjectCollaboratorCreate[] = collaboratorIds.map(
         (id) => ({ id }),
       );
-      const response = await httpClient.post(
+      return await baseApi.postRequest(
         TODO_ENDPOINTS.projectCollaborators(projectId),
+        todoProjectCollaboratorsSchema,
         payload,
       );
-      return response.data;
     } catch (error) {
       logger.error(
         `Error adding collaborators to project ${projectId}:`,
@@ -48,8 +49,9 @@ export const collaboratorsService = {
 
   async removeCollaborator(projectId: number, userId: string): Promise<void> {
     try {
-      await httpClient.delete(
+      await baseApi.deleteRequest(
         TODO_ENDPOINTS.projectCollaboratorById(projectId, userId),
+        voidResponseSchema,
       );
     } catch (error) {
       logger.error(
