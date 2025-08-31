@@ -8,7 +8,6 @@
   "dependencies": {
     "@cockpit-app/api-types": "0.0.1",
     "@cockpit-app/shared-utils": "0.0.1",
-    "axios": "1.11.0",
     "@cockpit-app/common-shared-data-access": "0.0.1",
     "zod": "^4.0.10"
   }
