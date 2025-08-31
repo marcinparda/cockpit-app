@@ -3,16 +3,14 @@ import type {
   TodoItemCreate,
   TodoItemUpdate,
 } from '@cockpit-app/api-types';
-import { environments } from '@cockpit-app/shared-utils';
 import httpClient from './httpClient';
-
-const API_URL = `${environments.apiUrl}/api/v1/todo/items`;
+import { TODO_ENDPOINTS } from './endpoints';
 
 export const todoItemsService = {
   async getTodoItems(skip = 0, limit = 100): Promise<TodoItem[]> {
     try {
       const response = await httpClient.get(
-        `${API_URL}?skip=${skip}&limit=${limit}`,
+        `${TODO_ENDPOINTS.items()}?skip=${skip}&limit=${limit}`,
       );
       return response.data;
     } catch (error) {
@@ -23,7 +21,7 @@ export const todoItemsService = {
 
   async getTodoItem(id: number): Promise<TodoItem> {
     try {
-      const response = await httpClient.get(`${API_URL}/${id}`);
+      const response = await httpClient.get(TODO_ENDPOINTS.itemById(id));
       return response.data;
     } catch (error) {
       console.error(`Error fetching todo item with id ${id}:`, error);
@@ -33,7 +31,7 @@ export const todoItemsService = {
 
   async addTodoItem(item: TodoItemCreate): Promise<TodoItem> {
     try {
-      const response = await httpClient.post(`${API_URL}`, item);
+      const response = await httpClient.post(TODO_ENDPOINTS.items(), item);
       return response.data;
     } catch (error) {
       console.error('Error adding todo item:', error);
@@ -43,7 +41,7 @@ export const todoItemsService = {
 
   async updateTodoItem(id: number, updates: TodoItemUpdate): Promise<TodoItem> {
     try {
-      const response = await httpClient.put(`${API_URL}/${id}`, updates);
+      const response = await httpClient.put(TODO_ENDPOINTS.itemById(id), updates);
       return response.data;
     } catch (error) {
       console.error('Error updating todo item:', error);
@@ -53,7 +51,7 @@ export const todoItemsService = {
 
   async deleteTodoItem(id: number): Promise<TodoItem> {
     try {
-      const response = await httpClient.delete(`${API_URL}/${id}`);
+      const response = await httpClient.delete(TODO_ENDPOINTS.itemById(id));
       return response.data;
     } catch (error) {
       console.error('Error deleting todo item:', error);

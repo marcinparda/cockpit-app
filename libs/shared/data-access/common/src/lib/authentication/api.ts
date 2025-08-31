@@ -1,4 +1,4 @@
-import { baseApi } from '@cockpit-app/shared-utils';
+import { baseApi } from '../api/baseApi';
 import { AUTHENTICATION_ENDPOINTS } from './endpoints';
 import {
   currentUserSchema,
@@ -20,7 +20,7 @@ export async function login(
   password: string,
 ): Promise<LoginResponse> {
   return await baseApi.postRequest(
-    AUTHENTICATION_ENDPOINTS.LOGIN,
+    AUTHENTICATION_ENDPOINTS.login(),
     simpleRefreshResponseSchema,
     {
       email,
@@ -31,7 +31,7 @@ export async function login(
 
 export async function getCurrentUser(withRedirect = true) {
   return await baseApi.getRequest<UserInfoResponse>(
-    AUTHENTICATION_ENDPOINTS.USER,
+    AUTHENTICATION_ENDPOINTS.user(),
     currentUserSchema,
     withRedirect,
   );
@@ -39,7 +39,7 @@ export async function getCurrentUser(withRedirect = true) {
 
 export async function refreshAccessToken() {
   return await baseApi.postRequest<SimpleRefreshResponse, object>(
-    AUTHENTICATION_ENDPOINTS.REFRESH,
+    AUTHENTICATION_ENDPOINTS.refresh(),
     simpleRefreshResponseSchema,
     {},
   );
@@ -47,7 +47,7 @@ export async function refreshAccessToken() {
 
 export async function logout() {
   return await baseApi.postRequest<LogoutResponse, object>(
-    AUTHENTICATION_ENDPOINTS.LOGOUT,
+    AUTHENTICATION_ENDPOINTS.logout(),
     logoutResponseSchema,
     {},
   );
@@ -58,7 +58,7 @@ export async function changePassword(
   newPassword: string,
 ) {
   return baseApi.postRequest<PasswordChangeResponse, PasswordChangeRequest>(
-    AUTHENTICATION_ENDPOINTS.CHANGE_PASSWORD,
+    AUTHENTICATION_ENDPOINTS.changePassword(),
     passwordChangeResponseSchema,
     {
       current_password: currentPassword,

@@ -4,15 +4,14 @@ import type {
   TodoProjectCreate,
   TodoProjectUpdate,
 } from '@cockpit-app/api-types';
-import { environments, logger } from '@cockpit-app/shared-utils';
+import { logger } from '@cockpit-app/shared-utils';
 import httpClient from './httpClient';
-
-const API_URL = `${environments.apiUrl}/api/v1/todo/projects`;
+import { TODO_ENDPOINTS } from './endpoints';
 
 export const todoProjectsService = {
   async getAllTodoProjects(): Promise<TodoProject[]> {
     try {
-      const response = await httpClient.get(`${API_URL}`);
+      const response = await httpClient.get(TODO_ENDPOINTS.projects());
       return response.data;
     } catch (error) {
       logger.error('Error fetching todo projects:', error);
@@ -22,7 +21,7 @@ export const todoProjectsService = {
 
   async getTodoProjectById(id: number): Promise<TodoProject> {
     try {
-      const response = await httpClient.get(`${API_URL}/${id}`);
+      const response = await httpClient.get(TODO_ENDPOINTS.projectById(id));
       return response.data;
     } catch (error) {
       logger.error(`Error fetching todo project with id ${id}:`, error);
@@ -32,7 +31,7 @@ export const todoProjectsService = {
 
   async addTodoProject(item: TodoProjectCreate): Promise<TodoProject> {
     try {
-      const response = await httpClient.post(`${API_URL}`, item);
+      const response = await httpClient.post(TODO_ENDPOINTS.projects(), item);
       return response.data;
     } catch (error) {
       logger.error('Error adding todo project:', error);
@@ -45,7 +44,7 @@ export const todoProjectsService = {
     updates: TodoProjectUpdate,
   ): Promise<TodoProject> {
     try {
-      const response = await httpClient.put(`${API_URL}/${id}`, updates);
+      const response = await httpClient.put(TODO_ENDPOINTS.projectById(id), updates);
       return response.data;
     } catch (error) {
       logger.error('Error updating todo project:', error);
@@ -55,7 +54,7 @@ export const todoProjectsService = {
 
   async deleteTodoProject(id: number): Promise<void> {
     try {
-      await httpClient.delete(`${API_URL}/${id}`);
+      await httpClient.delete(TODO_ENDPOINTS.projectById(id));
     } catch (error) {
       logger.error('Error deleting todo project:', error);
       throw error;
@@ -67,7 +66,7 @@ export const todoProjectsService = {
   ): Promise<TodoProjectCollaboratorResponse[]> {
     try {
       const response = await httpClient.get(
-        `${API_URL}/${projectId}/collaborators`,
+        TODO_ENDPOINTS.projectCollaborators(projectId),
       );
       return response.data;
     } catch (error) {

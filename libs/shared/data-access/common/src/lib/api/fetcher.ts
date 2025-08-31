@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { logout, refreshAccessToken } from './api';
-import { environments } from '../environments/environments';
+import { logout, refreshAccessToken } from '../authentication/api';
+import { environments } from '@cockpit-app/shared-utils';
 
 interface FetcherArgs<ResponseData> {
   url: string;

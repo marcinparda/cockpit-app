@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { fetcher } from './fetcher';
-import { environments } from '../environments/environments';
+import { environments } from '@cockpit-app/shared-utils';
 
 /**
  * Sends a GET request to the specified endpoint and validates the response using the provided Zod schema.

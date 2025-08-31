@@ -2,10 +2,9 @@ import type {
   TodoProjectCollaboratorCreate,
   TodoProjectCollaboratorResponse,
 } from '@cockpit-app/api-types';
-import { environments, logger } from '@cockpit-app/shared-utils';
+import { logger } from '@cockpit-app/shared-utils';
 import httpClient from './httpClient';
-
-const API_URL = `${environments.apiUrl}/api/v1/todo/projects`;
+import { TODO_ENDPOINTS } from './endpoints';
 
 export const collaboratorsService = {
   async getCollaborators(
@@ -13,7 +12,7 @@ export const collaboratorsService = {
   ): Promise<TodoProjectCollaboratorResponse[]> {
     try {
       const response = await httpClient.get(
-        `${API_URL}/${projectId}/collaborators`,
+        TODO_ENDPOINTS.projectCollaborators(projectId),
       );
       return response.data;
     } catch (error) {
@@ -34,7 +33,7 @@ export const collaboratorsService = {
         (id) => ({ id }),
       );
       const response = await httpClient.post(
-        `${API_URL}/${projectId}/collaborators`,
+        TODO_ENDPOINTS.projectCollaborators(projectId),
         payload,
       );
       return response.data;
@@ -50,7 +49,7 @@ export const collaboratorsService = {
   async removeCollaborator(projectId: number, userId: string): Promise<void> {
     try {
       await httpClient.delete(
-        `${API_URL}/${projectId}/collaborators/${userId}`,
+        TODO_ENDPOINTS.projectCollaboratorById(projectId, userId),
       );
     } catch (error) {
       logger.error(
