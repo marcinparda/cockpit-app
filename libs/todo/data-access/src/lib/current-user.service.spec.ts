@@ -1,20 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { UserInfoResponse } from '@cockpit-app/api-types';
 
-vi.mock('@cockpit-app/shared-utils', () => ({
-  environments: { apiUrl: 'https://api.example.com' },
-}));
-
-// Define the mock inside the factory to avoid hoisting TDZ issues
-vi.mock('./httpClient', () => ({
-  default: { get: vi.fn() },
+vi.mock('@cockpit-app/common-shared-data-access', () => ({
+  getCurrentUser: vi.fn(),
 }));
 
 import { currentUserService } from './current-user.service';
-import httpClient from './httpClient';
+import { getCurrentUser } from '@cockpit-app/common-shared-data-access';
 
-// Access the mocked get function after imports
-const getMock = (httpClient as unknown as { get: ReturnType<typeof vi.fn> }).get;
+const getCurrentUserMock = vi.mocked(getCurrentUser);
 
 describe('currentUserService', () => {
   beforeEach(() => {
@@ -30,33 +24,23 @@ describe('currentUserService', () => {
       created_at: '2025-01-01T00:00:00.000Z',
     };
 
-    getMock.mockResolvedValueOnce({ data: mockUser });
+    getCurrentUserMock.mockResolvedValueOnce(mockUser);
 
     const result = await currentUserService.getCurrentUserInfo();
 
-    expect(getMock).toHaveBeenCalledTimes(1);
-    expect(getMock).toHaveBeenCalledWith(
-      'https://api.example.com/api/v1/auth/me',
-    );
+    expect(getCurrentUserMock).toHaveBeenCalledTimes(1);
+    expect(getCurrentUserMock).toHaveBeenCalledWith();
     expect(result).toBe(mockUser);
   });
 
-  it('should log error and rethrow when request fails', async () => {
+  it('should rethrow when request fails', async () => {
     const error = new Error('Network error');
-    getMock.mockRejectedValueOnce(error);
-    const consoleSpy = vi
-      .spyOn(console, 'error')
-      .mockImplementation(function log() { /* silent */ });
+    getCurrentUserMock.mockRejectedValueOnce(error);
 
     await expect(currentUserService.getCurrentUserInfo()).rejects.toThrow(
       error,
     );
 
-    expect(getMock).toHaveBeenCalledTimes(1);
-    expect(consoleSpy).toHaveBeenCalled();
-    const firstCallArgs = consoleSpy.mock.calls[0];
-    expect(firstCallArgs[0]).toContain('Error fetching user data');
-
-    consoleSpy.mockRestore();
+    expect(getCurrentUserMock).toHaveBeenCalledTimes(1);
   });
 });
