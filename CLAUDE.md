@@ -115,6 +115,7 @@ nx typecheck <project-name>
 ### Framework-Specific Patterns
 
 #### React
+
 - Use functional components and React Hooks
 - Prefer arrow functions for component definitions
 - Use `function` for event handlers and functions in general instead of arrow functions
@@ -122,6 +123,7 @@ nx typecheck <project-name>
 - Use React Testing Library and Jest for testing
 
 #### Vue
+
 - Use the Composition API for new components
 - Prefer `<script setup lang="ts">` for TypeScript support
 - Use PrimeVue for UI components in vue-ui lib
@@ -130,6 +132,7 @@ nx typecheck <project-name>
 - Write tests with Vue Test Utils and Vitest
 
 #### Angular
+
 - Use Angular CLI conventions for file and folder structure
 - Implement services for business logic and dependency injection
 - Use RxJS observables for asynchronous operations
@@ -144,12 +147,13 @@ nx typecheck <project-name>
 
 ### Code Quality Guidelines
 
-- Always provide concise, well-commented code
 - Prefer modern ES6+ syntax for JavaScript/TypeScript
 - Use clear, descriptive variable and function names
 - Prefer Self-Explanatory Code Over Comments
-- Use Comments to Explain Why, Not What
+- If you need to use Comments to Explain Why, Not What
 - Keep Comments Updated
+- Avoid logging information
+- Use `logger` from '@cockpit-app/shared-utils' if logging information is necessary
 
 ### Build System
 
