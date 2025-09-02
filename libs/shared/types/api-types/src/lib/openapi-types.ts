@@ -815,8 +815,16 @@ export interface components {
          * @description Response model for login endpoint.
          */
         LoginResponse: {
-            /** Message */
-            message: string;
+            /** Detail */
+            detail: string;
+        };
+        /**
+         * LogoutResponse
+         * @description Response model for logout endpoint.
+         */
+        LogoutResponse: {
+            /** Detail */
+            detail: string;
         };
         /**
          * PasswordChangeRequest
@@ -833,8 +841,8 @@ export interface components {
          * @description Response model for password change endpoint.
          */
         PasswordChangeResponse: {
-            /** Message */
-            message: string;
+            /** Detail */
+            detail: string;
         };
         /** PaymentMethod */
         PaymentMethod: {
@@ -901,8 +909,8 @@ export interface components {
          * @description Simple response model for refresh endpoint.
          */
         SimpleRefreshResponse: {
-            /** Message */
-            message: string;
+            /** Detail */
+            detail: string;
         };
         /** SimpleTodoProject */
         SimpleTodoProject: {
@@ -1153,8 +1161,8 @@ export interface components {
          * @description Response model for permission assignment endpoint.
          */
         UserPermissionAssignResponse: {
-            /** Message */
-            message: string;
+            /** Detail */
+            detail: string;
             /** Assigned Permissions */
             assigned_permissions: number;
         };
@@ -2581,7 +2589,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["LogoutResponse"];
                 };
             };
             /** @description Validation Error */
