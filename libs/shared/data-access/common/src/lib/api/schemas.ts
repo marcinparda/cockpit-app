@@ -7,7 +7,7 @@ export type LogoutResponse = {
 
 export const simpleRefreshResponseSchema = z
   .object({
-    message: z.string().describe('Message'),
+    detail: z.string().describe('Detail'),
   })
   .transform((data) => data as SimpleRefreshResponse);
 

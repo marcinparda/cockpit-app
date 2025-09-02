@@ -15,10 +15,10 @@ const userInfo = {
   created_at: '2023-01-01T00:00:00Z',
 };
 
-const simpleRefresh = { message: 'Refreshed' };
-const login = { message: 'Logged in' };
+const simpleRefresh = { detail: 'Refreshed' };
+const login = { detail: 'Logged in' };
 const logout = { detail: 'Logged out' };
-const passwordChange = { message: 'Password changed' };
+const passwordChange = { detail: 'Password changed' };
 
 describe('schemas', () => {
   it('validates currentUserSchema', () => {
