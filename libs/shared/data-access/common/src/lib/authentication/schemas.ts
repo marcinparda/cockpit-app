@@ -23,13 +23,13 @@ export const currentUserSchema = z
 
 export const simpleRefreshResponseSchema = z
   .object({
-    message: z.string().describe('Message'),
+    detail: z.string().describe('Detail'),
   })
   .transform((data) => data as SimpleRefreshResponse);
 
 export const loginResponseSchema = z
   .object({
-    message: z.string().describe('Message'),
+    detail: z.string().describe('Detail'),
   })
   .transform((data) => data as LoginResponse);
 
@@ -41,6 +41,6 @@ export const logoutResponseSchema = z
 
 export const passwordChangeResponseSchema = z
   .object({
-    message: z.string().describe('Message'),
+    detail: z.string().describe('Detail'),
   })
   .transform((data) => data as PasswordChangeResponse);

@@ -14,7 +14,6 @@ interface FetcherArgs<ResponseData> {
   withCredentials?: boolean;
 }
 
-// Main fetch function
 export async function fetcher<ResponseData>({
   url,
   responseDataSchema,
@@ -43,6 +42,13 @@ export async function fetcher<ResponseData>({
       redirectUrl.searchParams.set('redirect_uri', window.location.href);
       window.location.href = redirectUrl.toString();
     }
+  }
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(
+      `HTTP ${response.status}: ${response.statusText}${errorText ? ` - ${errorText}` : ''}`,
+    );
   }
 
   const data = await response.json();
