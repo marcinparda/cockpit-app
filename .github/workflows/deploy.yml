@@ -163,16 +163,16 @@ jobs:
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Build and push Docker image for cv
-        if: steps.cv_exists.outputs.exists == 'true'
+      - name: Build and push Docker image for cockpit
+        if: steps.cockpit_exists.outputs.exists == 'true'
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: apps/cv/Dockerfile
+          file: apps/cockpit/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}-cv:latest
-            ghcr.io/${{ github.repository }}-cv:${{ github.sha }}
+            ghcr.io/${{ github.repository }}-cockpit:latest
+            ghcr.io/${{ github.repository }}-cockpit:${{ github.sha }}
           platforms: linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
