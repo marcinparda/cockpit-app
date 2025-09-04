@@ -16,6 +16,9 @@ const appsList = [
       'Track your expenses and manage your budget effectively with your team.',
     url: environments.budgetUrl,
     Icon: DollarSign,
+    disabled: true,
+    disabledTooltipText:
+      'This app is currently work in progress and not available yet.',
   },
 ];
 
@@ -38,6 +41,8 @@ export default function AppsPage() {
             description={project.description}
             url={project.url}
             Icon={project.Icon}
+            disabled={project.disabled}
+            disabledTooltipText={project.disabledTooltipText}
           />
         ))}
       </div>
