@@ -19,7 +19,7 @@ interface AppCardProps {
 export function AppCard({ title, description, url, Icon }: AppCardProps) {
   return (
     <a href={url} className="cursor-pointer">
-      <Card className="bg-background hover:bg-muted w-[350px] transition-all">
+      <Card className="bg-background hover:bg-muted h-[175px] w-[350px] transition-all">
         <CardContent className="py-6">
           <div className="flex gap-5">
             <Icon className="h-10 w-10" />
