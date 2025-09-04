@@ -5,6 +5,7 @@
 # Compiled output
 /dist
 /libs/dist
+/libs/node_modules
 /tmp
 /out-tsc
 /bazel-out

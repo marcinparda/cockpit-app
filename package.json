@@ -10,7 +10,8 @@
     "generate:types": "openapi-typescript ./libs/shared/types/api-types/src/openapi.json -o ./libs/shared/types/api-types/src/lib/openapi-types.ts",
     "fetch-openapi": "curl -o ./libs/shared/types/api-types/src/openapi.json https://api.parda.me/openapi.json",
     "update:types": "npm run fetch-openapi && npm run generate:types",
-    "validate:types": "tsx ./libs/shared/types/api-types/src/validateTypes.ts"
+    "validate:types": "tsx ./libs/shared/types/api-types/src/validateTypes.ts",
+    "start:all": "nx run-many --target=serve --all --parallel"
   },
   "private": true,
   "dependencies": {
