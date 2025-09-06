@@ -7,8 +7,10 @@ import type {
 import { todoItemsService } from '@cockpit-app/todo-data-access';
 import { logger } from '@cockpit-app/shared-utils';
 
+// Shared state - singleton across all instances
 const todoItems = ref<TodoItem[]>([]);
 const isLoading = ref(false);
+let isInitialized = false;
 
 // single shared poller across all consumers of this composable
 let pollerId: ReturnType<typeof setInterval> | null = null;
@@ -30,6 +32,8 @@ function areTodoItemsEqual(a: TodoItem[], b: TodoItem[]): boolean {
 }
 
 async function fetchTodoItems() {
+  if (isLoading.value) return; // Prevent concurrent requests
+  
   isLoading.value = true;
   try {
     const fetchedItems = await todoItemsService.getTodoItems();
@@ -42,6 +46,7 @@ async function fetchTodoItems() {
     logger.error('Failed to load todo items:', error);
   } finally {
     isLoading.value = false;
+    isInitialized = true;
   }
 }
 
@@ -120,7 +125,10 @@ const updateTodoItemTitle = async (todoItemId: number, newTitle: string) => {
 export function useTodoItems() {
   // Fetch items when the composable is used within a component lifecycle
   onMounted(() => {
-    fetchTodoItems();
+    // Only fetch if not already initialized or loading
+    if (!isInitialized && !isLoading.value) {
+      fetchTodoItems();
+    }
   });
 
   function startPolling(intervalMs = 10000) {
@@ -154,5 +162,6 @@ export function useTodoItems() {
     updateTodoItemTitle,
     startPolling,
     stopPolling,
+    isLoading,
   };
 }
