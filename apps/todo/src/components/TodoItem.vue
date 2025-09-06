@@ -83,11 +83,8 @@
         @click.stop
       />
       <label class="flex flex-1 cursor-pointer flex-col pl-1">
-        <span :class="cn('pt-1', item.is_closed ? 'line-through' : '')">
+        <span :class="cn(item.is_closed ? 'line-through' : '')">
           {{ item.name }}
-        </span>
-        <span class="pr-2 text-xs text-gray-500">
-          {{ item.project?.name || ALL_PROJECT_NAME }}
         </span>
       </label>
       <Button
