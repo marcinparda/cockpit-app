@@ -9,11 +9,15 @@ import { logger } from '@cockpit-app/shared-utils';
 import { useRoute } from 'vue-router';
 import { useCurrentUser } from '../composables/useCurrentUser';
 
+// Shared state - singleton across all instances
 const projects = ref<TodoProject[]>([]);
 const isLoading = ref(false);
 const selectedProject = ref<TodoProject | null>(null);
+let isInitialized = false;
 
 async function fetchProjects() {
+  if (isLoading.value) return; // Prevent concurrent requests
+  
   try {
     isLoading.value = true;
     projects.value = await todoProjectsService.getAllTodoProjects();
@@ -21,6 +25,7 @@ async function fetchProjects() {
     logger.error('Failed to load projects:', error);
   } finally {
     isLoading.value = false;
+    isInitialized = true;
   }
 }
 
@@ -72,7 +77,10 @@ export function useProjects() {
   const { currentUser } = useCurrentUser();
 
   onMounted(() => {
-    fetchProjects();
+    // Only fetch if not already initialized or loading
+    if (!isInitialized && !isLoading.value) {
+      fetchProjects();
+    }
   });
 
   const myProjects = computed(() => {
