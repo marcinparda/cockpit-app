@@ -11,11 +11,9 @@
   import { useCurrentUser } from '../composables/useCurrentUser';
   import { useCollaborators } from '../composables/useCollaborators';
   import ManageCollaboratorsDialog from './ManageCollaboratorsDialog.vue';
-  import { useRoute } from 'vue-router';
   import ProjectSelect from './ProjectSelect.vue';
   import { cn } from '@cockpit-app/shared-utils';
 
-  const route = useRoute();
   const { selectedProject } = useProjects();
   const { currentUser } = useCurrentUser();
   const { isCurrentUserOwner, collaborators, fetchCollaborators } =
@@ -41,12 +39,13 @@
   }
 
   watch(
-    () => route.query['project'],
+    selectedProject,
     (newProject) => {
-      if (newProject) {
+      if (newProject && !newProject.is_general) {
         fetchCollaborators();
       }
     },
+    { immediate: true }
   );
 </script>
 <template>
