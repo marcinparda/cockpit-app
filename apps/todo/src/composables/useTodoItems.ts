@@ -12,7 +12,6 @@ import { logger } from '@cockpit-app/shared-utils';
 const todoItems = ref<TodoItem[]>([]);
 const isLoading = ref(false);
 const currentProjectId = ref<number | null>(null);
-let isInitialized = false;
 
 // single shared poller across all consumers of this composable
 let pollerId: ReturnType<typeof setInterval> | null = null;
@@ -48,7 +47,6 @@ async function fetchTodoItemsForProject(projectId?: number) {
     logger.error('Failed to load todo items:', error);
   } finally {
     isLoading.value = false;
-    isInitialized = true;
   }
 }
 
@@ -74,7 +72,6 @@ async function fetchTodoItemsForInbox(projects: TodoProject[]) {
     logger.error('Failed to load todo items for inbox:', error);
   } finally {
     isLoading.value = false;
-    isInitialized = true;
   }
 }
 
@@ -152,7 +149,6 @@ const updateTodoItemTitle = async (todoItemId: number, newTitle: string) => {
 
 function setCurrentProject(projectId: number | null) {
   currentProjectId.value = projectId;
-  isInitialized = false;
 }
 
 async function fetchTodoItems() {

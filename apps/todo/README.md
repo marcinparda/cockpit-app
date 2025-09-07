@@ -17,12 +17,14 @@ A modern todo and project management application built with Vue 3, featuring rea
 ## Key Features
 
 ### Core Functionality
+
 - ✅ **Todo Management** - Create, edit, delete, and organize todos
 - 📁 **Project Organization** - Group todos by projects with dedicated views
 - 👥 **Collaboration** - Multi-user support with collaborator management
 - 📱 **Responsive Design** - Works seamlessly on desktop and mobile
 
 ### Architecture Highlights
+
 - **Composition API** - Modern Vue 3 patterns for reactive components
 - **Pinia Store Pattern** - Centralized state management with TypeScript support
 - **Component-based UI** - Reusable components from `@cockpit-app/shared-vue-ui`
@@ -33,23 +35,25 @@ A modern todo and project management application built with Vue 3, featuring rea
 ```
 apps/todo/src/
 ├── app/
-│   └── App.vue              # Root application component
-├── components/              # Reusable UI components
-│   ├── TodoItem.vue         # Individual todo item
-│   ├── TodoList.vue         # Todo list container
-│   ├── ProjectItem.vue      # Project list item
-│   ├── Sidebar.vue          # Navigation sidebar
-│   └── Header.vue           # App header with navigation
-├── views/                   # Route-level components
-│   ├── TodoListView.vue     # Main todo list page
-│   └── ProjectsView.vue     # Project management page
-├── router/                  # Vue Router configuration
-└── stores/                  # Pinia stores for state management
+│   └── App.vue                      # Root application component
+├── components/                      # Reusable UI components
+│   ├── TodoItem.vue                 # Individual todo item
+│   ├── TodoList.vue                 # Todo list container
+│   ├── ProjectItem.vue              # Project list item
+│   ├── Sidebar.vue                  # Navigation sidebar
+│   └── Header.vue                   # App header with navigation
+├── views/                           # Route-level components
+│   ├── ProjectTodoListView.vue      # Main todo list page
+│   ├── InboxTodoListView.vue        # Inbox todo list page
+│   └── ProjectsView.vue             # Project management page
+├── router/                          # Vue Router configuration
+└── stores/                          # Pinia stores for state management
 ```
 
 ## Development
 
 ### Local Development
+
 ```bash
 # Start todo app in development mode
 nx serve todo
@@ -65,6 +69,7 @@ nx typecheck todo
 ```
 
 ### Production Build
+
 ```bash
 # Build for production
 nx build todo
@@ -90,4 +95,4 @@ The Todo app is containerized using Docker and deployed to production infrastruc
 
 ---
 
-*A production-grade Vue 3 application demonstrating modern frontend architecture and real-world usage patterns.*
+_A production-grade Vue 3 application demonstrating modern frontend architecture and real-world usage patterns._
