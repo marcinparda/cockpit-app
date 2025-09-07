@@ -1931,6 +1931,8 @@ export interface operations {
                 sort_by?: string;
                 /** @description Sort order: asc or desc */
                 order?: string;
+                /** @description Filter items by project ID */
+                project_id?: number | null;
             };
             header?: never;
             path?: never;

@@ -8,10 +8,19 @@ import { TODO_ENDPOINTS } from './endpoints';
 import { todoItemSchema, todoItemsSchema } from './schemas';
 
 export const todoItemsService = {
-  async getTodoItems(skip = 0, limit = 100): Promise<TodoItem[]> {
+  async getTodoItems(skip = 0, limit = 100, projectId?: number): Promise<TodoItem[]> {
     try {
+      const params = new URLSearchParams({
+        skip: skip.toString(),
+        limit: limit.toString(),
+      });
+      
+      if (projectId !== undefined) {
+        params.append('project_id', projectId.toString());
+      }
+      
       return await baseApi.getRequest(
-        `${TODO_ENDPOINTS.items()}?skip=${skip}&limit=${limit}`,
+        `${TODO_ENDPOINTS.items()}?${params.toString()}`,
         todoItemsSchema,
       );
     } catch (error) {
