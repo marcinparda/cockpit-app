@@ -23,7 +23,7 @@
 </script>
 
 <template>
-  <div class="flex h-screen flex-col px-4 py-6 md:flex-row md:px-0 md:py-0">
+  <div class="flex min-h-full flex-col px-4 py-6 md:flex-row md:px-0 md:py-0">
     <div class="hidden md:flex">
       <Sidebar />
     </div>
