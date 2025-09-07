@@ -4,7 +4,7 @@
 </script>
 
 <template>
-  <div class="flex h-screen flex-col">
+  <div class="flex min-h-screen flex-col">
     <Header />
     <RouterView />
   </div>
