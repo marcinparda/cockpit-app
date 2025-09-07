@@ -51,6 +51,22 @@ export async function fetcher<ResponseData>({
     );
   }
 
+  // Handle 204 No Content responses
+  if (response.status === 204) {
+    try {
+      const parsedData = responseDataSchema.parse(undefined);
+      return parsedData;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        throw new Error(
+          '[ZOD ERROR] Fetch response data validation error for 204 response: ' +
+            JSON.stringify(error.message, null, 2),
+        );
+      }
+      throw error;
+    }
+  }
+
   const data = await response.json();
   try {
     const parsedData = responseDataSchema.parse(data);

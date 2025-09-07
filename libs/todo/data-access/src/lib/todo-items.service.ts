@@ -5,7 +5,7 @@ import type {
 } from '@cockpit-app/api-types';
 import { baseApi } from '@cockpit-app/common-shared-data-access';
 import { TODO_ENDPOINTS } from './endpoints';
-import { todoItemSchema, todoItemsSchema } from './schemas';
+import { todoItemSchema, todoItemsSchema, voidResponseSchema } from './schemas';
 
 export const todoItemsService = {
   async getTodoItems(skip = 0, limit = 100, projectId?: number): Promise<TodoItem[]> {
@@ -67,11 +67,11 @@ export const todoItemsService = {
     }
   },
 
-  async deleteTodoItem(id: number): Promise<TodoItem> {
+  async deleteTodoItem(id: number): Promise<void> {
     try {
       return await baseApi.deleteRequest(
         TODO_ENDPOINTS.itemById(id),
-        todoItemSchema,
+        voidResponseSchema,
       );
     } catch (error) {
       console.error('Error deleting todo item:', error);
