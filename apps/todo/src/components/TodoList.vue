@@ -1,29 +1,32 @@
 <script setup lang="ts">
-  import { useRoute } from 'vue-router';
   import { useTodoItems } from '../composables/useTodoItems';
+  import { useProjects } from '../composables/useProjects';
   import TodoItem from './TodoItem.vue';
   import { Divider } from '@cockpit-app/shared-vue-ui';
   import { computed, onMounted } from 'vue';
 
-  const route = useRoute();
-  const { todoItems, startPolling } = useTodoItems();
+  const { selectedProject, projects } = useProjects();
+  const { todoItems, startPolling, isLoading } = useTodoItems(
+    selectedProject,
+    projects,
+  );
 
   onMounted(() => {
     startPolling();
   });
 
-  const projectTodoItems = computed(() => {
-    const projectId = route.query['project']
-      ? Number(route.query['project'])
-      : null;
-    if (projectId) {
-      return todoItems.value.filter((item) => item.project_id === projectId);
-    }
-    return todoItems.value;
-  });
-
   const groupedTodoItems = computed(() => {
-    const items = projectTodoItems.value;
+    const items = todoItems.value;
+
+    if (selectedProject.value) {
+      return [
+        {
+          projectName: selectedProject.value.name,
+          items: items,
+        },
+      ];
+    }
+
     const groups = new Map<
       string,
       { projectName: string; items: typeof items }
@@ -47,9 +50,18 @@
 
 <template>
   <div class="py-8">
+    <div v-if="isLoading" class="flex justify-center py-8">
+      <div class="text-sm text-gray-500">Loading todos...</div>
+    </div>
+
+    <div v-else-if="todoItems.length === 0" class="flex justify-center py-8">
+      <div class="text-sm text-gray-500">No todos found</div>
+    </div>
+
     <template
-      v-for="(group, groupIdx) in groupedTodoItems"
-      :key="`group-${groupIdx}`"
+      v-for="group in groupedTodoItems"
+      v-else
+      :key="`group-${group.projectName}`"
     >
       <div class="mb-6">
         <div class="mb-3">

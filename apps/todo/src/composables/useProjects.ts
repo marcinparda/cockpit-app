@@ -101,11 +101,11 @@ export function useProjects() {
 
   watch(
     [() => router.query['project'], () => projects.value],
-    ([newProjectId, projects]) => {
-      if (newProjectId && projects && projects.length > 0) {
-        const project = projects.find((p) => p.id === Number(newProjectId));
+    ([newProjectId, projectsArray]) => {
+      if (newProjectId && projectsArray && projectsArray.length > 0) {
+        const project = projectsArray.find((p) => p.id === Number(newProjectId));
         selectedProject.value = project || null;
-      } else {
+      } else if (!newProjectId) {
         selectedProject.value = null;
       }
     },

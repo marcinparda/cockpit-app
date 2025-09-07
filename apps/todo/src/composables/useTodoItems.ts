@@ -1,8 +1,9 @@
-import { ref, onMounted, onScopeDispose } from 'vue';
+import { ref, onScopeDispose, watch, type Ref } from 'vue';
 import type {
   TodoItem,
   TodoItemCreate,
   TodoItemUpdate,
+  TodoProject,
 } from '@cockpit-app/api-types';
 import { todoItemsService } from '@cockpit-app/todo-data-access';
 import { logger } from '@cockpit-app/shared-utils';
@@ -10,6 +11,7 @@ import { logger } from '@cockpit-app/shared-utils';
 // Shared state - singleton across all instances
 const todoItems = ref<TodoItem[]>([]);
 const isLoading = ref(false);
+const currentProjectId = ref<number | null>(null);
 let isInitialized = false;
 
 // single shared poller across all consumers of this composable
@@ -31,12 +33,12 @@ function areTodoItemsEqual(a: TodoItem[], b: TodoItem[]): boolean {
   });
 }
 
-async function fetchTodoItems() {
-  if (isLoading.value) return; // Prevent concurrent requests
-  
+async function fetchTodoItemsForProject(projectId?: number) {
+  if (isLoading.value) return;
+
   isLoading.value = true;
   try {
-    const fetchedItems = await todoItemsService.getTodoItems();
+    const fetchedItems = await todoItemsService.getTodoItems(0, 100, projectId);
     const current = todoItems.value;
     const areTodoItemsCached = areTodoItemsEqual(current, fetchedItems);
     if (!areTodoItemsCached) {
@@ -44,6 +46,32 @@ async function fetchTodoItems() {
     }
   } catch (error) {
     logger.error('Failed to load todo items:', error);
+  } finally {
+    isLoading.value = false;
+    isInitialized = true;
+  }
+}
+
+async function fetchTodoItemsForInbox(projects: TodoProject[]) {
+  if (isLoading.value) return;
+
+  isLoading.value = true;
+  try {
+    const promises = projects.map((project) =>
+      todoItemsService.getTodoItems(0, 100, project.id),
+    );
+
+    const results = await Promise.all(promises);
+    const allItems = results.flat();
+    const sortedItems = allItems.sort((a, b) => a.name.localeCompare(b.name));
+
+    const current = todoItems.value;
+    const areTodoItemsCached = areTodoItemsEqual(current, sortedItems);
+    if (!areTodoItemsCached) {
+      todoItems.value = sortedItems;
+    }
+  } catch (error) {
+    logger.error('Failed to load todo items for inbox:', error);
   } finally {
     isLoading.value = false;
     isInitialized = true;
@@ -122,21 +150,55 @@ const updateTodoItemTitle = async (todoItemId: number, newTitle: string) => {
   }
 };
 
-export function useTodoItems() {
-  // Fetch items when the composable is used within a component lifecycle
-  onMounted(() => {
-    // Only fetch if not already initialized or loading
-    if (!isInitialized && !isLoading.value) {
-      fetchTodoItems();
-    }
-  });
+function setCurrentProject(projectId: number | null) {
+  currentProjectId.value = projectId;
+  isInitialized = false;
+}
+
+async function fetchTodoItems() {
+  await fetchTodoItemsForProject(currentProjectId.value || undefined);
+}
+
+export function useTodoItems(
+  selectedProject?: Ref<TodoProject | null>,
+  projects?: Ref<TodoProject[]>,
+) {
+  if (selectedProject && projects) {
+    watch(
+      [selectedProject, projects],
+      async ([newProject, allProjects]) => {
+        if (!allProjects || allProjects.length === 0) {
+          if (!newProject) {
+            todoItems.value = [];
+            return;
+          }
+          return;
+        }
+
+        if (newProject) {
+          setCurrentProject(newProject.id);
+          await fetchTodoItemsForProject(newProject.id);
+        } else {
+          setCurrentProject(null);
+          await fetchTodoItemsForInbox(allProjects);
+        }
+      },
+      { immediate: true },
+    );
+  }
 
   function startPolling(intervalMs = 10000) {
     pollerConsumers += 1;
     if (pollerId) return;
     pollerId = setInterval(() => {
       if (!isLoading.value) {
-        fetchTodoItems();
+        if (currentProjectId.value) {
+          fetchTodoItemsForProject(currentProjectId.value);
+        } else if (projects?.value && projects.value.length > 0) {
+          fetchTodoItemsForInbox(projects.value);
+        } else {
+          fetchTodoItems();
+        }
       }
     }, intervalMs);
   }
@@ -156,6 +218,9 @@ export function useTodoItems() {
   return {
     todoItems,
     fetchTodoItems,
+    fetchTodoItemsForProject,
+    fetchTodoItemsForInbox,
+    setCurrentProject,
     addTodoItem,
     toggleTodoItem,
     deleteTodoItem,
