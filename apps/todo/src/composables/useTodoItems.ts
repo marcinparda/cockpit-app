@@ -173,7 +173,6 @@ export function useTodoItems(
 
         if (newProject) {
           setCurrentProject(newProject.id);
-          debugger;
           await fetchTodoItemsForProject(newProject.id);
         } else {
           setCurrentProject(null);
