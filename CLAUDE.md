@@ -170,6 +170,12 @@ nx typecheck <project-name>
 - Use `docker compose` for multi-container setups
 - Docker setup is only for production, development uses `nx serve` commands
 
+### Comments
+
+- Do not leave commented-out code in the codebase
+- Do not write comments that explain what the code does
+- Use comments to explain why certain decisions were made if not obvious
+
 ## API Integration Pattern
 
 The codebase uses a centralized API types system:

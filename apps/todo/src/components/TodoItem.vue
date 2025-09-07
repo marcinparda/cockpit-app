@@ -4,7 +4,6 @@
   import type { TodoItem } from '@cockpit-app/api-types';
   import { ref } from 'vue';
   import { useTodoItems } from '../composables/useTodoItems';
-  import { ALL_PROJECT_NAME } from '../utils/consts';
 
   const props = defineProps<{
     item: TodoItem;

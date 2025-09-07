@@ -18,15 +18,6 @@
   const groupedTodoItems = computed(() => {
     const items = todoItems.value;
 
-    if (selectedProject.value) {
-      return [
-        {
-          projectName: selectedProject.value.name,
-          items: items,
-        },
-      ];
-    }
-
     const groups = new Map<
       string,
       { projectName: string; items: typeof items }
