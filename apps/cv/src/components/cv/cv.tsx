@@ -27,6 +27,7 @@ export function CV() {
       <KeyAchievements achievements={achievementsData} />
       <Experience experience={experienceData} />
       <Education education={educationData} />
+      <div className="mb-48"></div>
       <PersonalProjects projects={personalProjectsData} />
       <Courses courses={coursesData} />
       <Footer />

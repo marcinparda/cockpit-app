@@ -13,6 +13,27 @@ export interface PersonalProjectsProps {
   projects: PersonalProject[];
 }
 
+function renderCodeLinks(code: string) {
+  const parts = code.split(' & ');
+
+  return parts.map((part, index) => {
+    const isUrl = part.startsWith('http://') || part.startsWith('https://');
+
+    return (
+      <React.Fragment key={index}>
+        {index > 0 && ' & '}
+        {isUrl ? (
+          <a href={part} className="text-sm text-blue-600 underline">
+            {part.replace('https://github.com/marcinparda/', '')}
+          </a>
+        ) : (
+          <span className="text-sm text-blue-600">{part}</span>
+        )}
+      </React.Fragment>
+    );
+  });
+}
+
 export function PersonalProjects({ projects }: PersonalProjectsProps) {
   return (
     <section className="mb-8">
@@ -36,7 +57,7 @@ export function PersonalProjects({ projects }: PersonalProjectsProps) {
           </div>
           <div className="mb-2">
             <span className="text-sm">Code - </span>
-            <span className="text-sm text-blue-600">{project.code}</span>
+            {renderCodeLinks(project.code)}
           </div>
           <ul className="ml-4 list-disc space-y-1 text-xs">
             {project.description.map((desc, i) => (

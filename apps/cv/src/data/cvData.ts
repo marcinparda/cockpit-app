@@ -74,6 +74,7 @@ export const experienceData = [
       'Made key architecture and technical decisions collaboratively with programming team members.',
       'Built map-based features for field management, trip tracking, sampling grids, and lab examination visualization.',
       'Worked with AI tools and workflows to speed up development and prototyping.',
+      'Refactor app from monolith to modular monolith architecture to improve maintainability and scalability.',
     ],
   },
   {
@@ -138,7 +139,7 @@ export const personalProjectsData = [
   {
     name: 'Blog',
     liveUrl: 'https://www.parda.me/blog',
-    code: 'Blog',
+    code: 'https://github.com/marcinparda/parda.me',
     date: '03/2023 - Present',
     description: [
       'Technical blog where I write about web development topics.',
@@ -150,7 +151,7 @@ export const personalProjectsData = [
   {
     name: 'Cockpit',
     liveUrl: 'https://www.cockpit.parda.me',
-    code: 'Cockpit Backend & Cockpit Frontend',
+    code: 'https://github.com/marcinparda/cockpit-api & https://github.com/marcinparda/cockpit-app',
     date: '03/2023 - Present',
     description: [
       'Cockpit project consists of several apps that help boost my productivity and overall quality of life, such as managing my budget and assisting with newsletters.',
