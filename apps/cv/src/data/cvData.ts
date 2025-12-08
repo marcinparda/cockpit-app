@@ -13,7 +13,7 @@ export const headerData: HeaderData = {
 };
 
 export const summaryData = [
-  'Specialist with over 5 years of experience, including over 1.5 years as a senior developer. Acting as a code mentor and technical recruiter. Regular frontend and seasoned speaker at IT meetings and blogger. Active participant in events such as Advent of Code and hackathons. More about me: https://www.parda.me/work',
+  'Specialist with 5.5 years of experience, including over 2 years as a senior developer. Acting as a code mentor and technical recruiter. Regular speaker inside organization and seasoned speaker at external IT meetings and blogger. Active participant in events such as Advent of Code and hackathons. More about me: https://www.parda.me/work',
   '(CV has more than one page, please scroll)',
 ];
 
@@ -49,9 +49,9 @@ export const achievementsData = [
       'As sole developer, I reduced development time from six to four months. We delivered a minimalistic product, and the client returned with more budget for further work.',
   },
   {
-    title: 'Awarded "SPOT award" bonus',
+    title: 'Awarded "SPOT award" & "Consulting People Champion" bonus',
     description:
-      'I led a side project automating CV updates, saving 0.5 hours monthly for each of over 100 employees.',
+      'I led a side project automating CV updates, saving 0.5 hours monthly for each of over 100 employees which resulted in receiving the "SPOT award". Also I was awarded "Consulting People Champion" award for my dedication to mentoring and supporting colleagues.',
   },
   {
     title: 'Increased employment',
@@ -62,14 +62,29 @@ export const achievementsData = [
 
 export const experienceData = [
   {
+    title: 'Senior Frontend Developer + Backend (Python)',
+    company: 'Agro (Second Job)',
+    date: '09/2025 - Present',
+    location: 'Remote',
+    description: [
+      'Developed a full-stack agriculture management application with Django REST Framework and React TypeScript.',
+      'Implemented Progressive Web App (PWA) with offline mode support, enabling field work without internet connectivity.',
+      'Integrated Leaflet maps with offline tile caching for geospatial field management and visualization.',
+      'Worked with Django and PostGIS for backend GIS functionality, handling spatial data and queries.',
+      'Made key architecture and technical decisions collaboratively with programming team members.',
+      'Built map-based features for field management, trip tracking, sampling grids, and lab examination visualization.',
+      'Worked with AI tools and workflows to speed up development and prototyping.',
+    ],
+  },
+  {
     title: 'Senior Developer',
-    company: 'EY GDS',
-    details: 'Consulting company, BIG4',
+    company: 'EY GDS (BIG4)',
     date: '11/2023 - Present',
     location: 'Warsaw, Poland',
     description: [
       'Successfully led a team developing internal applications; handled requirements gathering with managers, authored user stories, assigned tasks, set priorities for architecture and complex feature development, and facilitated a smooth project handover to management.',
       'Spearheaded the migration from a broken microfrontend solution to a monorepo architecture for five projects, enabling easier code sharing, simplifying new project creation, and reducing deployment times from ~40min to ~10min.',
+      'Worked with a system that handles changes in real time communication with backend via SignalR, ensuring seamless data updates and user interactions.',
       'Orchestrated migration initiatives from legacy frameworks and infrastructure. Delivered React upgrade and a full UI overhaul across all pages, both delivered on schedule and resulting in zero major bugs or design inconsistencies.',
       'Created and maintained a detailed frontend developer competence matrix, accelerating the on-boarding and learning skills assessment for employees using a technical problem-solving skills.',
       'Coordinated knowledge-sharing meetings within the frontend & design department, fostering learning and best practices across teams by participating in industry events and community.',
