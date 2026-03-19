@@ -1,6 +1,6 @@
 import { useUser } from '@cockpit-app/shared-react-data-access';
 import { AppSkeleton } from './skeleton';
-import { CV } from '../components/cv/cv';
+import { CVEditor } from '../components/editor/CVEditor';
 
 export default function App() {
   const {
@@ -29,5 +29,5 @@ export default function App() {
     return <AppSkeleton />;
   }
 
-  return <CV />;
+  return <CVEditor />;
 }

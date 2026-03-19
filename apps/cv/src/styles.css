@@ -132,46 +132,70 @@
 
 @media print {
   @page {
-    margin: 0.1in;
-    margin-left: 0in;
-    margin-right: 0in;
+    margin: 0.5in;
     size: A4;
-    /* Remove default headers and footers */
-    @top-left {
-      content: '';
-    }
-    @top-center {
-      content: '';
-    }
-    @top-right {
-      content: '';
-    }
-    @bottom-left {
-      content: '';
-    }
-    @bottom-center {
-      content: '';
-    }
-    @bottom-right {
-      content: '';
-    }
   }
 
-  body {
+  * {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  body, html {
     margin: 0 !important;
     padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     color-adjust: exact;
-    /* Hide browser's default print headers/footers */
-    orphans: 0;
-    widows: 0;
   }
 
-  /* Force minimal margins on html and body */
-  html {
-    margin: 0 !important;
-    padding: 0 !important;
+  #root {
+    overflow: visible !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  #root > * {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Completely override panel layout for print */
+  [data-panel-group] {
+    display: block !important;
+    height: auto !important;
+    width: 100% !important;
+  }
+
+  [data-panel-group-id] {
+    display: block !important;
+    height: auto !important;
+    width: 100% !important;
+    position: static !important;
+  }
+
+  /* Hide first panel (editor) */
+  [data-panel-id]:first-child {
+    display: none !important;
+  }
+
+  /* Hide separator */
+  [data-panel-resize-handle-id] {
+    display: none !important;
+  }
+
+  /* Show only second panel (preview) at full width */
+  [data-panel-id]:last-child {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    position: static !important;
   }
 
   /* Hide any potential print artifacts */
