@@ -38,10 +38,16 @@ export interface PersonalProject {
   description: string[];
 }
 
+export interface Skill {
+  name: string;
+  years: number;
+  description: string;
+}
+
 export interface CVData {
   header: HeaderData;
   summary: string[];
-  skills: string[];
+  skills: Skill[];
   achievements: Achievement[];
   experience: Experience[];
   education: Education[];

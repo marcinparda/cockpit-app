@@ -5,7 +5,15 @@ import { CVEditorPanel } from './CVEditorPanel';
 import { GripVertical } from 'lucide-react';
 
 export function CVEditor() {
-  const { cvData, setCVData, resetToDefault } = useCVData();
+  const { cvData, setCVData, resetToDefault, isLoading } = useCVData();
+
+  if (isLoading) {
+    return (
+      <div className="h-screen w-full bg-slate-50 flex items-center justify-center">
+        <div className="text-slate-400 text-sm">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen w-full bg-slate-50">

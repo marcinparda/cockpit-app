@@ -1,8 +1,9 @@
 import { Badge } from '@cockpit-app/shared-react-ui';
+import { Skill } from '../../../types/cv.types';
 import { SectionTitle } from './SectionTitle';
 
 export interface SkillsProps {
-  skills: string[];
+  skills: Skill[];
 }
 
 /**
@@ -15,7 +16,7 @@ export function Skills({ skills }: SkillsProps) {
       <div className="flex flex-wrap gap-2">
         {skills.map((skill, index) => (
           <Badge key={index} variant="secondary" className="text-xs">
-            {skill}
+            {skill.name}
           </Badge>
         ))}
       </div>

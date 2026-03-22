@@ -16,7 +16,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical, Plus, Trash2 } from 'lucide-react';
-import { CVData } from '../../../types/cv.types';
+import { CVData, Skill } from '../../../types/cv.types';
 
 interface SkillsEditorProps {
   cvData: CVData;
@@ -29,7 +29,7 @@ function SortableSkillItem({
   onUpdate,
   onRemove,
 }: {
-  skill: string;
+  skill: Skill;
   index: number;
   onUpdate: (value: string) => void;
   onRemove: () => void;
@@ -57,7 +57,7 @@ function SortableSkillItem({
       </button>
       <input
         type="text"
-        value={skill}
+        value={skill.name}
         onChange={(e) => onUpdate(e.target.value)}
         className="flex-1 rounded border-0 px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
       />
@@ -93,12 +93,12 @@ export function SkillsEditor({ cvData, setCVData }: SkillsEditorProps) {
 
   function updateSkill(index: number, value: string) {
     const newSkills = [...cvData.skills];
-    newSkills[index] = value;
+    newSkills[index] = { ...newSkills[index], name: value };
     setCVData({ ...cvData, skills: newSkills });
   }
 
   function addSkill() {
-    setCVData({ ...cvData, skills: [...cvData.skills, ''] });
+    setCVData({ ...cvData, skills: [...cvData.skills, { name: '', years: 0, description: '' }] });
   }
 
   function removeSkill(index: number) {

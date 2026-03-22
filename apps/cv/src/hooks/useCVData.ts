@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { CVData } from '../types/cv.types';
 import {
   headerData,
@@ -10,8 +11,7 @@ import {
   personalProjectsData,
   coursesData,
 } from '../data/cvData';
-
-const STORAGE_KEY = 'cv-editor-data';
+import { getCVData, putCVData } from '../services/cvStoreApi';
 
 const defaultCVData: CVData = {
   header: headerData,
@@ -25,25 +25,45 @@ const defaultCVData: CVData = {
 };
 
 export function useCVData() {
-  const [cvData, setCVData] = useState<CVData>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        return JSON.parse(stored);
-      } catch {
-        return defaultCVData;
-      }
-    }
-    return defaultCVData;
+  const [cvData, setCVData] = useState<CVData>(defaultCVData);
+  const isInitialLoadDone = useRef(false);
+  const skipNextSave = useRef(false);
+
+  const { data: storedData, isLoading } = useQuery({
+    queryKey: ['cv-store-data'],
+    queryFn: getCVData,
+    staleTime: Infinity,
   });
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cvData));
-  }, [cvData]);
+    if (!isLoading && !isInitialLoadDone.current) {
+      isInitialLoadDone.current = true;
+      if (storedData) {
+        skipNextSave.current = true;
+        setCVData(storedData);
+      }
+    }
+  }, [isLoading, storedData]);
+
+  const { mutate: saveData } = useMutation({
+    mutationFn: putCVData,
+  });
+
+  useEffect(() => {
+    if (!isInitialLoadDone.current) return;
+    if (skipNextSave.current) {
+      skipNextSave.current = false;
+      return;
+    }
+    const timer = setTimeout(() => {
+      saveData(cvData);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [cvData, saveData]);
 
   function resetToDefault() {
     setCVData(defaultCVData);
   }
 
-  return { cvData, setCVData, resetToDefault };
+  return { cvData, setCVData, resetToDefault, isLoading };
 }
