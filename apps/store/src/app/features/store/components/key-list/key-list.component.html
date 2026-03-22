@@ -21,11 +21,6 @@
     </div>
   } @else if (error) {
     <p-message severity="error" [text]="error"></p-message>
-  } @else if (prefixNodes.length === 0) {
-    <div class="empty-state">
-      <i class="pi pi-inbox empty-icon"></i>
-      <p>No prefixes found.</p>
-    </div>
   } @else {
     <div class="tree">
       @for (prefix of prefixNodes; track prefix.name) {
@@ -89,13 +84,96 @@
                   }
                 </div>
               }
-              @if (prefix.categories.length === 0 && !prefix.loading) {
-                <div class="tree-row key-row">
+
+              @if (prefix.categories.length === 0 && !prefix.loading && !prefix.addingCategory) {
+                <div class="tree-row category-row muted-row">
                   <span class="node-label muted">No categories</span>
+                </div>
+              }
+
+              @if (!prefix.addingCategory) {
+                <div class="tree-row add-category-row" (click)="startAddCategory(prefix, $event)">
+                  <i class="pi pi-plus node-icon"></i>
+                  <span class="node-label">New Category</span>
+                </div>
+              }
+
+              @if (prefix.addingCategory) {
+                <div class="tree-row add-input-row category-input-row">
+                  <i class="pi pi-folder node-icon"></i>
+                  <input
+                    pInputText
+                    type="text"
+                    [(ngModel)]="prefix.newCategoryInput"
+                    placeholder="Category name..."
+                    class="add-input"
+                    (keydown.enter)="confirmAddCategory(prefix)"
+                    (keydown.escape)="cancelAddCategory(prefix)"
+                  />
+                  <button
+                    type="button"
+                    pButton
+                    icon="pi pi-check"
+                    title="Confirm"
+                    severity="success"
+                    text
+                    size="small"
+                    (click)="confirmAddCategory(prefix)"
+                  ></button>
+                  <button
+                    type="button"
+                    pButton
+                    icon="pi pi-times"
+                    title="Cancel"
+                    severity="secondary"
+                    text
+                    size="small"
+                    (click)="cancelAddCategory(prefix)"
+                  ></button>
                 </div>
               }
             </div>
           }
+        </div>
+      }
+
+      @if (addingPrefix) {
+        <div class="tree-row add-input-row prefix-input-row">
+          <i class="pi pi-server node-icon"></i>
+          <input
+            pInputText
+            type="text"
+            [(ngModel)]="newPrefixInput"
+            placeholder="Prefix name..."
+            class="add-input"
+            (keydown.enter)="confirmAddPrefix()"
+            (keydown.escape)="cancelAddPrefix()"
+          />
+          <button
+            type="button"
+            pButton
+            icon="pi pi-check"
+            title="Confirm"
+            severity="success"
+            text
+            size="small"
+            (click)="confirmAddPrefix()"
+          ></button>
+          <button
+            type="button"
+            pButton
+            icon="pi pi-times"
+            title="Cancel"
+            severity="secondary"
+            text
+            size="small"
+            (click)="cancelAddPrefix()"
+          ></button>
+        </div>
+      } @else {
+        <div class="tree-row add-prefix-row" (click)="startAddPrefix($event)">
+          <i class="pi pi-plus node-icon"></i>
+          <span class="node-label">New Prefix</span>
         </div>
       }
     </div>

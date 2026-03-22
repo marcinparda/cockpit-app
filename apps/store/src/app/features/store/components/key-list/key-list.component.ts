@@ -8,9 +8,11 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { SkeletonModule } from 'primeng/skeleton';
 import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
 import { StoreApiService } from '../../services/store-api.service';
 
 interface CategoryNode {
@@ -25,12 +27,14 @@ interface PrefixNode {
   categories: CategoryNode[];
   expanded: boolean;
   loading: boolean;
+  addingCategory: boolean;
+  newCategoryInput: string;
 }
 
 @Component({
   selector: 'app-key-list',
   standalone: true,
-  imports: [NgClass, ButtonModule, SkeletonModule, MessageModule],
+  imports: [NgClass, FormsModule, ButtonModule, SkeletonModule, MessageModule, InputTextModule],
   templateUrl: './key-list.component.html',
   styleUrls: ['./key-list.component.css'],
 })
@@ -45,6 +49,9 @@ export class KeyListComponent implements OnInit, OnChanges {
   prefixNodes: PrefixNode[] = [];
   loadingPrefixes = false;
   error: string | null = null;
+
+  addingPrefix = false;
+  newPrefixInput = '';
 
   constructor(private storeApi: StoreApiService) {}
 
@@ -62,6 +69,7 @@ export class KeyListComponent implements OnInit, OnChanges {
   }
 
   togglePrefix(node: PrefixNode): void {
+    if (node.addingCategory) return;
     if (!node.expanded && node.categories.length === 0) {
       node.loading = true;
       this.storeApi.listCategories(node.name).subscribe({
@@ -115,6 +123,60 @@ export class KeyListComponent implements OnInit, OnChanges {
     return fullKey.split(':').pop() ?? fullKey;
   }
 
+  startAddPrefix(event: MouseEvent): void {
+    event.stopPropagation();
+    this.addingPrefix = true;
+    this.newPrefixInput = '';
+  }
+
+  confirmAddPrefix(): void {
+    const name = this.newPrefixInput.trim();
+    if (!name) return;
+    if (!this.prefixNodes.find((p) => p.name === name)) {
+      this.prefixNodes.push({
+        name,
+        categories: [],
+        expanded: false,
+        loading: false,
+        addingCategory: false,
+        newCategoryInput: '',
+      });
+    }
+    this.addingPrefix = false;
+    this.newPrefixInput = '';
+  }
+
+  cancelAddPrefix(): void {
+    this.addingPrefix = false;
+    this.newPrefixInput = '';
+  }
+
+  startAddCategory(prefix: PrefixNode, event: MouseEvent): void {
+    event.stopPropagation();
+    prefix.addingCategory = true;
+    prefix.newCategoryInput = '';
+  }
+
+  confirmAddCategory(prefix: PrefixNode): void {
+    const name = prefix.newCategoryInput.trim();
+    if (!name) return;
+    if (!prefix.categories.find((c) => c.name === name)) {
+      prefix.categories.push({
+        name,
+        keys: [],
+        expanded: false,
+        loading: false,
+      });
+    }
+    prefix.addingCategory = false;
+    prefix.newCategoryInput = '';
+  }
+
+  cancelAddCategory(prefix: PrefixNode): void {
+    prefix.addingCategory = false;
+    prefix.newCategoryInput = '';
+  }
+
   private loadPrefixes(): void {
     this.loadingPrefixes = true;
     this.storeApi.listPrefixes().subscribe({
@@ -124,6 +186,8 @@ export class KeyListComponent implements OnInit, OnChanges {
           categories: [],
           expanded: false,
           loading: false,
+          addingCategory: false,
+          newCategoryInput: '',
         }));
         this.loadingPrefixes = false;
       },
