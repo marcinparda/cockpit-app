@@ -5,7 +5,7 @@ import { CVEditorPanel } from './CVEditorPanel';
 import { GripVertical } from 'lucide-react';
 
 export function CVEditor() {
-  const { cvData, setCVData, resetToDefault, isLoading } = useCVData();
+  const { cvData, setCVData, resetToDefault, saveToApi, isSaving, isLoading } = useCVData();
 
   if (isLoading) {
     return (
@@ -23,6 +23,8 @@ export function CVEditor() {
             cvData={cvData}
             setCVData={setCVData}
             resetToDefault={resetToDefault}
+            saveToApi={saveToApi}
+            isSaving={isSaving}
           />
         </Panel>
         <Separator className="group relative w-2 bg-slate-200 transition-colors hover:bg-blue-400 print:hidden">

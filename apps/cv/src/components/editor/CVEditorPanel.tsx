@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, Save } from 'lucide-react';
 import { CVData } from '../../types/cv.types';
 import { HeaderEditor } from './sections/HeaderEditor';
 import { SummaryEditor } from './sections/SummaryEditor';
@@ -14,6 +14,8 @@ interface CVEditorPanelProps {
   cvData: CVData;
   setCVData: (data: CVData) => void;
   resetToDefault: () => void;
+  saveToApi: () => void;
+  isSaving: boolean;
 }
 
 type Tab =
@@ -30,6 +32,8 @@ export function CVEditorPanel({
   cvData,
   setCVData,
   resetToDefault,
+  saveToApi,
+  isSaving,
 }: CVEditorPanelProps) {
   const [activeTab, setActiveTab] = useState<Tab>('header');
 
@@ -49,13 +53,25 @@ export function CVEditorPanel({
       <div className="border-b border-slate-200 bg-slate-50 px-6 py-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-slate-800">CV Editor</h2>
-          <button
-            onClick={resetToDefault}
-            className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
-          >
-            <RotateCcw className="h-4 w-4" />
-            Reset
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={saveToApi}
+              disabled={isSaving}
+              className="flex items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+            >
+              <Save className="h-4 w-4" />
+              {isSaving ? 'Saving...' : 'Save'}
+            </button>
+            <button
+              type="button"
+              onClick={resetToDefault}
+              className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+            >
+              <RotateCcw className="h-4 w-4" />
+              Reset
+            </button>
+          </div>
         </div>
       </div>
 

@@ -27,7 +27,6 @@ const defaultCVData: CVData = {
 export function useCVData() {
   const [cvData, setCVData] = useState<CVData>(defaultCVData);
   const isInitialLoadDone = useRef(false);
-  const skipNextSave = useRef(false);
 
   const { data: storedData, isLoading } = useQuery({
     queryKey: ['cv-store-data'],
@@ -39,31 +38,22 @@ export function useCVData() {
     if (!isLoading && !isInitialLoadDone.current) {
       isInitialLoadDone.current = true;
       if (storedData) {
-        skipNextSave.current = true;
         setCVData(storedData);
       }
     }
   }, [isLoading, storedData]);
 
-  const { mutate: saveData } = useMutation({
+  const { mutate: saveData, isPending: isSaving } = useMutation({
     mutationFn: putCVData,
   });
 
-  useEffect(() => {
-    if (!isInitialLoadDone.current) return;
-    if (skipNextSave.current) {
-      skipNextSave.current = false;
-      return;
-    }
-    const timer = setTimeout(() => {
-      saveData(cvData);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [cvData, saveData]);
+  function saveToApi() {
+    saveData(cvData);
+  }
 
   function resetToDefault() {
     setCVData(defaultCVData);
   }
 
-  return { cvData, setCVData, resetToDefault, isLoading };
+  return { cvData, setCVData, resetToDefault, saveToApi, isSaving, isLoading };
 }
