@@ -6,6 +6,7 @@ export const environments = {
   loginUrl: 'http://localhost:4202',
   cockpitUrl: 'http://localhost:4203',
   cvUrl: 'http://localhost:4204',
+  storeUrl: 'http://localhost:4205',
   apiUrl: 'http://localhost:8000',
   mode: mode.development,
 };

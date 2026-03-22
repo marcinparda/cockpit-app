@@ -201,6 +201,30 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      # Check if store build output exists
+      - name: Check if store build output exists
+        id: store_exists
+        run: |
+          if [ -d "dist/apps/store" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build and push Docker image for store
+        if: steps.store_exists.outputs.exists == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/store/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}-store:latest
+            ghcr.io/${{ github.repository }}-store:${{ github.sha }}
+          platforms: linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
   deploy-to-raspberry:
     needs: [validate-types, build-test-and-push]
     uses: ./.github/workflows/deploy-to-production.yml

@@ -1,6 +1,6 @@
 import { AppCard } from '@cockpit-app/cockpit-ui';
 import { TypographyH1, TypographyP } from '@cockpit-app/shared-react-ui';
-import { CheckSquare, DollarSign, User } from 'lucide-react';
+import { CheckSquare, Database, DollarSign, User } from 'lucide-react';
 import { environments } from '@cockpit-app/shared-utils';
 
 const appsList = [
@@ -15,6 +15,12 @@ const appsList = [
     description: 'Professional CV and resume showcase with detailed experience and skills.',
     url: environments.cvUrl,
     Icon: User,
+  },
+  {
+    name: 'Store',
+    description: 'Browse and manage Redis store key-value entries.',
+    url: environments.storeUrl,
+    Icon: Database,
   },
   {
     name: 'Budget Tracker',

@@ -40,7 +40,7 @@ jobs:
         run: npm ci
 
       - name: Build all apps
-        run: npx nx run-many --target=lint,build,test --projects=ai-budget,todo,login,cockpit --parallel=4
+        run: npx nx run-many --target=lint,build,test --projects=ai-budget,todo,login,cockpit,store --parallel=5
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -108,6 +108,21 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}-cockpit:latest
             ghcr.io/${{ github.repository }}-cockpit:${{ github.sha }}
+          platforms: linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Build and push Docker image for store
+      - name: Build and push Docker image for store
+        if: ${{ always() }}
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/store/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}-store:latest
+            ghcr.io/${{ github.repository }}-store:${{ github.sha }}
           platforms: linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max

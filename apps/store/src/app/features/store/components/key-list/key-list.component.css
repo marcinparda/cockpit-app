@@ -1,0 +1,155 @@
+:host {
+  display: contents;
+}
+
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  height: 100%;
+  background-color: #1e293b;
+  border-right: 1px solid #334155;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #334155;
+  background: #0f172a;
+  flex-shrink: 0;
+}
+
+.sidebar-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.skeleton-list {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 2rem;
+  color: #64748b;
+  text-align: center;
+  gap: 0.75rem;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+}
+
+.tree {
+  padding: 0.5rem 0;
+  flex: 1;
+}
+
+.tree-node {
+  display: flex;
+  flex-direction: column;
+}
+
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 4px;
+  margin: 1px 0.25rem;
+  transition: background 0.15s;
+}
+
+.tree-row:hover {
+  background: #334155;
+}
+
+.prefix-row {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.category-row {
+  color: #7dd3fc;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding-left: 1.5rem;
+}
+
+.key-row {
+  color: #cbd5e1;
+  font-size: 0.8rem;
+  padding-left: 3rem;
+}
+
+.key-row.selected {
+  background: #1d4ed8;
+  color: #e2e8f0;
+}
+
+.key-row.selected:hover {
+  background: #2563eb;
+}
+
+.tree-children {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-icon {
+  font-size: 0.65rem;
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.node-icon {
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.node-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.node-label.muted {
+  color: #475569;
+  font-style: italic;
+}
+
+.loading-icon {
+  font-size: 0.75rem;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.add-entry-row {
+  color: #34d399;
+  opacity: 0.6;
+  border: 1px dashed transparent;
+}
+
+.add-entry-row:hover {
+  background: #064e3b22;
+  border-color: #34d39940;
+  opacity: 1;
+}

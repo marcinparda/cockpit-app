@@ -4,57 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-CockpitApp is a multi-application monorepo built with Nx that includes several web applications with a comprehensive type-safe API integration system. The project uses Angular, Vue and React applications within the same workspace.
-
-## Architecture
-
-### Monorepo Structure
-
-- **Apps**: Located in `apps/` directory
-  - `cockpit`: React app (main dashboard)
-  - `todo`: Vue 3 app with Pinia state management
-  - `cv`: React app
-  - `login`: React app
-  - `ai-budget`: Angular app
-- **Libraries**: Located in `libs/` directory
-  - `shared/types/api-types`: Auto-generated OpenAPI TypeScript types
-  - `shared/ui/react`: React UI components
-  - `shared/ui/vue`: Vue UI components
-  - `shared/utils`: Shared utilities
-  - `todo/data-access`: Todo-specific data access layer
-
-### Frontend Frameworks
-
-- **Angular Applications**: Use basic Angular
-- **Vue 3 Applications**: Use Pinia for state management, Vue Router, and PrimeVue UI
-- **React Applications**: Use React Query (@tanstack/react-query), React Router, and custom UI components
-- **Styling**: TailwindCSS 4.x with custom configurations
+CockpitApp is a multi-application monorepo built with Nx that includes several web applications with a comprehensive type-safe API integration system.
 
 ### API Integration
 
 - **Type Generation**: Auto-generated from OpenAPI specification at `https://api.parda.me/openapi.json`
 - **Type Library**: `@cockpit-app/api-types` provides type-safe API integration
-- **Location**: `libs/shared/types/api-types/src/lib/openapi-types.ts`
 
-## Development Commands
-
-### Core Development
-
-```bash
-# Start development server (all apps)
-npm start
-
-# Build all applications and libraries
-npm run build
-
-# Watch mode for development builds
-npm run watch
-
-# Run all tests
-npm test
-```
-
-### API Type Management
+#### API Type Management
 
 ```bash
 # Fetch latest OpenAPI specification
@@ -69,48 +26,6 @@ npm run update:types
 # Validate generated types
 npm run validate:types
 ```
-
-### Nx-Specific Commands
-
-```bash
-# Run specific app in development
-nx serve <app-name>
-
-# Build specific project
-nx build <app-name>
-
-# Run tests for specific project
-nx test <project-name>
-
-# Lint specific project
-nx lint <project-name>
-
-# Check project dependencies
-nx show project <project-name> --web
-
-# Type check specific project
-nx typecheck <project-name>
-```
-
-### Testing
-
-- **React Apps**: Use Vitest with React Testing Library
-- **Vue Apps**: Use Vitest with Vue Test Utils
-- **E2E**: Playwright for end-to-end testing
-
-## Key Configuration Files
-
-- `nx.json`: Nx workspace configuration with build caching and task orchestration
-- `package.json`: Root package configuration with workspace scripts
-- Individual project configurations in `apps/*/project.json` and `libs/*/project.json`
-
-## Development Notes
-
-### Type Safety
-
-- Never manually edit `openapi-types.ts` - it's auto-generated
-- For API requests and responses, always import types from `@cockpit-app/api-types`
-- Don't use `any` type, prefer `unknown` or specific types
 
 ### Framework-Specific Patterns
 
@@ -139,42 +54,15 @@ nx typecheck <project-name>
 - Prefer OnPush change detection for performance
 - Write unit tests with Jasmine and Karma
 
-### Nx Workspace Conventions
-
-- Use proper imports from `@cockpit-app` libraries
-- Do not use relative imports in apps and libs
-- When generating new js/ts libraries/apps, use vite and vitest
-
 ### Code Quality Guidelines
 
-- Prefer modern ES6+ syntax for JavaScript/TypeScript
-- Use clear, descriptive variable and function names
-- Prefer Self-Explanatory Code Over Comments
 - If you need to use Comments to Explain Why, Not What
 - Keep Comments Updated
-- Avoid logging information
 - Use `logger` from '@cockpit-app/shared-utils' if logging information is necessary
-
-### Build System
-
-- All projects use Vite as the build tool
-- Nx handles dependency graph and build orchestration
-- TypeScript strict mode is enabled across all projects
-- ESLint with TypeScript configuration for code quality
 
 ### Deployment
 
-- Use Docker for containerization
-- Use GitHub Actions for CI/CD pipelines
-- Each app should have its own Dockerfile
-- Use `docker compose` for multi-container setups
-- Docker setup is only for production, development uses `nx serve` commands
-
-### Comments
-
-- Do not leave commented-out code in the codebase
-- Do not write comments that explain what the code does
-- Use comments to explain why certain decisions were made if not obvious
+- See .github dir
 
 ## API Integration Pattern
 

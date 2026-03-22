@@ -1,0 +1,87 @@
+{
+  "name": "store",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/store/src",
+  "prefix": "app",
+  "generators": {},
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/store",
+        "index": "apps/store/src/index.html",
+        "main": "apps/store/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/store/tsconfig.app.json",
+        "assets": [
+          "apps/store/src/favicon.ico",
+          "apps/store/src/assets",
+          {
+            "glob": "**/*",
+            "input": "node_modules/monaco-editor/min",
+            "output": "assets/monaco-editor/min"
+          }
+        ],
+        "styles": [
+          "apps/store/src/styles.css",
+          "node_modules/primeicons/primeicons.css"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "4mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "port": 4205
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "store:build:production"
+        },
+        "development": {
+          "buildTarget": "store:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "store:build"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "configFile": "apps/store/vite.config.mts"
+      }
+    }
+  }
+}

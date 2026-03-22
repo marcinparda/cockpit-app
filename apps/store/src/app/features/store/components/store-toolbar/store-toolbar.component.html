@@ -1,0 +1,39 @@
+<div class="toolbar">
+  <div class="toolbar-selects">
+    <div class="select-group">
+      <label>Prefix</label>
+      <p-select
+        [options]="prefixes"
+        [(ngModel)]="selectedPrefix"
+        placeholder="Select prefix..."
+        [loading]="loadingPrefixes"
+        [disabled]="loadingPrefixes"
+        (onChange)="onPrefixChange($event.value)"
+        styleClass="toolbar-select"
+      ></p-select>
+    </div>
+
+    <div class="select-group">
+      <label>Category</label>
+      <p-select
+        [options]="categories"
+        [(ngModel)]="selectedCategory"
+        placeholder="Select category..."
+        [loading]="loadingCategories"
+        [disabled]="!selectedPrefix || loadingCategories"
+        (onChange)="onCategoryChange($event.value)"
+        styleClass="toolbar-select"
+      ></p-select>
+    </div>
+  </div>
+
+  <div class="toolbar-actions">
+    <button
+      pButton
+      label="New Entry"
+      icon="pi pi-plus"
+      severity="success"
+      (click)="onNew()"
+    ></button>
+  </div>
+</div>
