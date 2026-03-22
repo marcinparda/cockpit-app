@@ -6,7 +6,7 @@ import {
   StoreEnvelope,
   StorePatchRequest,
   StoreWriteRequest,
-} from 'apps/store/src/app/features/store/models/store.models';
+} from '../models/store.models';
 
 @Injectable({
   providedIn: 'root',

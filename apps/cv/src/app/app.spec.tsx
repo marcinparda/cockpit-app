@@ -9,6 +9,10 @@ vi.mock('@cockpit-app/shared-react-data-access', () => ({
   }),
 }));
 
+vi.mock('../components/editor/CVEditor', () => ({
+  CVEditor: () => <div data-testid="cv-editor" />,
+}));
+
 describe('App', () => {
   it('should render successfully', () => {
     const { baseElement } = render(<App />);
