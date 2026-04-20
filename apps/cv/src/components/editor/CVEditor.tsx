@@ -1,13 +1,66 @@
+import { useState } from 'react';
 import { Panel, Group, Separator } from 'react-resizable-panels';
+import { GripVertical } from 'lucide-react';
 import { useCVData } from '../../hooks/useCVData';
+import { usePresets } from '../../hooks/usePresets';
 import { CVPreview } from './CVPreview';
 import { CVEditorPanel } from './CVEditorPanel';
-import { GripVertical } from 'lucide-react';
+import { NewPresetModal } from '../NewPresetModal';
+import { UnsavedChangesDialog } from '../UnsavedChangesDialog';
+import { Preset } from '../../types/preset.types';
 
 export function CVEditor() {
-  const { cvData, setCVData, resetToDefault, saveToApi, isSaving, isLoading } = useCVData();
+  const {
+    presets,
+    selectedPresetId,
+    isLoading: presetsLoading,
+    selectPreset,
+    createPreset,
+    archivePreset,
+  } = usePresets();
 
-  if (isLoading) {
+  const { cvData, setCVData, resetToDefault, saveToApi, isSaving, isLoading, markDirty, isDirty, clearDirty } =
+    useCVData(selectedPresetId);
+
+  const [pendingPresetId, setPendingPresetId] = useState<string | null>(null);
+  const [isUnsavedDialogOpen, setIsUnsavedDialogOpen] = useState(false);
+  const [isNewPresetModalOpen, setIsNewPresetModalOpen] = useState(false);
+
+  function handleSelectPreset(id: string) {
+    if (isDirty) {
+      setPendingPresetId(id);
+      setIsUnsavedDialogOpen(true);
+    } else {
+      selectPreset(id);
+    }
+  }
+
+  function handleDiscardAndSwitch() {
+    if (pendingPresetId) {
+      clearDirty();
+      selectPreset(pendingPresetId);
+    }
+    setPendingPresetId(null);
+    setIsUnsavedDialogOpen(false);
+  }
+
+  function handleCancelSwitch() {
+    setPendingPresetId(null);
+    setIsUnsavedDialogOpen(false);
+  }
+
+  async function handleCreatePreset(label: string, description?: string) {
+    const newPreset: Preset = await createPreset(label, description);
+    selectPreset(newPreset.id);
+    setIsNewPresetModalOpen(false);
+  }
+
+  const pendingPresetLabel =
+    pendingPresetId === 'base'
+      ? 'Base'
+      : (presets.find((p) => p.id === pendingPresetId)?.label ?? pendingPresetId ?? '');
+
+  if (isLoading || presetsLoading) {
     return (
       <div className="h-screen w-full bg-slate-50 flex items-center justify-center">
         <div className="text-slate-400 text-sm">Loading...</div>
@@ -25,6 +78,13 @@ export function CVEditor() {
             resetToDefault={resetToDefault}
             saveToApi={saveToApi}
             isSaving={isSaving}
+            markDirty={markDirty}
+            presets={presets}
+            selectedPresetId={selectedPresetId}
+            isDirty={isDirty}
+            onSelectPreset={handleSelectPreset}
+            onCreatePreset={() => setIsNewPresetModalOpen(true)}
+            onArchivePreset={archivePreset}
           />
         </Panel>
         <Separator className="group relative w-2 bg-slate-200 transition-colors hover:bg-blue-400 print:hidden">
@@ -33,9 +93,23 @@ export function CVEditor() {
           </div>
         </Separator>
         <Panel defaultSize={50} minSize={30} className="print:w-full">
-          <CVPreview cvData={cvData} />
+          <CVPreview cvData={cvData} presetId={selectedPresetId} />
         </Panel>
       </Group>
+
+      <UnsavedChangesDialog
+        isOpen={isUnsavedDialogOpen}
+        targetPresetLabel={pendingPresetLabel}
+        onConfirm={handleDiscardAndSwitch}
+        onCancel={handleCancelSwitch}
+      />
+
+      <NewPresetModal
+        isOpen={isNewPresetModalOpen}
+        existingSlugs={presets.map((p) => p.id)}
+        onClose={() => setIsNewPresetModalOpen(false)}
+        onConfirm={handleCreatePreset}
+      />
     </div>
   );
 }

@@ -7,7 +7,7 @@ A multi-framework monorepo built with Nx showcasing modern web development acros
 - **[Todo App](apps/todo/README.md)** - Vue 3 + Pinia (✅ **Deployment Ready**)
 - **[Cockpit Dashboard](apps/cockpit/README.md)** - React + React Query (✅ **Deployment Ready**)
 - **[Login System](apps/login/README.md)** - React (✅ **Deployment Ready**)
-- **[CV Portfolio](apps/cv/README.md)** - React (_In Development_)
+- **[CV Portfolio](apps/cv/README.md)** - React + Redis store (✅ **Deployment Ready**)
 - **[AI Budget](apps/ai-budget/README.md)** - Angular (_Template_)
 
 ## Architecture

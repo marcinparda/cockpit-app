@@ -14,19 +14,22 @@ const storeEnvelopeSchema = z.object({
   data: z.unknown(),
 });
 
-const BASE = '/api/v1/store/base/cv';
+function getEndpoints(prefix: string) {
+  const BASE = `/api/v1/store/${prefix}/cv`;
+  return {
+    header: `${BASE}/header`,
+    summary: `${BASE}/summary`,
+    skills: `${BASE}/skills`,
+    achievements: `${BASE}/achievements`,
+    experience: `${BASE}/experience`,
+    education: `${BASE}/education`,
+    personalProjects: `${BASE}/projects`,
+    courses: `${BASE}/courses`,
+  } as const;
+}
 
-const ENDPOINTS = {
-  header: `${BASE}/header`,
-  summary: `${BASE}/summary`,
-  skills: `${BASE}/skills`,
-  achievements: `${BASE}/achievements`,
-  experience: `${BASE}/experience`,
-  education: `${BASE}/education`,
-  personalProjects: `${BASE}/projects`,
-  courses: `${BASE}/courses`,
-} as const;
-
+// fetchSection already returns null on 404 (when error.message includes 'HTTP 404')
+// rather than throwing, so callers are protected from missing-section errors.
 async function fetchSection<T>(endpoint: string): Promise<T | null> {
   try {
     const envelope = await baseApi.getRequest(endpoint, storeEnvelopeSchema);
@@ -39,7 +42,8 @@ async function fetchSection<T>(endpoint: string): Promise<T | null> {
   }
 }
 
-export async function getCVData(): Promise<CVData | null> {
+export async function getCVData(prefix: string = 'base'): Promise<CVData | null> {
+  const ENDPOINTS = getEndpoints(prefix);
   const [
     header,
     summary,
@@ -85,7 +89,8 @@ export async function getCVData(): Promise<CVData | null> {
   };
 }
 
-export async function putCVData(data: CVData): Promise<void> {
+export async function putCVData(data: CVData, prefix: string = 'base'): Promise<void> {
+  const ENDPOINTS = getEndpoints(prefix);
   await Promise.all([
     baseApi.putRequest(ENDPOINTS.header, storeEnvelopeSchema, {
       type: 'cv_section',

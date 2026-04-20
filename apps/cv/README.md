@@ -1,98 +1,72 @@
 # CV Portfolio App
 
-**Status: In Development** - Personal portfolio and CV application
+A React-based interactive CV editor and viewer. Authenticated users can edit their CV content through a split-panel interface, manage multiple CV presets (e.g. tailored for specific companies), and export to PDF. Unauthenticated users are redirected to a static PDF fallback.
 
-A React-based digital CV and portfolio application with authentication-gated access, designed to showcase professional experience and skills in an interactive web format. If unauthenticated, users are redirected to a PDF version of the CV.
+Data is stored per-section in the Cockpit API Redis store (`base:cv:{section}`, `{preset}:cv:{section}`).
 
-## Tech Stack
+## Features
 
-- **React 19** - Modern React with hooks and concurrent features
-- **TypeScript** - Full type safety for reliable code
-- **Vite** - Fast development and optimized production builds
-- **Tailwind CSS** - Utility-first styling approach
+- **Split-panel editor** — live preview alongside editable sections (header, summary, skills, achievements, experience, education, projects, courses)
+- **CV presets** — create named variants (e.g. "Google", "Netflix") that inherit from base and only store sections you explicitly override
+- **Preset dropdown** — switch between presets with unsaved-change warnings; selected preset reflected in `?preset=` URL param
+- **PDF export** — prints current preset as `{preset-id}-cv.pdf` via `react-to-print`
+- **Authentication gate** — redirects unauthenticated users to `parda.me/cv.pdf`
 
-## Current Features
+## Preset inheritance model
 
-### Core Functionality
+- `base` is the source of truth for all sections
+- A preset only stores sections explicitly edited in that preset (`{preset}:cv:{section}`)
+- Unoverridden sections fall back to `base:cv:{section}` at fetch time
+- Saving base invalidates all preset caches so inherited sections update immediately
+- Creating a new preset from base starts empty (inherits everything); creating from another preset copies only that preset's explicit overrides
 
-- 🔐 **Authentication Gate** - Secure access to CV content
-- 📄 **Digital CV** - Interactive web-based curriculum vitae
-- 🚀 **Fallback Redirect** - Automatic PDF CV fallback for unauthenticated users
-- 📱 **Responsive Design** - Optimized for various screen sizes
-
-### Architecture Patterns
-
-- **Authentication Flow** - Uses `useUser` hook for secure access control
-- **Error Handling** - Graceful fallback to external PDF CV
-- **Component Structure** - Clean separation with dedicated CV component
-- **Shared Libraries** - Integration with authentication system
-
-## Project Structure
+## Project structure
 
 ```
 apps/cv/src/
 ├── app/
-│   ├── app.tsx              # Main app with authentication logic
-│   └── skeleton.tsx         # Loading state component
+│   ├── app.tsx                     # Auth gate + routing
+│   └── skeleton.tsx                # Loading state
 ├── components/
-│   └── cv/
-│       └── cv.tsx           # Main CV component
-├── main.tsx                 # Application entry point
-└── styles.css               # Global styles
+│   ├── editor/
+│   │   ├── CVEditor.tsx            # Main container — wires hooks + dialogs
+│   │   ├── CVEditorPanel.tsx       # Tabbed section editors + preset dropdown
+│   │   ├── CVPreview.tsx           # Live preview + PDF export
+│   │   └── sections/               # Per-section form editors
+│   ├── cv/                         # CV display components (Header, Skills, etc.)
+│   ├── PresetDropdown.tsx          # Preset switcher UI
+│   ├── NewPresetModal.tsx          # Create preset modal
+│   └── UnsavedChangesDialog.tsx    # Discard-changes confirmation
+├── hooks/
+│   ├── useCVData.ts                # Fetch/save CV sections with inheritance + dirty tracking
+│   └── usePresets.ts               # Preset registry, URL sync, create/archive
+├── services/
+│   ├── cvStoreApi.ts               # base:cv:* CRUD (prefix-parameterised)
+│   └── presetApi.ts                # Preset section CRUD + registry + clone
+├── types/
+│   ├── cv.types.ts                 # CVData, Skill, Experience, etc.
+│   └── preset.types.ts             # Preset, PresetRegistry, CV_SECTIONS, SectionKey
+├── utils/
+│   └── slug.ts                     # generateSlug / generateUniqueSlug
+└── data/
+    └── cvData.ts                   # Default fallback data (used when Redis is empty)
 ```
 
-## Access Control Logic
+## Redis key conventions
 
-The application implements a sophisticated access control system:
+| Key | Content |
+|-----|---------|
+| `base:cv:{section}` | Base CV section data |
+| `{preset-id}:cv:{section}` | Preset override for a section |
+| `registry:cv:presets` | `Preset[]` — preset list (archived presets included, filtered client-side) |
 
-1. **Authenticated Users** - Full access to interactive CV content
-2. **Unauthenticated Users** - Automatic redirect to PDF version at `parda.me/cv.pdf`
-3. **Error States** - Graceful handling with PDF fallback
+Seed `registry:cv:presets` with `[]` on first run if the key doesn't exist.
 
 ## Development
 
-### Local Development
-
 ```bash
-# Start CV app in development mode
-nx serve cv
-
-# Run tests
-nx test cv
-
-# Lint code
-nx lint cv
-
-# Type check
-nx typecheck cv
+nx serve cv        # Start dev server
+nx build cv        # Production build
+nx typecheck cv    # Type check
+nx lint cv         # Lint
 ```
-
-### Production Build
-
-```bash
-# Build for production
-nx build cv
-
-# Preview production build
-nx preview cv
-```
-
-## Integration with Shared Libraries
-
-- **Authentication** - Uses `@cockpit-app/shared-react-data-access` for user management
-- **API Types** - Type-safe integration via `@cockpit-app/api-types`
-- **UI Components** - Leverages shared React components where applicable
-
-## Future Development
-
-Planned enhancements for the CV application:
-
-- **Interactive Sections** - Expandable experience and project details
-- **Skills Visualization** - Dynamic charts and progress indicators
-- **Contact Integration** - Direct messaging and networking features
-- **Multi-language Support** - Internationalized CV content
-- **Export Options** - PDF generation from web content
-
----
-
-_A professional portfolio application demonstrating secure content access and modern React development patterns._

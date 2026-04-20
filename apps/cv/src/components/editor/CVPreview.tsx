@@ -14,14 +14,15 @@ import { Footer } from '../cv/components/Footer';
 
 interface CVPreviewProps {
   cvData: CVData;
+  presetId: string;
 }
 
-export function CVPreview({ cvData }: CVPreviewProps) {
+export function CVPreview({ cvData, presetId }: CVPreviewProps) {
   const previewRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({
     contentRef: previewRef,
-    documentTitle: 'CV',
+    documentTitle: `${presetId}-cv`,
   });
 
   return (

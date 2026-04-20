@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { RotateCcw, Save } from 'lucide-react';
 import { CVData } from '../../types/cv.types';
+import { SectionKey, Preset } from '../../types/preset.types';
+import { PresetDropdown } from '../PresetDropdown';
 import { HeaderEditor } from './sections/HeaderEditor';
 import { SummaryEditor } from './sections/SummaryEditor';
 import { SkillsEditor } from './sections/SkillsEditor';
@@ -16,6 +18,13 @@ interface CVEditorPanelProps {
   resetToDefault: () => void;
   saveToApi: () => void;
   isSaving: boolean;
+  markDirty: (section: SectionKey) => void;
+  presets: Preset[];
+  selectedPresetId: string;
+  isDirty: boolean;
+  onSelectPreset: (id: string) => void;
+  onCreatePreset: () => void;
+  onArchivePreset: (id: string) => void;
 }
 
 type Tab =
@@ -34,7 +43,20 @@ export function CVEditorPanel({
   resetToDefault,
   saveToApi,
   isSaving,
+  markDirty,
+  presets,
+  selectedPresetId,
+  isDirty,
+  onSelectPreset,
+  onCreatePreset,
+  onArchivePreset,
 }: CVEditorPanelProps) {
+  function sectionSetter(section: SectionKey) {
+    return (data: CVData) => {
+      setCVData(data);
+      markDirty(section);
+    };
+  }
   const [activeTab, setActiveTab] = useState<Tab>('header');
 
   const tabs: { id: Tab; label: string }[] = [
@@ -52,7 +74,17 @@ export function CVEditorPanel({
     <div className="flex h-screen flex-col bg-white">
       <div className="border-b border-slate-200 bg-slate-50 px-6 py-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-slate-800">CV Editor</h2>
+          <div className="flex items-center gap-3">
+            <h2 className="text-lg font-semibold text-slate-800">CV Editor</h2>
+            <PresetDropdown
+              presets={presets}
+              selectedPresetId={selectedPresetId}
+              isDirty={isDirty}
+              onSelect={onSelectPreset}
+              onCreateNew={onCreatePreset}
+              onArchive={onArchivePreset}
+            />
+          </div>
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -95,28 +127,28 @@ export function CVEditorPanel({
 
       <div className="flex-1 overflow-y-auto p-6">
         {activeTab === 'header' && (
-          <HeaderEditor cvData={cvData} setCVData={setCVData} />
+          <HeaderEditor cvData={cvData} setCVData={sectionSetter('header')} />
         )}
         {activeTab === 'summary' && (
-          <SummaryEditor cvData={cvData} setCVData={setCVData} />
+          <SummaryEditor cvData={cvData} setCVData={sectionSetter('summary')} />
         )}
         {activeTab === 'skills' && (
-          <SkillsEditor cvData={cvData} setCVData={setCVData} />
+          <SkillsEditor cvData={cvData} setCVData={sectionSetter('skills')} />
         )}
         {activeTab === 'achievements' && (
-          <AchievementsEditor cvData={cvData} setCVData={setCVData} />
+          <AchievementsEditor cvData={cvData} setCVData={sectionSetter('achievements')} />
         )}
         {activeTab === 'experience' && (
-          <ExperienceEditor cvData={cvData} setCVData={setCVData} />
+          <ExperienceEditor cvData={cvData} setCVData={sectionSetter('experience')} />
         )}
         {activeTab === 'education' && (
-          <EducationEditor cvData={cvData} setCVData={setCVData} />
+          <EducationEditor cvData={cvData} setCVData={sectionSetter('education')} />
         )}
         {activeTab === 'projects' && (
-          <PersonalProjectsEditor cvData={cvData} setCVData={setCVData} />
+          <PersonalProjectsEditor cvData={cvData} setCVData={sectionSetter('projects')} />
         )}
         {activeTab === 'courses' && (
-          <CoursesEditor cvData={cvData} setCVData={setCVData} />
+          <CoursesEditor cvData={cvData} setCVData={sectionSetter('courses')} />
         )}
       </div>
     </div>
