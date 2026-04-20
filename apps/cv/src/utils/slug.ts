@@ -5,13 +5,16 @@ export function generateSlug(label: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
+const RESERVED_SLUGS = ['base', 'registry'];
+
 export function generateUniqueSlug(label: string, existingSlugs: string[]): string {
   const base = generateSlug(label);
-  if (!existingSlugs.includes(base)) {
+  const taken = [...existingSlugs, ...RESERVED_SLUGS];
+  if (!taken.includes(base)) {
     return base;
   }
   let counter = 2;
-  while (existingSlugs.includes(`${base}-${counter}`)) {
+  while (taken.includes(`${base}-${counter}`)) {
     counter++;
   }
   return `${base}-${counter}`;
