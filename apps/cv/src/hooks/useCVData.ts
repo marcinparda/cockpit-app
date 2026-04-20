@@ -54,7 +54,7 @@ async function fetchPresetCVData(presetId: string): Promise<CVData> {
   return cvData as CVData;
 }
 
-export function useCVData(presetId: string = 'base') {
+export function useCVData(presetId = 'base') {
   const isBase = presetId === 'base';
   const queryClient = useQueryClient();
 

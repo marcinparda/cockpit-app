@@ -42,7 +42,7 @@ async function fetchSection<T>(endpoint: string): Promise<T | null> {
   }
 }
 
-export async function getCVData(prefix: string = 'base'): Promise<CVData | null> {
+export async function getCVData(prefix = 'base'): Promise<CVData | null> {
   const ENDPOINTS = getEndpoints(prefix);
   const [
     header,
@@ -89,7 +89,7 @@ export async function getCVData(prefix: string = 'base'): Promise<CVData | null>
   };
 }
 
-export async function putCVData(data: CVData, prefix: string = 'base'): Promise<void> {
+export async function putCVData(data: CVData, prefix = 'base'): Promise<void> {
   const ENDPOINTS = getEndpoints(prefix);
   await Promise.all([
     baseApi.putRequest(ENDPOINTS.header, storeEnvelopeSchema, {

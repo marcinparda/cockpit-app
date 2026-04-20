@@ -19,7 +19,7 @@ function setPresetIdInUrl(id: string): void {
   } else {
     url.searchParams.set('preset', id);
   }
-  history.replaceState(history.state, '', url.toString());
+  window.history.replaceState(window.history.state, '', url.toString());
 }
 
 function resolveSelectedPresetId(
