@@ -26,7 +26,7 @@ export async function fetcher<ResponseData>({
   }
   const response = await fetch(url, options);
 
-  if (response.status === 401 && withRedirect) {
+  if (response.status === 401) {
     try {
       await refreshAccessToken();
       return fetcher({
@@ -37,10 +37,12 @@ export async function fetcher<ResponseData>({
         withCredentials,
       });
     } catch {
-      await logout();
-      const redirectUrl = new URL(environments.loginUrl);
-      redirectUrl.searchParams.set('redirect_uri', window.location.href);
-      window.location.href = redirectUrl.toString();
+      if (withRedirect) {
+        await logout();
+        const redirectUrl = new URL(environments.loginUrl);
+        redirectUrl.searchParams.set('redirect_uri', window.location.href);
+        window.location.href = redirectUrl.toString();
+      }
     }
   }
 
