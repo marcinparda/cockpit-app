@@ -1,36 +1,52 @@
 import { AppCard } from '@cockpit-app/cockpit-ui';
 import { TypographyH1, TypographyP } from '@cockpit-app/shared-react-ui';
-import { CheckSquare, Database, DollarSign, User } from 'lucide-react';
+import { CheckSquare, Database, DollarSign, User, Archive } from 'lucide-react';
 import { environments } from '@cockpit-app/shared-utils';
 
 const appsList = [
   {
-    name: 'Todo',
-    description: 'Todo application to manage tasks between multiple people.',
-    url: environments.todoUrl,
+    name: 'Twodo',
+    description:
+      'Track your todo tasks in a collaborative mode. Powered by Vikunja',
+    url: environments.twodoUrl,
     Icon: CheckSquare,
   },
   {
+    name: 'Actual budget',
+    description:
+      'Track your expenses and manage your budget effectively with your team. Powered by Actual.',
+    url: environments.actualUrl,
+    Icon: DollarSign,
+  },
+  {
     name: 'CV',
-    description: 'Professional CV and resume showcase with detailed experience and skills.',
+    description:
+      'Professional CV and resume showcase with detailed experience and skills.',
     url: environments.cvUrl,
     Icon: User,
   },
   {
-    name: 'Store',
+    name: 'Redis Store',
     description: 'Browse and manage Redis store key-value entries.',
     url: environments.storeUrl,
     Icon: Database,
   },
   {
-    name: 'Budget Tracker',
+    name: 'Budget Tracker (archived)',
     description:
       'Track your expenses and manage your budget effectively with your team.',
     url: environments.budgetUrl,
-    Icon: DollarSign,
+    Icon: Archive,
     disabled: true,
-    disabledTooltipText:
-      'This app is currently work in progress and not available yet.',
+    disabledTooltipText: 'Replaced by Actual app.',
+  },
+  {
+    name: 'Todo (archived)',
+    description: 'Todo application to manage tasks between multiple people.',
+    disabledTooltipText: 'Replaced by Twodo app.',
+    disabled: true,
+    url: environments.todoUrl,
+    Icon: Archive,
   },
 ];
 
