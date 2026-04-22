@@ -225,6 +225,30 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      # Check if agent build output exists
+      - name: Check if agent build output exists
+        id: agent_exists
+        run: |
+          if [ -d "dist/apps/agent" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build and push Docker image for agent
+        if: steps.agent_exists.outputs.exists == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/agent/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}-agent:latest
+            ghcr.io/${{ github.repository }}-agent:${{ github.sha }}
+          platforms: linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
   deploy-to-raspberry:
     needs: [validate-types, build-test-and-push]
     uses: ./.github/workflows/deploy-to-production.yml
