@@ -1,9 +1,22 @@
 import { AppCard } from '@cockpit-app/cockpit-ui';
 import { TypographyH1, TypographyP } from '@cockpit-app/shared-react-ui';
-import { CheckSquare, Database, DollarSign, User, Archive } from 'lucide-react';
+import {
+  CheckSquare,
+  Database,
+  DollarSign,
+  User,
+  Archive,
+  Bot,
+} from 'lucide-react';
 import { environments } from '@cockpit-app/shared-utils';
 
 const appsList = [
+  {
+    name: 'Agent',
+    description: 'Talk with chatbot to manage all applications.',
+    url: environments.agentUrl,
+    Icon: Bot,
+  },
   {
     name: 'Twodo',
     description:

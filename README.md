@@ -4,6 +4,7 @@ A multi-framework monorepo built with Nx showcasing modern web development acros
 
 ## 🚀 Applications
 
+- **[Agent](apps/agent/README.md)** - React PWA — AI agent for CV tailoring (✅ **Deployment Ready**)
 - **[Todo App](apps/todo/README.md)** - Vue 3 + Pinia (✅ **Deployment Ready**)
 - **[Cockpit Dashboard](apps/cockpit/README.md)** - React + React Query (✅ **Deployment Ready**)
 - **[Login System](apps/login/README.md)** - React (✅ **Deployment Ready**)
@@ -17,6 +18,7 @@ A multi-framework monorepo built with Nx showcasing modern web development acros
 ```
 cockpit-app/
 ├── apps/                    # Applications
+│   ├── agent/             # React PWA — AI CV tailoring agent
 │   ├── todo/               # Vue 3 + Pinia (Production)
 │   ├── cockpit/           # React Dashboard
 │   ├── cv/                # React Portfolio
