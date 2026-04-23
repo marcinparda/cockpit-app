@@ -34,14 +34,16 @@ export function Header({ headerData }: HeaderProps) {
         </div>
         <div className="flex items-center gap-1">
           <Linkedin className="h-4 w-4" />
-          <a
-            href={`https://${linkedin.url}`}
-            className="text-blue-600 underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {linkedin.text || linkedin.url}
-          </a>
+          {linkedin && (
+            <a
+              href={`https://${linkedin.url}`}
+              className="text-blue-600 underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {linkedin.text || linkedin.url}
+            </a>
+          )}
         </div>
         <div className="flex items-center gap-1">
           <MapPin className="h-4 w-4" />

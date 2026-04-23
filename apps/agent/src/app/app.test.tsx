@@ -11,16 +11,16 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 vi.mock('../components/ChatThread', () => ({
   ChatThread: ({ conversationTitle, onSend }: any) => (
     <div data-testid="chat-thread">
-      <div data-testid="conversation-title">{conversationTitle}</div>
+      <div data-testid="conversation-title">{conversationTitle ?? ''}</div>
       <button onClick={() => onSend('test message')}>Send</button>
     </div>
   ),
 }));
 
 vi.mock('../components/Sidebar', () => ({
-  Sidebar: ({ conversations, onSelect, onCreate }: any) => (
+  Sidebar: ({ conversations, onSelect, onNew }: any) => (
     <div data-testid="sidebar">
-      <button onClick={() => onCreate('New Chat', 'claude-sonnet')}>
+      <button onClick={() => onNew()}>
         Create
       </button>
       {conversations?.map((conv: any) => (
@@ -53,7 +53,7 @@ vi.mock('../hooks/useConversations', () => ({
 vi.mock('../hooks/useStreamingChat', () => ({
   useStreamingChat: () => ({
     messages: [],
-    statusText: null,
+    statusSteps: [],
     pendingConfirm: null,
     isStreaming: false,
     loadMessages: vi.fn(),
@@ -116,7 +116,7 @@ describe('Agent App', () => {
     } as any);
 
     renderApp();
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByText('Loading…')).toBeInTheDocument();
   });
 
   it('redirects to parda.me when user is not authenticated', async () => {
@@ -147,8 +147,8 @@ describe('Agent App', () => {
     });
   });
 
-  it('renders sidebar and empty state when user is authenticated', () => {
-    const userInfo = { name: 'Test User', id: '1' };
+  it('renders sidebar and chat thread when user is authenticated', () => {
+    const userInfo = { name: 'Test User', id: '1', email: 'test@example.com' };
     vi.spyOn(useUserModule, 'useUser').mockReturnValue({
       isLoading: false,
       data: userInfo,
@@ -158,9 +158,7 @@ describe('Agent App', () => {
     renderApp();
 
     expect(screen.getByTestId('sidebar')).toBeInTheDocument();
-    expect(
-      screen.getByText('Select or create a conversation to start.'),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId('chat-thread')).toBeInTheDocument();
   });
 
   it('renders chat thread when a conversation is selected', async () => {

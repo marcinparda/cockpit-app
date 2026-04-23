@@ -39,7 +39,7 @@ export function HeaderEditor({ cvData, setCVData }: HeaderEditorProps) {
           type="text"
           value={cvData.header.name}
           onChange={(e) => updateField('name', e.target.value)}
-          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
         />
       </div>
 
@@ -51,7 +51,7 @@ export function HeaderEditor({ cvData, setCVData }: HeaderEditorProps) {
           type="text"
           value={cvData.header.title}
           onChange={(e) => updateField('title', e.target.value)}
-          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
         />
       </div>
 
@@ -63,7 +63,7 @@ export function HeaderEditor({ cvData, setCVData }: HeaderEditorProps) {
           type="text"
           value={cvData.header.phone}
           onChange={(e) => updateField('phone', e.target.value)}
-          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
         />
       </div>
 
@@ -75,7 +75,7 @@ export function HeaderEditor({ cvData, setCVData }: HeaderEditorProps) {
           type="email"
           value={cvData.header.email}
           onChange={(e) => updateField('email', e.target.value)}
-          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
         />
       </div>
 
@@ -85,9 +85,9 @@ export function HeaderEditor({ cvData, setCVData }: HeaderEditorProps) {
         </label>
         <input
           type="text"
-          value={cvData.header.linkedin.url}
+          value={cvData.header.linkedin?.url || ''}
           onChange={(e) => updateLinkedin('url', e.target.value)}
-          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
         />
       </div>
 
@@ -97,9 +97,9 @@ export function HeaderEditor({ cvData, setCVData }: HeaderEditorProps) {
         </label>
         <input
           type="text"
-          value={cvData.header.linkedin.text || ''}
+          value={cvData.header.linkedin?.text || ''}
           onChange={(e) => updateLinkedin('text', e.target.value)}
-          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
         />
       </div>
 
@@ -111,7 +111,7 @@ export function HeaderEditor({ cvData, setCVData }: HeaderEditorProps) {
           type="text"
           value={cvData.header.location}
           onChange={(e) => updateField('location', e.target.value)}
-          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+          className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
         />
       </div>
     </div>

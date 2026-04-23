@@ -7,16 +7,9 @@ export interface ConfirmPayload {
   preview: Record<string, unknown>;
 }
 
-export interface ChatState {
-  messages: Message[];
-  statusText: string | null;
-  pendingConfirm: ConfirmPayload | null;
-  isStreaming: boolean;
-}
-
 export function useStreamingChat(conversationId: string | null) {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [statusText, setStatusText] = useState<string | null>(null);
+  const [statusSteps, setStatusSteps] = useState<string[]>([]);
   const [pendingConfirm, setPendingConfirm] = useState<ConfirmPayload | null>(null);
   const [isStreaming, setIsStreaming] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
@@ -25,23 +18,24 @@ export function useStreamingChat(conversationId: string | null) {
     const msgs = await agentApi.getMessages(convId);
     setMessages(msgs);
     setPendingConfirm(null);
-    setStatusText(null);
+    setStatusSteps([]);
   }, []);
 
   const sendMessage = useCallback(
-    async (content: string) => {
-      if (!conversationId || isStreaming) return;
+    async (content: string, convIdOverride?: string) => {
+      const targetId = convIdOverride ?? conversationId;
+      if (!targetId || isStreaming) return;
 
       const userMsg: Message = {
         id: crypto.randomUUID(),
-        conversation_id: conversationId,
+        conversation_id: targetId,
         role: 'user',
         content,
         created_at: new Date().toISOString(),
       };
       setMessages((prev) => [...prev, userMsg]);
       setPendingConfirm(null);
-      setStatusText(null);
+      setStatusSteps([]);
       setIsStreaming(true);
 
       abortRef.current = new AbortController();
@@ -49,14 +43,14 @@ export function useStreamingChat(conversationId: string | null) {
       let assistantContent = '';
       const assistantMsg: Message = {
         id: crypto.randomUUID(),
-        conversation_id: conversationId,
+        conversation_id: targetId,
         role: 'assistant',
         content: '',
         created_at: new Date().toISOString(),
       };
 
       try {
-        const res = await agentApi.sendMessageStream(conversationId, content);
+        const res = await agentApi.sendMessageStream(targetId, content);
         if (!res.body) throw new Error('No response body');
 
         setMessages((prev) => [...prev, assistantMsg]);
@@ -80,7 +74,7 @@ export function useStreamingChat(conversationId: string | null) {
             } else if (line.startsWith('data: ')) {
               const data = JSON.parse(line.slice(6));
               if (event === 'status') {
-                setStatusText(data.text as string);
+                setStatusSteps((prev) => [...prev, data.text as string]);
               } else if (event === 'chunk') {
                 assistantContent += data.text as string;
                 setMessages((prev) =>
@@ -101,7 +95,7 @@ export function useStreamingChat(conversationId: string | null) {
                   )
                 );
               } else if (event === 'done') {
-                setStatusText(null);
+                setStatusSteps([]);
               } else if (event === 'error') {
                 assistantContent += data.text as string;
                 setMessages((prev) =>
@@ -126,7 +120,7 @@ export function useStreamingChat(conversationId: string | null) {
         }
       } finally {
         setIsStreaming(false);
-        setStatusText(null);
+        setStatusSteps([]);
       }
     },
     [conversationId, isStreaming]
@@ -136,5 +130,11 @@ export function useStreamingChat(conversationId: string | null) {
     abortRef.current?.abort();
   }, []);
 
-  return { messages, statusText, pendingConfirm, isStreaming, loadMessages, sendMessage, abort };
+  const reset = useCallback(() => {
+    setMessages([]);
+    setStatusSteps([]);
+    setPendingConfirm(null);
+  }, []);
+
+  return { messages, statusSteps, pendingConfirm, isStreaming, loadMessages, sendMessage, abort, reset };
 }

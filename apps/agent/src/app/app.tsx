@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useUser } from '@cockpit-app/shared-react-data-access';
 import { agentApi, ModelInfo } from '../api/agent';
@@ -15,6 +15,8 @@ export default function App() {
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<string>('anthropic/claude-sonnet-4-6');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const skipLoadRef = useRef<string | null>(null);
 
   const { data: modelData } = useQuery({
     queryKey: ['agent-models'],
@@ -28,11 +30,15 @@ export default function App() {
   const { conversations, isLoading: convsLoading, createConversation, deleteConversation } =
     useConversations();
 
-  const { messages, statusText, pendingConfirm, isStreaming, loadMessages, sendMessage } =
+  const { messages, statusSteps, pendingConfirm, isStreaming, loadMessages, sendMessage, reset } =
     useStreamingChat(selectedId);
 
   useEffect(() => {
     if (selectedId) {
+      if (skipLoadRef.current === selectedId) {
+        skipLoadRef.current = null;
+        return;
+      }
       loadMessages(selectedId);
     }
   }, [selectedId, loadMessages]);
@@ -48,21 +54,28 @@ export default function App() {
 
   if (userLoading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-slate-950">
-        <div className="text-slate-400 text-sm">Loading...</div>
+      <div className="flex h-full items-center justify-center bg-bg-1">
+        <div className="text-fg-3 text-sm font-mono">Loading…</div>
       </div>
     );
   }
 
-  async function handleCreate(title: string, model: string) {
-    const conv = await createConversation({ title, model });
+  async function handleFirstSend(content: string) {
+    if (!content.trim()) return;
+    const title = content.trim().slice(0, 60) || 'New conversation';
+    const conv = await createConversation({ title, model: selectedModel });
+    skipLoadRef.current = conv.id;
     setSelectedId(conv.id);
-    setSelectedModel(model);
+    setSidebarOpen(false);
+    sendMessage(content.trim(), conv.id);
   }
 
   async function handleDelete(id: string) {
     await deleteConversation(id);
-    if (selectedId === id) setSelectedId(null);
+    if (selectedId === id) {
+      setSelectedId(null);
+      reset();
+    }
   }
 
   function handleConfirm() {
@@ -73,40 +86,57 @@ export default function App() {
     sendMessage('no');
   }
 
+  function handleNew() {
+    setSelectedId(null);
+    reset();
+    setSidebarOpen(false);
+  }
+
+  function handleSelect(id: string) {
+    setSelectedId(id);
+    setSidebarOpen(false);
+  }
+
   const selectedConv = conversations.find((c) => c.id === selectedId);
 
   return (
-    <div className="flex h-screen bg-slate-950 text-white overflow-hidden">
+    <div className="flex h-full bg-bg-1 text-fg-0 font-sans overflow-hidden">
+      {/* Sidebar overlay backdrop on mobile */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-20 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       <Sidebar
         conversations={conversations}
         selectedId={selectedId}
         isLoading={convsLoading}
-        defaultModel={defaultModel}
-        onSelect={setSelectedId}
-        onCreate={handleCreate}
+        userEmail={userInfo?.email ?? ''}
+        sidebarOpen={sidebarOpen}
+        onSelect={handleSelect}
+        onNew={handleNew}
         onDelete={handleDelete}
+        onClose={() => setSidebarOpen(false)}
       />
 
-      <main className="flex flex-1 min-w-0 h-full">
-        {selectedId && selectedConv ? (
-          <ChatThread
-            conversationTitle={selectedConv.title}
-            messages={messages}
-            statusText={statusText}
-            pendingConfirm={pendingConfirm}
-            isStreaming={isStreaming}
-            models={models}
-            selectedModel={selectedModel}
-            onModelChange={setSelectedModel}
-            onSend={sendMessage}
-            onConfirm={handleConfirm}
-            onCancel={handleCancel}
-          />
-        ) : (
-          <div className="flex flex-1 items-center justify-center text-slate-500 text-sm">
-            Select or create a conversation to start.
-          </div>
-        )}
+      <main className="flex flex-1 min-w-0 flex-col h-full">
+        <ChatThread
+          conversationTitle={selectedConv?.title ?? null}
+          messages={messages}
+          statusSteps={statusSteps}
+          pendingConfirm={pendingConfirm}
+          isStreaming={isStreaming}
+          models={models}
+          selectedModel={selectedModel}
+          defaultModel={defaultModel}
+          onModelChange={setSelectedModel}
+          onSend={selectedId ? sendMessage : handleFirstSend}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+          onMenuOpen={() => setSidebarOpen(true)}
+        />
       </main>
     </div>
   );
