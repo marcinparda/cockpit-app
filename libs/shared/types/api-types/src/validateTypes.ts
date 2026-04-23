@@ -3,6 +3,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as https from 'https';
 import * as crypto from 'crypto';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * Validates if the current API types are up to date with the remote OpenAPI specification.
@@ -130,7 +133,7 @@ async function validateTypes(): Promise<void> {
 }
 
 // Run validation if this script is executed directly
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   validateTypes();
 }
 
