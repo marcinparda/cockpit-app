@@ -1,6 +1,8 @@
 import { mode } from './consts';
 
 export const environments = {
+  VIKUNJA_USERNAME: '',
+  VIKUNJA_PASSWORD: '',
   loginUrl: 'http://localhost:4202',
   cockpitUrl: 'http://localhost:4203',
   cvUrl: 'http://localhost:4204',

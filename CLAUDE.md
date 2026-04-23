@@ -15,6 +15,13 @@ CockpitApp is a multi-application monorepo built with Nx that includes several w
 
 - See .github dir
 
+### External Services (Raspberry Pi)
+
+Two external apps hosted on Raspberry Pi via Docker — not part of this codebase but planned for agent integration:
+
+- **TwoDo** (`apps/twodo/README.md`) — Vikunja task manager. Full REST API, JWT auth, OpenAPI spec at `/api/v1/docs.json`.
+- **Budget** (`apps/budget/README.md`) — Actual Budget finance app. No native REST; uses `@actual-app/api` Node.js package. Community REST wrapper: `actual-http-api`.
+
 ## API Integration Pattern
 
 The codebase uses a centralized API types system:

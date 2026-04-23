@@ -9,6 +9,13 @@ A multi-framework monorepo built with Nx showcasing modern web development acros
 - **[Login System](apps/login/README.md)** - React (✅ **Deployment Ready**)
 - **[CV Portfolio](apps/cv/README.md)** - React + Redis store (✅ **Deployment Ready**)
 
+## 🔗 External Services (Raspberry Pi)
+
+Self-hosted services running on Raspberry Pi via Docker. Not part of this codebase — see READMEs for API integration reference.
+
+- **[TwoDo](apps/twodo/README.md)** — [Vikunja](https://vikunja.io) task management. REST API + JWT auth + OpenAPI spec.
+- **[Budget](apps/budget/README.md)** — [Actual Budget](https://actualbudget.org) personal finance. Node.js API (`@actual-app/api`).
+
 ## Architecture
 
 ### Monorepo Structure
