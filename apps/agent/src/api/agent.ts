@@ -1,4 +1,6 @@
-const BASE = '/api/v1/agent';
+import { environments } from '@cockpit-app/shared-utils';
+
+const BASE = `${environments.apiUrl}/api/v1/agent`;
 
 export interface Conversation {
   id: string;
