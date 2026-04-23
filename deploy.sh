@@ -18,8 +18,6 @@ echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
 
 # App definitions: name, image, container, port
 declare -A apps=(
-  [ai-budget]="4200"
-  [todo]="4201"
   [login]="4202"
   [cockpit]="4203"
   [cv]="4204"

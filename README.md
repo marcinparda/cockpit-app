@@ -1,15 +1,13 @@
 # CockpitApp
 
-A multi-framework monorepo built with Nx showcasing modern web development across React, Vue 3, and Angular applications with comprehensive type-safe API integration.
+A multi-framework monorepo built with Nx showcasing modern web development across React and Angular applications with comprehensive type-safe API integration.
 
 ## 🚀 Applications
 
 - **[Agent](apps/agent/README.md)** - React PWA — AI agent for CV tailoring (✅ **Deployment Ready**)
-- **[Todo App](apps/todo/README.md)** - Vue 3 + Pinia (✅ **Deployment Ready**)
 - **[Cockpit Dashboard](apps/cockpit/README.md)** - React + React Query (✅ **Deployment Ready**)
 - **[Login System](apps/login/README.md)** - React (✅ **Deployment Ready**)
 - **[CV Portfolio](apps/cv/README.md)** - React + Redis store (✅ **Deployment Ready**)
-- **[AI Budget](apps/ai-budget/README.md)** - Angular (_Template_)
 
 ## Architecture
 
@@ -19,19 +17,16 @@ A multi-framework monorepo built with Nx showcasing modern web development acros
 cockpit-app/
 ├── apps/                    # Applications
 │   ├── agent/             # React PWA — AI CV tailoring agent
-│   ├── todo/               # Vue 3 + Pinia (Production)
 │   ├── cockpit/           # React Dashboard
 │   ├── cv/                # React Portfolio
 │   ├── login/             # React Auth
-│   └── ai-budget/         # Angular Template
+│   └── store/             # Angular — Redis Store admin UI
 ├── libs/                   # Shared Libraries
 │   ├── shared/
 │   │   ├── types/api-types # Auto-generated OpenAPI types
 │   │   ├── ui/react        # React UI components
-│   │   ├── ui/vue          # Vue UI components
 │   │   ├── data-access/    # Framework-specific data layers
 │   │   └── utils/          # Shared utilities
-│   └── todo/data-access   # Todo-specific data layer
 ```
 
 ### Module Boundaries & Future-Proofing
@@ -41,7 +36,7 @@ The architecture follows domain-driven design principles with clear separation o
 - **Framework-specific UI libraries** - Shared components per framework
 - **Specialized data-access layers** - Business logic separation
 - **Auto-generated API types** - Type-safe integration across all apps
-- **Domain-specific libraries** - (e.g., `todo/data-access`) ready for microservices extraction
+- **Domain-specific libraries** - Ready for microservices extraction
 
 _Future: Nx module boundaries will be enforced to maintain architectural integrity._
 
@@ -50,7 +45,6 @@ _Future: Nx module boundaries will be enforced to maintain architectural integri
 ### Frontend Frameworks
 
 - **React 19** - Modern hooks, React Query for state management
-- **Vue 3** - Composition API, Pinia state management, PrimeVue UI
 - **Angular 19** - Dependency injection, RxJS observables
 
 ### Build & Development
@@ -78,7 +72,6 @@ npm install
 npm start
 
 # Start specific application
-nx serve todo
 nx serve cockpit
 ```
 
@@ -122,7 +115,6 @@ nx run-many -t typecheck
 Current implementation includes unit tests with framework-specific testing tools:
 
 - **React**: Vitest + React Testing Library
-- **Vue**: Vitest + Vue Test Utils
 - **Angular**: Jasmine + Karma
 - **E2E**: Playwright
 

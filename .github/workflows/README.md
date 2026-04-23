@@ -15,7 +15,7 @@ This repository uses several GitHub Actions workflows to automate validation, ty
 - **Purpose:** Handles CI/CD for all apps in the monorepo. On every push to `master`, it:
   - Validates API types (calls `validate-types.yml`)
   - Runs affected checks and builds (lint, build, test) only for changed projects
-  - Builds and pushes Docker images for affected apps (ai-budget, todo, login, cockpit) to GHCR, only if their build output exists
+  - Builds and pushes Docker images for affected apps (login, cockpit, cv, store, agent) to GHCR, only if their build output exists
   - Triggers deployment to Raspberry Pi via `deploy-to-production.yml`
 
 - **File:** `.github/workflows/deploy-to-production.yml`
@@ -28,7 +28,7 @@ This repository uses several GitHub Actions workflows to automate validation, ty
 - **How it works:**
   - Requires `GITHUB_TOKEN` and `GITHUB_ACTOR` environment variables for authentication with GitHub Container Registry (GHCR).
   - Logs in to GHCR using the provided credentials.
-  - Defines all apps to deploy (ai-budget, todo, login, cockpit) with their respective ports.
+  - Defines all apps to deploy (login, cockpit, cv, store, agent) with their respective ports.
   - For each app:
     - Stops and removes any existing container for the app
     - Prunes old Docker images

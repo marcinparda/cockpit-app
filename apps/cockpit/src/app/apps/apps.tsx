@@ -5,7 +5,6 @@ import {
   Database,
   DollarSign,
   User,
-  Archive,
   Bot,
 } from 'lucide-react';
 import { environments } from '@cockpit-app/shared-utils';
@@ -43,23 +42,6 @@ const appsList = [
     description: 'Browse and manage Redis store key-value entries.',
     url: environments.storeUrl,
     Icon: Database,
-  },
-  {
-    name: 'Budget Tracker (archived)',
-    description:
-      'Track your expenses and manage your budget effectively with your team.',
-    url: environments.budgetUrl,
-    Icon: Archive,
-    disabled: true,
-    disabledTooltipText: 'Replaced by Actual app.',
-  },
-  {
-    name: 'Todo (archived)',
-    description: 'Todo application to manage tasks between multiple people.',
-    disabledTooltipText: 'Replaced by Twodo app.',
-    disabled: true,
-    url: environments.todoUrl,
-    Icon: Archive,
   },
 ];
 

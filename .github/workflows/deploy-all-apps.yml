@@ -40,7 +40,7 @@ jobs:
         run: npm ci
 
       - name: Build all apps
-        run: npx nx run-many --target=lint,build,test --projects=ai-budget,todo,login,cockpit,store,agent --parallel=5
+        run: npx nx run-many --target=lint,build,test --projects=login,cockpit,cv,store,agent --parallel=5
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -51,36 +51,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-      # Build and push Docker image for ai-budget
-      - name: Build and push Docker image for ai-budget
-        if: ${{ always() }}
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: apps/ai-budget/Dockerfile
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository }}-ai-budget:latest
-            ghcr.io/${{ github.repository }}-ai-budget:${{ github.sha }}
-          platforms: linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      # Build and push Docker image for todo
-      - name: Build and push Docker image for todo
-        if: ${{ always() }}
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: apps/todo/Dockerfile
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository }}-todo:latest
-            ghcr.io/${{ github.repository }}-todo:${{ github.sha }}
-          platforms: linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       # Build and push Docker image for login
       - name: Build and push Docker image for login

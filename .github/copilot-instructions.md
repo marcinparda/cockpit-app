@@ -31,16 +31,6 @@
 - Prefer OnPush change detection for performance.
 - Write unit tests with Jasmine and Karma.
 
-## Vue
-
-- Use the Composition API for new components.
-- Prefer `<script setup lang="ts">` for TypeScript support.
-- Use PrimeVue for UI components in vue-ui lib.
-- In apps (like todo) use components from vue-ui lib.
-- Organize code into reusable components.
-- Use Vue Router for navigation.
-- Write tests with Vue Test Utils and Vitest.
-
 ## TypeScript
 
 - For types for API requests and responses use import from lib `@cockpit-app/api-types`
