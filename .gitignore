@@ -45,10 +45,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Environment files
-/apps/ai-budget/src/environments/environment.*.ts
-
-
 .nx/cache
 .nx/workspace-data
 vite.config.*.timestamp*
