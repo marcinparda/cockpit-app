@@ -119,3 +119,30 @@ export function LogoIcon(p: SvgProps) {
     </svg>
   );
 }
+
+export function CurrencyIcon(p: SvgProps) {
+  return (
+    <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <circle cx="8" cy="8" r="5.5"/>
+      <path d="M8 5v6M6.5 6.5h2a1 1 0 1 1 0 2h-1a1 1 0 1 0 0 2H9"/>
+    </svg>
+  );
+}
+
+export function TaskCheckIcon(p: SvgProps) {
+  return (
+    <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <rect x="2.5" y="2.5" width="5" height="5" rx="1"/>
+      <path d="m3.5 5 1 1 2-2"/>
+      <path d="M9.5 4.5h4M9.5 8h4M2.5 10h11M2.5 13h8"/>
+    </svg>
+  );
+}
+
+export function SlashIcon(p: SvgProps) {
+  return (
+    <svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" {...p}>
+      <path d="M10 3 6 13"/>
+    </svg>
+  );
+}

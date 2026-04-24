@@ -4,12 +4,15 @@ import { ConfirmPayload } from '../hooks/useStreamingChat';
 import { ConfirmCard } from './ConfirmCard';
 import {
   AttachIcon,
+  CurrencyIcon,
+  DocIcon,
   GlobeIcon,
   LogoIcon,
   MenuIcon,
   PencilIcon,
   SendIcon,
-  SparkleIcon,
+  SlashIcon,
+  TaskCheckIcon,
 } from './Icons';
 import { MessageBubble } from './MessageBubble';
 import { ModelSelector } from './ModelSelector';
@@ -32,50 +35,136 @@ interface Props {
   onMenuOpen: () => void;
 }
 
-const QUICK_EXAMPLES = [
-  'Tailor my CV for a Senior Backend Engineer role at Stripe',
-  'Make a preset for a Founding Design Engineer position at Linear',
-  'Rewrite my summary for AI infrastructure roles',
-  'Extract keywords from this job posting and match to my CV',
+// ── Domain card definitions ────────────────────────────────────────────────────
+
+type DomainCardDef = {
+  domain: string;
+  text: string;
+  color: string;
+  iconBg: string;
+  Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+};
+
+const DOMAIN_CARDS: DomainCardDef[] = [
+  {
+    domain: 'CV',
+    text: 'Tailor my CV for a Senior Backend role at Stripe',
+    color: 'var(--color-accent)',
+    iconBg: 'var(--accent-soft)',
+    Icon: DocIcon,
+  },
+  {
+    domain: 'BUDGET',
+    text: 'Where did I overspend this month?',
+    color: 'oklch(0.72 0.14 155)',
+    iconBg: 'oklch(0.72 0.14 155 / 0.12)',
+    Icon: CurrencyIcon,
+  },
+  {
+    domain: 'TASKS',
+    text: "What's on my plate this week?",
+    color: 'oklch(0.78 0.15 55)',
+    iconBg: 'oklch(0.78 0.15 55 / 0.12)',
+    Icon: TaskCheckIcon,
+  },
+  {
+    domain: 'BUDGET',
+    text: 'Add transactions from my bank statement',
+    color: 'oklch(0.72 0.14 155)',
+    iconBg: 'oklch(0.72 0.14 155 / 0.12)',
+    Icon: CurrencyIcon,
+  },
 ];
+
+// ── Empty state ────────────────────────────────────────────────────────────────
 
 function EmptyState({ onQuick }: { onQuick: (text: string) => void }) {
   return (
-    <div className="flex flex-col items-center text-center max-w-[640px] mx-auto px-7 pt-[60px] pb-6 gap-2">
-      <div className="w-11 h-11 rounded-[12px] bg-bg-2 border border-line-2 flex items-center justify-center mb-2">
-        <LogoIcon width="22" height="22" />
+    <div className="flex flex-col items-center text-center max-w-[660px] mx-auto px-7 pt-[72px] pb-6 gap-0 animate-[fade-in-up_0.4s_ease_both]">
+      {/* Logo */}
+      <div className="w-12 h-12 rounded-[13px] bg-bg-2 border border-line-2 flex items-center justify-center mb-4"
+        style={{ boxShadow: '0 0 0 4px color-mix(in oklch, var(--color-accent) 8%, transparent)' }}>
+        <LogoIcon width="24" height="24" />
       </div>
-      <div className="font-mono text-[11.5px] text-accent tracking-[0.02em]">agent.parda.me</div>
-      <h1 className="text-[26px] font-semibold tracking-[-0.02em] leading-[1.2] mt-1 mb-0.5">
-        Paste a job offer. I'll tailor your CV.
+
+      {/* Subtitle */}
+      <div className="font-mono text-[11px] text-accent tracking-[0.04em] mb-3">
+        agent.parda.me · 3 apps connected
+      </div>
+
+      {/* Heading */}
+      <h1 className="text-[28px] font-semibold tracking-[-0.025em] leading-[1.18] mb-3 text-fg-0">
+        What can I help you with today?
       </h1>
-      <p className="text-fg-2 text-[13.5px] max-w-[460px] mb-4">
-        I read the posting, research the company, and rewrite your base CV into a preset you
-        can open in the builder.
+
+      {/* Description */}
+      <p className="text-fg-2 text-[13.5px] leading-[1.6] max-w-[440px] mb-7">
+        I can work across your <span className="text-fg-1">CV</span>,{' '}
+        <span className="text-fg-1">budget</span>, and{' '}
+        <span className="text-fg-1">tasks</span>. Type{' '}
+        <kbd className="font-mono text-[11px] border border-line bg-bg-2 px-1.5 py-0.5 rounded text-fg-1 mx-0.5">/</kbd>
+        {' '}to target a specific app, or just describe what you need.
       </p>
 
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
-        {QUICK_EXAMPLES.map((example) => (
+      {/* Domain suggestion cards */}
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-7">
+        {DOMAIN_CARDS.map((card) => (
           <button
-            key={example}
-            className="flex items-center gap-2.5 px-3 py-3 bg-bg-2 border border-line-2 rounded-[10px] text-[12.5px] text-fg-1 cursor-pointer hover:bg-bg-3 hover:border-line hover:text-fg-0 transition-colors text-left"
-            onClick={() => onQuick(example)}
+            key={card.domain + card.text}
+            className="group flex items-start gap-3 px-3.5 py-3.5 bg-bg-2 border border-line-2 rounded-[11px] text-left cursor-pointer hover:bg-bg-3 hover:border-line transition-all duration-150"
+            style={{
+              '--hover-border': card.color,
+            } as React.CSSProperties}
+            onClick={() => onQuick(card.text)}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.borderColor = `color-mix(in oklch, ${card.color} 40%, transparent)`;
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.borderColor = '';
+            }}
           >
-            <span className="w-[22px] h-[22px] rounded-md flex items-center justify-center shrink-0 text-accent" style={{ background: 'var(--accent-soft)' }}>
-              <SparkleIcon />
-            </span>
-            <span>{example}</span>
+            {/* Icon badge */}
+            <div
+              className="w-8 h-8 rounded-[8px] flex items-center justify-center shrink-0 mt-0.5"
+              style={{ background: card.iconBg, color: card.color }}
+            >
+              <card.Icon width="14" height="14" />
+            </div>
+
+            {/* Text */}
+            <div className="flex-1 min-w-0">
+              <div
+                className="text-[10.5px] font-semibold tracking-[0.07em] uppercase mb-1"
+                style={{ color: card.color }}
+              >
+                {card.domain}
+              </div>
+              <div className="text-[13px] text-fg-1 leading-snug group-hover:text-fg-0 transition-colors">
+                {card.text}
+              </div>
+            </div>
           </button>
         ))}
       </div>
 
-      <div className="flex items-center gap-1.5 text-[11.5px] text-fg-3">
-        <span className="w-1.5 h-1.5 rounded-full bg-ok" style={{ boxShadow: '0 0 0 3px color-mix(in oklch, var(--color-ok) 20%, transparent)' }} />
-        Base CV linked — paste a job offer to begin
+      {/* Connected status */}
+      <div className="flex items-center gap-2 text-[11.5px] text-fg-3">
+        <span
+          className="w-1.5 h-1.5 rounded-full bg-ok shrink-0"
+          style={{ boxShadow: '0 0 0 3px color-mix(in oklch, var(--color-ok) 18%, transparent)' }}
+        />
+        Connected:
+        <span className="text-fg-2">CV</span>
+        <span className="text-fg-3">·</span>
+        <span className="text-fg-2">Budget</span>
+        <span className="text-fg-3">·</span>
+        <span className="text-fg-2">Tasks</span>
       </div>
     </div>
   );
 }
+
+// ── Main component ─────────────────────────────────────────────────────────────
 
 export function ChatThread({
   conversationTitle,
@@ -128,6 +217,11 @@ export function ChatThread({
     }
   }
 
+  function handleRouteToApp() {
+    setInput('/');
+    taRef.current?.focus();
+  }
+
   const showEmptyState = !conversationTitle && messages.length === 0;
   const showConvEmpty = !!conversationTitle && messages.length === 0 && !isStreaming;
 
@@ -135,7 +229,6 @@ export function ChatThread({
     <div className="flex flex-col flex-1 min-w-0 h-full bg-bg-1">
       {/* Header */}
       <header className="flex items-center gap-3 px-5 border-b border-line-2 h-[52px] shrink-0">
-        {/* Mobile menu button */}
         <button
           className="text-fg-1 hover:bg-bg-2 p-1.5 rounded-md cursor-pointer md:hidden"
           onClick={onMenuOpen}
@@ -144,7 +237,6 @@ export function ChatThread({
           <MenuIcon />
         </button>
 
-        {/* Title */}
         <div className="flex-1 min-w-0">
           {editingTitle ? (
             <input
@@ -161,9 +253,7 @@ export function ChatThread({
               className="flex items-center gap-1.5 text-fg-0 text-[13.5px] font-medium px-1.5 py-1 rounded-md hover:bg-bg-2 cursor-pointer max-w-full group"
               onClick={() => conversationTitle && setEditingTitle(true)}
             >
-              <span className="truncate">
-                {conversationTitle ?? 'New conversation'}
-              </span>
+              <span className="truncate">{conversationTitle ?? 'New conversation'}</span>
               {conversationTitle && (
                 <PencilIcon className="text-fg-3 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
               )}
@@ -171,7 +261,6 @@ export function ChatThread({
           )}
         </div>
 
-        {/* Model selector */}
         <div className="shrink-0">
           <ModelSelector
             models={models}
@@ -188,7 +277,9 @@ export function ChatThread({
 
         {showConvEmpty && (
           <div className="flex flex-col items-center justify-center h-full text-fg-3 text-sm">
-            Paste a job offer and I'll tailor your CV for it.
+            Ask me anything, or type{' '}
+            <kbd className="font-mono text-[11px] border border-line bg-bg-2 px-1.5 py-0.5 rounded text-fg-2 mx-1">/</kbd>
+            to pick a domain.
           </div>
         )}
 
@@ -216,7 +307,7 @@ export function ChatThread({
 
             {pendingConfirm && (
               <div className="flex items-start gap-3">
-                <div className="w-[26px] h-[26px] shrink-0" /> {/* ghost avatar */}
+                <div className="w-[26px] h-[26px] shrink-0" />
                 <ConfirmCard
                   payload={pendingConfirm}
                   onConfirm={onConfirm}
@@ -234,34 +325,49 @@ export function ChatThread({
       {/* Composer */}
       <div className="shrink-0 px-5 pb-[18px] pt-2 bg-bg-1">
         <div
-          className="max-w-[760px] mx-auto bg-bg-2 border border-line-2 rounded-[14px] px-3 pt-2.5 pb-2 transition-[border-color,box-shadow] focus-within:border-[var(--accent-line)]"
+          className="max-w-[760px] mx-auto bg-bg-2 border border-line-2 rounded-[14px] overflow-hidden transition-[border-color,box-shadow] focus-within:border-[var(--accent-line)]"
           style={{ '--tw-shadow': '0 0 0 3px var(--accent-soft)' } as React.CSSProperties}
         >
+          {/* Route hint row */}
+          <div className="flex items-center gap-2 px-3 pt-2.5 pb-1">
+            <button
+              onClick={handleRouteToApp}
+              className="flex items-center gap-1.5 text-fg-3 text-[11px] hover:text-fg-1 transition-colors cursor-pointer group"
+              title="Type / to route to a specific app"
+            >
+              <span className="flex items-center justify-center w-4 h-4 rounded bg-bg-3 border border-line-2 group-hover:border-line transition-colors">
+                <SlashIcon />
+              </span>
+              <span className="hidden sm:inline">Route to app</span>
+              <span className="flex items-center justify-center w-4 h-4 rounded bg-bg-3 border border-line-2 group-hover:border-line transition-colors">
+                <SlashIcon />
+              </span>
+            </button>
+          </div>
+
+          {/* Textarea */}
           <textarea
             ref={taRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder={
-              showEmptyState
-                ? 'Paste a job offer URL or description…'
-                : 'Reply to agent…'
-            }
+            placeholder={showEmptyState ? 'Ask anything, or type / to pick an app…' : 'Reply to agent…'}
             rows={1}
             disabled={isStreaming}
-            className="w-full bg-transparent border-none outline-none resize-none text-fg-0 text-[13.5px] leading-[1.55] py-1 px-0.5 placeholder:text-fg-3 disabled:opacity-60 font-sans"
+            className="w-full bg-transparent border-none outline-none resize-none text-fg-0 text-[13.5px] leading-[1.55] px-3 py-1 pb-2 placeholder:text-fg-3 disabled:opacity-60 font-sans"
             style={{ minHeight: '22px' }}
           />
 
-          <div className="flex items-center justify-between gap-2.5 pt-1.5">
+          {/* Toolbar */}
+          <div className="flex items-center justify-between gap-2.5 px-3 pb-2.5">
             <div className="flex gap-1">
               <button className="flex items-center gap-1.5 px-2 py-1 border border-line-2 rounded-md text-fg-1 text-[11.5px] cursor-pointer hover:bg-bg-3 hover:text-fg-0 transition-colors">
                 <AttachIcon />
-                Base CV
+                Attach
               </button>
               <button className="flex items-center gap-1.5 px-2 py-1 border border-line-2 rounded-md text-fg-2 text-[11.5px] cursor-pointer hover:bg-bg-3 hover:text-fg-0 transition-colors">
                 <GlobeIcon />
-                Web search · on
+                Web · on
               </button>
             </div>
 
