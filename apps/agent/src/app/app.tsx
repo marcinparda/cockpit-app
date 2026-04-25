@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useUser } from '@cockpit-app/shared-react-data-access';
 import { agentApi, ModelInfo } from '../api/agent';
 import { ChatThread } from '../components/ChatThread';
+import { LoginPage } from '../components/LoginPage';
 import { Sidebar } from '../components/Sidebar';
 import { useConversations } from '../hooks/useConversations';
 import { useStreamingChat } from '../hooks/useStreamingChat';
@@ -48,8 +49,7 @@ export default function App() {
   }, [modelData]);
 
   if (isError || (!userLoading && !userInfo)) {
-    window.location.href = 'https://parda.me';
-    return null;
+    return <LoginPage />;
   }
 
   if (userLoading) {
