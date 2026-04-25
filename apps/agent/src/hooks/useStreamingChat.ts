@@ -48,12 +48,11 @@ export function useStreamingChat(conversationId: string | null) {
         content: '',
         created_at: new Date().toISOString(),
       };
+      setMessages((prev) => [...prev, assistantMsg]);
 
       try {
         const res = await agentApi.sendMessageStream(targetId, content);
         if (!res.body) throw new Error('No response body');
-
-        setMessages((prev) => [...prev, assistantMsg]);
 
         const reader = res.body.getReader();
         const decoder = new TextDecoder();

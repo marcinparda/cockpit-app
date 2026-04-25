@@ -285,13 +285,18 @@ export function ChatThread({
 
         {messages.length > 0 && (
           <div className="max-w-[760px] mx-auto px-7 flex flex-col gap-[22px]">
-            {messages.map((msg, i) => (
-              <MessageBubble
-                key={msg.id}
-                message={msg}
-                isStreaming={isStreaming && i === messages.length - 1 && msg.role === 'assistant'}
-              />
-            ))}
+            {messages.map((msg, i) => {
+              const isLast = i === messages.length - 1;
+              const isLastAssistant = isLast && msg.role === 'assistant';
+              if (isLastAssistant && !msg.content && statusSteps.length > 0) return null;
+              return (
+                <MessageBubble
+                  key={msg.id}
+                  message={msg}
+                  isStreaming={isStreaming && isLast && msg.role === 'assistant'}
+                />
+              );
+            })}
 
             {statusSteps.length > 0 && (
               <div className="flex items-start gap-3">
