@@ -30,7 +30,7 @@ export default function App() {
   const { conversations, isLoading: convsLoading, createConversation, deleteConversation } =
     useConversations();
 
-  const { messages, statusSteps, pendingConfirm, isStreaming, loadMessages, sendMessage, reset } =
+  const { messages, statusSteps, pendingConfirm, isStreaming, loadMessages, sendMessage, abort, reset } =
     useStreamingChat(selectedId);
 
   useEffect(() => {
@@ -133,6 +133,7 @@ export default function App() {
           defaultModel={defaultModel}
           onModelChange={setSelectedModel}
           onSend={selectedId ? sendMessage : handleFirstSend}
+          onAbort={abort}
           onConfirm={handleConfirm}
           onCancel={handleCancel}
           onMenuOpen={() => setSidebarOpen(true)}

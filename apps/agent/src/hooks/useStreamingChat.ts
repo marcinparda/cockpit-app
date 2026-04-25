@@ -127,7 +127,10 @@ export function useStreamingChat(conversationId: string | null) {
 
   const abort = useCallback(() => {
     abortRef.current?.abort();
-  }, []);
+    if (conversationId) {
+      agentApi.stopGeneration(conversationId).catch(() => undefined);
+    }
+  }, [conversationId]);
 
   const reset = useCallback(() => {
     setMessages([]);

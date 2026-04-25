@@ -139,6 +139,14 @@ export function TaskCheckIcon(p: SvgProps) {
   );
 }
 
+export function StopIcon(p: SvgProps) {
+  return (
+    <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" {...p}>
+      <rect x="3.5" y="3.5" width="9" height="9" rx="1.5"/>
+    </svg>
+  );
+}
+
 export function SlashIcon(p: SvgProps) {
   return (
     <svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" {...p}>

@@ -74,4 +74,10 @@ export const agentApi = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ content }),
     }),
+
+  stopGeneration: (conversationId: string) =>
+    fetch(`${BASE}/conversations/${conversationId}/stop`, {
+      method: 'POST',
+      credentials: 'include',
+    }),
 };

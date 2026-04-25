@@ -12,6 +12,7 @@ import {
   PencilIcon,
   SendIcon,
   SlashIcon,
+  StopIcon,
   TaskCheckIcon,
 } from './Icons';
 import { MessageBubble } from './MessageBubble';
@@ -30,6 +31,7 @@ interface Props {
   defaultModel: string;
   onModelChange: (model: string) => void;
   onSend: (content: string) => void;
+  onAbort: () => void;
   onConfirm: () => void;
   onCancel: () => void;
   onMenuOpen: () => void;
@@ -190,6 +192,7 @@ export function ChatThread({
   defaultModel,
   onModelChange,
   onSend,
+  onAbort,
   onConfirm,
   onCancel,
   onMenuOpen,
@@ -407,14 +410,24 @@ export function ChatThread({
                 </kbd>
                 newline
               </span>
-              <button
-                onClick={handleSend}
-                disabled={!input.trim() || isStreaming}
-                aria-label="Send"
-                className="bg-accent text-accent-ink hover:bg-accent-hi flex h-7 w-7 cursor-pointer items-center justify-center rounded-[7px] transition-colors disabled:cursor-default disabled:opacity-35"
-              >
-                <SendIcon />
-              </button>
+              {isStreaming ? (
+                <button
+                  onClick={onAbort}
+                  aria-label="Stop generation"
+                  className="bg-accent text-accent-ink hover:bg-accent-hi flex h-7 w-7 cursor-pointer items-center justify-center rounded-[7px] transition-colors"
+                >
+                  <StopIcon />
+                </button>
+              ) : (
+                <button
+                  onClick={handleSend}
+                  disabled={!input.trim()}
+                  aria-label="Send"
+                  className="bg-accent text-accent-ink hover:bg-accent-hi flex h-7 w-7 cursor-pointer items-center justify-center rounded-[7px] transition-colors disabled:cursor-default disabled:opacity-35"
+                >
+                  <SendIcon />
+                </button>
+              )}
             </div>
           </div>
         </div>
