@@ -189,7 +189,7 @@ export function Sidebar({
                     {conv.title}
                   </span>
 
-                  <div className="shrink-0">
+                  <div className="shrink-0 h-5 flex items-center">
                     {hoverId === conv.id ? (
                       <div className="flex gap-0.5">
                         <button
