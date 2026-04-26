@@ -6,10 +6,18 @@ import {
   DollarSign,
   User,
   Bot,
+  Brain,
 } from 'lucide-react';
 import { environments } from '@cockpit-app/shared-utils';
 
 const appsList = [
+  {
+    name: 'Syncthing',
+    description:
+      'Personal knowledge base synchronization tool. Synchroning: Notes, reviews, summaries, projects.',
+    url: environments.brainUrl,
+    Icon: Brain,
+  },
   {
     name: 'Agent',
     description: 'Talk with chatbot to manage all applications.',

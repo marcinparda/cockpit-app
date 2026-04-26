@@ -10,6 +10,7 @@ export const environments = {
   agentUrl: 'http://localhost:4206',
   twodoUrl: 'https://twodo.parda.me',
   actualUrl: 'https://budget.parda.me',
+  brainUrl: 'http://localhost:8384/',
   apiUrl: 'http://localhost:8000',
   mode: mode.development,
 };
