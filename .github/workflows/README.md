@@ -20,6 +20,13 @@ This repository uses several GitHub Actions workflows to automate validation, ty
 
 - **File:** `.github/workflows/deploy-to-production.yml`
 - **Purpose:** Deploys all built Docker images to the Raspberry Pi using SSH and Cloudflare Tunnel. Runs `deploy.sh` on the Pi to update containers. Provides a deployment summary and troubleshooting tips.
+- **How it works:**
+  - Installs cloudflared via `AnimMouse/setup-cloudflared@v2` (cached, no `apt-get`).
+  - Configures SSH with known_hosts — no `StrictHostKeyChecking no`.
+  - Writes secrets (`GITHUB_TOKEN`, `GITHUB_ACTOR`, `OWNER`, `REPO`) to `/tmp/deploy.env` on Pi via pipe — not exposed in `ps aux`.
+  - Copies `deploy.sh` and launches it via `nohup` in the background so the SSH connection closes immediately.
+  - Polls `/tmp/deploy.exit` with short SSH sessions every 10s (up to 30 min) — avoids Cloudflare tunnel idle-timeout that caused false failures with long-lived connections.
+  - On success/failure, prints last 30 lines of `/tmp/deploy.log` for diagnostics.
 
 ### 2. Deployment Script (`deploy.sh`)
 
@@ -28,14 +35,15 @@ This repository uses several GitHub Actions workflows to automate validation, ty
 - **How it works:**
   - Requires `GITHUB_TOKEN` and `GITHUB_ACTOR` environment variables for authentication with GitHub Container Registry (GHCR).
   - Logs in to GHCR using the provided credentials.
-  - Defines all apps to deploy (login, cockpit, cv, store, agent) with their respective ports.
+  - Defines all apps to deploy (login, cockpit, cv, store) with their respective ports.
   - For each app:
-    - Stops and removes any existing container for the app
-    - Prunes old Docker images
-    - Pulls the latest image from GHCR
-    - Runs the container on the correct port with restart policy
-    - Performs a health check to ensure the container is running
-  - If any container fails to start, logs are shown and the script exits with an error.
+    - Tags current image as `:previous` for rollback
+    - Pulls the latest image from GHCR **before** stopping the running container (minimises downtime)
+    - Stops and removes the existing container
+    - Runs the new container on the correct port with restart policy
+    - Performs a real HTTP health check (`curl` loop, up to 90s) against the mapped port
+    - On health check failure: rolls back to `:previous` image and exits with error
+  - After all containers are healthy, prunes old Docker images.
   - If all succeed, prints a success message.
 
 ### 3. Checks Workflow (`checks.yml`)
@@ -66,13 +74,13 @@ This repository uses several GitHub Actions workflows to automate validation, ty
   - Notifies via GitHub Issue if drift is found
   - Cleans up old automated branches
 
-**Note:** The script is designed for a single-node deployment (Raspberry Pi) and expects Docker to be installed and running. It is robust against missing containers/images and will always attempt to deploy the latest version of each app.
+**Note:** The script is designed for a single-node deployment (Raspberry Pi) and expects Docker to be installed and running. It is robust against missing containers/images and will always attempt to deploy the latest version of each app. The `agent` app is built and pushed to GHCR by CI but intentionally not deployed by `deploy.sh`.
 
 ---
 
 - All workflows use Node.js 20 and npm for dependency management.
 - Docker images are built for `linux/arm64` and pushed to GitHub Container Registry (GHCR).
-- Deployment is designed for a Raspberry Pi using Docker Compose and Cloudflare Tunnel for secure SSH access.
+- Deployment is designed for a Raspberry Pi using Docker and Cloudflare Tunnel for secure SSH access.
 - For more details on the deployment approach, see [nx-docker-rpi-deployment](https://github.com/marcinparda/nx-docker-rpi-deployment).
 
 ## Adding Deployment Support for a New App

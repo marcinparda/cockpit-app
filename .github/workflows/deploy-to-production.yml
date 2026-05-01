@@ -16,20 +16,14 @@ jobs:
   deploy-to-production:
     runs-on: ubuntu-latest
     outputs:
-      deployment-status: ${{ steps.deploy.outcome }}
+      deployment-status: ${{ steps.wait.outcome }}
 
     steps:
       - name: Set up Cloudflared
-        run: |
-          echo "☁️ Setting up Cloudflare tunnel..."
-          sudo mkdir -p --mode=0755 /usr/share/keyrings
-          curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
-          echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared jammy main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
-          sudo apt-get update && sudo apt-get install cloudflared
+        uses: AnimMouse/setup-cloudflared@v2
 
       - name: Setup SSH Configuration
         run: |
-          echo "🔐 Setting up SSH configuration..."
           mkdir -p ~/.ssh
           echo "${{ secrets.RASPBERRY_PI_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
@@ -39,41 +33,59 @@ jobs:
             User ${{ secrets.RASPBERRY_PI_USERNAME }}
             IdentityFile ~/.ssh/id_ed25519
             ProxyCommand cloudflared access ssh --hostname %h
-            StrictHostKeyChecking no
           EOF
           chmod 600 ~/.ssh/config
 
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy all apps to Raspberry Pi
-        id: deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OWNER: ${{ github.repository_owner }}
-          REPO: ${{ github.event.repository.name }}
+      - name: Write deploy env file on Pi
         run: |
-          echo "🚀 Starting deployment of all apps to Raspberry Pi..."
+          {
+            echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}"
+            echo "GITHUB_ACTOR=${{ github.actor }}"
+            echo "OWNER=${{ github.repository_owner }}"
+            echo "REPO=${{ github.event.repository.name }}"
+          } | ssh ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "cat > /tmp/deploy.env && chmod 600 /tmp/deploy.env"
 
-          echo "📤 Copying deployment script to Raspberry Pi..."
-          scp deploy.sh ${{ secrets.RASPBERRY_PI_USERNAME }}@${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}:~/deploy.sh
+      - name: Copy deploy script to Pi
+        run: |
+          scp deploy.sh ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }}:~/deploy.sh
 
-          echo "⚡️ Executing deployment script on Raspberry Pi..."
-          ssh ${{ secrets.RASPBERRY_PI_USERNAME }}@${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} \
-            "chmod +x ~/deploy.sh && \
-            GITHUB_TOKEN='${{ secrets.GITHUB_TOKEN }}' \
-            GITHUB_ACTOR='${{ github.actor }}' \
-            OWNER='${{ github.repository_owner }}' \
-            REPO='${{ github.event.repository.name }}' \
-            ~/deploy.sh"
+      - name: Launch deploy on Pi
+        run: |
+          ssh ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} \
+            "rm -f /tmp/deploy.exit /tmp/deploy.log && \
+            chmod +x ~/deploy.sh && \
+            nohup bash -c \
+            'set -a; source /tmp/deploy.env; set +a; \
+            ~/deploy.sh > /tmp/deploy.log 2>&1; \
+            echo \$? > /tmp/deploy.exit; rm -f /tmp/deploy.env' \
+            </dev/null > /dev/null 2>&1 &"
 
-          echo "🎉 Deployment to Raspberry Pi completed successfully!"
+      - name: Wait for deployment
+        id: wait
+        timeout-minutes: 30
+        run: |
+          for i in $(seq 1 180); do
+            result=$(ssh ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} \
+              "[ -f /tmp/deploy.exit ] && echo done:\$(cat /tmp/deploy.exit) || echo running" 2>/dev/null || echo unreachable)
+            echo "[$i] $result"
+            case "$result" in
+              done:0) echo "Deploy succeeded"; exit 0 ;;
+              done:*)
+                echo "Deploy failed. Last log:"
+                ssh ${{ secrets.CLOUDFLARE_TUNNEL_DOMAIN }} "tail -30 /tmp/deploy.log" 2>/dev/null || true
+                exit 1 ;;
+            esac
+            sleep 10
+          done
+          echo "Timed out waiting"; exit 1
 
       - name: Cleanup SSH
         if: always()
         run: |
-          echo "🧹 Cleaning up SSH keys..."
-          rm -f ~/.ssh/id_rsa
+          rm -f ~/.ssh/id_ed25519
           rm -f deploy.sh
 
   summary:
