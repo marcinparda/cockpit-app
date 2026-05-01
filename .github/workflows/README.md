@@ -22,7 +22,7 @@ This repository uses several GitHub Actions workflows to automate validation, ty
 - **Purpose:** Deploys all built Docker images to the Raspberry Pi using SSH and Cloudflare Tunnel. Runs `deploy.sh` on the Pi to update containers. Provides a deployment summary and troubleshooting tips.
 - **How it works:**
   - Installs cloudflared via `AnimMouse/setup-cloudflared@v2` (cached, no `apt-get`).
-  - Configures SSH with known_hosts — no `StrictHostKeyChecking no`.
+  - Configures SSH with known_hosts and `StrictHostKeyChecking no` (required — cloudflared tunnel presents host key that doesn't match tunnel hostname).
   - Writes secrets (`GITHUB_TOKEN`, `GITHUB_ACTOR`, `OWNER`, `REPO`) to `/tmp/deploy.env` on Pi via pipe — not exposed in `ps aux`.
   - Copies `deploy.sh` and launches it via `nohup` in the background so the SSH connection closes immediately.
   - Polls `/tmp/deploy.exit` with short SSH sessions every 10s (up to 30 min) — avoids Cloudflare tunnel idle-timeout that caused false failures with long-lived connections.
